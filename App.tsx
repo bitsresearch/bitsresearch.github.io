@@ -1531,7 +1531,7 @@ const GetInvolved: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-block px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Learn More
+                      Session Details
                   </a>
                   <a 
                       href="https://forms.office.com/e/FPSgmUxEhD" 
@@ -1539,7 +1539,7 @@ const GetInvolved: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-block px-8 py-4 bg-earth-800 text-white rounded-full font-bold hover:bg-earth-900 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Register Interest
+                      Join the Session
                   </a>
               </div>
           </div>
@@ -1555,19 +1555,21 @@ const GetInvolved: React.FC = () => {
               </div>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a 
-                      href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/community-advisors-wanted-supporting-identity-transition-in-higher-education/" 
+                      href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/community-advisors-wanted-supporting-identity-transition-in-higher-education/#roles" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-block px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Learn More
                   </a>
-                  <Link 
-                      to={PageRoute.CONTACT} 
+                  <a 
+                      href="https://forms.cloud.microsoft/e/LM0sFix788" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
                       className="inline-block px-8 py-4 bg-earth-800 text-white rounded-full font-bold hover:bg-earth-900 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Get in Touch
-                  </Link>
+                      Expression of Interest
+                  </a>
               </div>
           </div>
         </div>
