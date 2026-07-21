@@ -177,7 +177,10 @@ const useVideoSheet = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`https://docs.google.com/spreadsheets/d/e/2PACX-1vSHQGTMTLaBAyxMZYxyjG1JrhOtHwvzZmDCgJ_3jaBJnCg81qmtRuN3Mj4toSFcPgJQ113wI1qyi7cS/pub?output=csv`);
+        const response = await fetch(
+          `https://docs.google.com/spreadsheets/d/e/2PACX-1vSHQGTMTLaBAyxMZYxyjG1JrhOtHwvzZmDCgJ_3jaBJnCg81qmtRuN3Mj4toSFcPgJQ113wI1qyi7cS/pub?output=csv&cacheBust=${Date.now()}`,
+          { cache: 'no-store' }
+        );
         if (!response.ok) throw new Error('Network response was not ok');
         const text = await response.text();
         const rows = text.split(/\r?\n/).filter(row => row.trim() !== "");
@@ -213,6 +216,12 @@ const useVideoSheet = () => {
 
   return { videos, loading };
 };
+
+// Numeric Order values belong to the Research Update section.
+// Special text values such as "About" are reserved for other pages.
+const getResearchVideos = (videos: VideoData[]) => videos
+  .filter(video => /^\d+$/.test(video.order.trim()) && Boolean(video.embedUrl))
+  .sort((a, b) => Number(a.order) - Number(b.order));
 
 // --- Helper: Linkify Text ---
 const linkify = (text: string) => {
@@ -688,10 +697,7 @@ const ResearchUpdate: React.FC = () => {
 
   useEffect(() => {
     if (!loading) {
-      const filtered = videos
-        .filter(v => v.area === 'Research Update' && v.embedUrl)
-        .sort((a, b) => (parseInt(a.order) || 0) - (parseInt(b.order) || 0));
-      setResearchVideos(filtered);
+      setResearchVideos(getResearchVideos(videos));
     }
   }, [videos, loading]);
 
@@ -767,14 +773,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (!videosLoading) {
-        const filtered = videos.filter(v => v.area === 'Research Update' && v.embedUrl);
-        // Sort by Order (numeric)
-        filtered.sort((a, b) => {
-            const orderA = parseInt(a.order) || 0;
-            const orderB = parseInt(b.order) || 0;
-            return orderA - orderB;
-        });
-        setResearchVideos(filtered);
+        setResearchVideos(getResearchVideos(videos));
     }
   }, [videos, videosLoading]);
 
@@ -792,18 +791,18 @@ const Home: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Reset index if out of bounds
+  const totalVideoPages = Math.max(1, Math.ceil(researchVideos.length / itemsPerPage));
+
+  // Reset page if the number of videos or the responsive layout changes.
   useEffect(() => {
-     if (researchVideos.length > 0) {
-         const maxIndex = Math.max(0, researchVideos.length - itemsPerPage);
-         if (currentIndex > maxIndex) {
-             setCurrentIndex(maxIndex);
-         }
+     const maxPage = totalVideoPages - 1;
+     if (currentIndex > maxPage) {
+         setCurrentIndex(maxPage);
      }
-  }, [itemsPerPage, researchVideos.length]);
+  }, [currentIndex, totalVideoPages]);
 
   const nextSlide = () => {
-    if (currentIndex < researchVideos.length - itemsPerPage) {
+    if (currentIndex < totalVideoPages - 1) {
         setCurrentIndex(prev => prev + 1);
     }
   };
@@ -942,7 +941,7 @@ const Home: React.FC = () => {
                             </button>
                             <button 
                                 onClick={nextSlide} 
-                                disabled={currentIndex >= researchVideos.length - itemsPerPage}
+                                disabled={currentIndex >= totalVideoPages - 1}
                                 className="p-3 rounded-full border border-sage-300 text-earth-50 hover:bg-sage-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-white"
                                 aria-label="Next research video"
                             >
@@ -980,37 +979,36 @@ const Home: React.FC = () => {
                     aria-label="Research Update Videos"
                 >
                     <div 
-                        className={`flex transition-transform duration-500 ease-out will-change-transform motion-reduce:transition-none ${researchVideos.length <= itemsPerPage ? 'justify-center' : 'justify-start'}`}
+                        className="flex transition-transform duration-500 ease-out will-change-transform motion-reduce:transition-none"
                         style={{ 
-                            transform: researchVideos.length > itemsPerPage ? `translateX(-${currentIndex * (100 / itemsPerPage)}%)` : 'none'
+                            transform: researchVideos.length > itemsPerPage ? `translateX(-${currentIndex * 100}%)` : 'none'
                         }}
                     >
-                        {researchVideos.length <= 2 ? (
-                             // Grid Layout for <= 2 items
-                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full">
-                                {researchVideos.map((video, idx) => (
-                                    <div key={idx} className="group relative aspect-video w-full bg-sage-600 rounded-3xl overflow-hidden shadow-xl transform transition-transform hover:-translate-y-2">
-                                        <iframe className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${idx + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                    </div>
-                                ))}
-                             </div>
-                        ) : (
-                            // Carousel Layout for > 2 items
-                            researchVideos.map((video, idx) => (
-                                <div 
-                                    key={idx} 
-                                    style={{ width: `${100 / itemsPerPage}%` }} 
-                                    className="flex-shrink-0 px-4"
+                        {Array.from({ length: totalVideoPages }, (_, pageIndex) => {
+                            const pageVideos = researchVideos.slice(
+                                pageIndex * itemsPerPage,
+                                (pageIndex + 1) * itemsPerPage
+                            );
+
+                            return (
+                                <div
+                                    key={pageIndex}
+                                    className={`grid grid-cols-1 ${itemsPerPage === 2 ? 'lg:grid-cols-2' : ''} gap-8 md:gap-12 w-full flex-shrink-0 px-4`}
                                     role="group"
                                     aria-roledescription="slide"
-                                    aria-label={`${idx + 1} of ${researchVideos.length}`}
+                                    aria-label={`Page ${pageIndex + 1} of ${totalVideoPages}`}
                                 >
-                                    <div className="group relative aspect-video w-full bg-sage-600 rounded-3xl overflow-hidden shadow-xl transform transition-transform hover:-translate-y-2">
-                                        <iframe className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${idx + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                                    </div>
+                                    {pageVideos.map((video, videoIndex) => {
+                                        const absoluteIndex = pageIndex * itemsPerPage + videoIndex;
+                                        return (
+                                            <div key={`${video.order}-${absoluteIndex}`} className="group relative aspect-video w-full bg-sage-600 rounded-3xl overflow-hidden shadow-xl transform transition-transform hover:-translate-y-2">
+                                                <iframe className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${absoluteIndex + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            ))
-                        )}
+                            );
+                        })}
                     </div>
                 </div>
             )}
