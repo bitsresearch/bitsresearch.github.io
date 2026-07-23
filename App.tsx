@@ -17,7 +17,7 @@ const SITE_ORIGIN = 'https://bitsresearch.github.io';
 const SITE_NAME = 'BITS | Building Identity through Stories';
 const SITE_AUTHOR = 'Charlie Tak Hei Kwong 鄺德希';
 const OG_IMAGE = `${SITE_ORIGIN}/og-image.jpg`;
-const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'team', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics', 'upcomingworkshops', 'upcomingworkshop'].flatMap(slug => [slug, `${slug}.html`]);
+const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics', 'upcomingworkshops', 'upcomingworkshop'].flatMap(slug => [slug, `${slug}.html`]);
 
 const personSchema = {
   "@type": "Person",
@@ -37,7 +37,7 @@ const personSchema = {
     { "@type": "CollegeOrUniversity", "name": "Falmouth University" },
     { "@type": "CollegeOrUniversity", "name": "University of the Arts London" }
   ],
-  "url": `${SITE_ORIGIN}/team/`
+  "url": `${SITE_ORIGIN}/people/`
 };
 
 const researchProjectSchema = {
@@ -1190,29 +1190,29 @@ const About: React.FC = () => {
   );
 };
 
-// 3. Team Page (People)
-const Team: React.FC = () => {
+// 3. People Page
+const People: React.FC = () => {
   return (
     <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="Researcher and Advisory Team | Building Identity through Stories"
+        title="People | Building Identity through Stories"
         description="Meet Charlie Tak Hei Kwong 鄺德希, the doctoral researcher of Building Identity Through Stories, a fully funded project on transmedia storytelling, inclusive education, and transition into higher education."
-        canonicalPath="/team/"
-        ogTitle="Researcher and Advisory Team | Building Identity through Stories"
+        canonicalPath="/people/"
+        ogTitle="People | Building Identity through Stories"
         ogDescription="Meet Charlie Tak Hei Kwong 鄺德希, doctoral researcher for a fully funded project on transmedia storytelling, inclusive education, and transition into higher education."
       />
       <JSONLD 
         data={{
           "@context": "https://schema.org",
           "@graph": [
-            { "@type": "ProfilePage", "name": "Charlie Tak Hei Kwong 鄺德希", "url": `${SITE_ORIGIN}/team/`, "mainEntity": personSchema },
+            { "@type": "ProfilePage", "name": "Charlie Tak Hei Kwong 鄺德希", "url": `${SITE_ORIGIN}/people/`, "mainEntity": personSchema },
             personSchema,
             researchProjectSchema
           ]
         }}
       />
       <div className="text-center mb-20">
-        <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">Team</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">People</h1>
         <p className="text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto font-light">Researcher, Supervisors & Advisors</p>
       </div>
 
@@ -1254,7 +1254,7 @@ const Team: React.FC = () => {
           <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Doctoral Research Supervision</h3>
           <p className="text-earth-600 dark:text-earth-400 mb-12 max-w-2xl mx-auto leading-relaxed">This research is developed under the guidance of an interdisciplinary supervisory team:</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {[{name: "Dr Jennifer Young", role: <>Director of Studies<br/>Dean, Faculty of Business & Design</>}, {name: "Prof. Neil Fox", role: "Professor of Film Practice and Pedagogy"}, {name: "Prof. Russell Crawford", role: "Deputy Vice-Chancellor (Interim)"}].map((sup, i) => (
+              {[{name: "Dr Jennifer Young", role: <>Director of Studies<br/>Dean, Faculty of Design & Culture</>}, {name: "Prof. Neil Fox", role: "Professor of Film Practice and Pedagogy"}, {name: "Prof. Russell Crawford", role: "Deputy Vice-Chancellor (Interim)"}].map((sup, i) => (
                   <div key={i} className="bg-white dark:bg-earth-900/60 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all border border-transparent hover:border-sage-400 dark:hover:border-sage-500 group">
                       <h4 className="font-serif font-bold text-xl text-earth-900 dark:text-earth-100 mb-2">{sup.name}</h4>
                       <div className="h-px w-8 bg-sage-300 mx-auto mb-3"></div>
@@ -2121,7 +2121,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path={PageRoute.ABOUT} element={<About />} />
-          <Route path={PageRoute.TEAM} element={<Team />} />
+          <Route path={PageRoute.PEOPLE} element={<People />} />
           <Route path={PageRoute.CARE} element={<WhatWeCare />} />
           <Route path={PageRoute.RESEARCH} element={<ResearchUpdate />} />
           <Route path={PageRoute.OUTPUT} element={<Output />} />
@@ -2133,7 +2133,7 @@ const App: React.FC = () => {
           <Route path={PageRoute.ACCESSIBILITY} element={<Accessibility />} />
           <Route path={PageRoute.ETHICS} element={<ResearchEthics />} />
           <Route path="/about.html" element={<About />} />
-          <Route path="/team.html" element={<Team />} />
+          <Route path="/people.html" element={<People />} />
           <Route path="/what-we-care.html" element={<WhatWeCare />} />
           <Route path="/research-update.html" element={<ResearchUpdate />} />
           <Route path="/output-resources.html" element={<Output />} />

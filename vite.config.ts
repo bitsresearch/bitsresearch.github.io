@@ -7,7 +7,7 @@ const pageInputs = {
   about: path.resolve(__dirname, 'about/index.html'),
   whatWeCare: path.resolve(__dirname, 'what-we-care/index.html'),
   researchUpdate: path.resolve(__dirname, 'research-update/index.html'),
-  team: path.resolve(__dirname, 'team/index.html'),
+  people: path.resolve(__dirname, 'people/index.html'),
   outputResources: path.resolve(__dirname, 'output-resources/index.html'),
   getInvolved: path.resolve(__dirname, 'get-involved/index.html'),
   contact: path.resolve(__dirname, 'contact/index.html'),

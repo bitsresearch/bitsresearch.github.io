@@ -161,7 +161,7 @@ export const Layout: React.FC = () => {
   const navLinks = [
     { name: 'About', path: PageRoute.ABOUT },
     { name: 'What We Care About', path: PageRoute.CARE },
-    { name: 'People', path: PageRoute.TEAM },
+    { name: 'People', path: PageRoute.PEOPLE },
     { name: 'Output', path: PageRoute.OUTPUT },
     { name: 'Get Involved', path: PageRoute.INVOLVED },
     { name: 'Contact', path: PageRoute.CONTACT },

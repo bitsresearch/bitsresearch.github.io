@@ -11,7 +11,7 @@ const nav = [
   ['/', 'Home'],
   ['/about/', 'About'],
   ['/what-we-care/', 'What We Care About'],
-  ['/team/', 'People'],
+  ['/people/', 'People'],
   ['/output-resources/', 'Output'],
   ['/get-involved/', 'Get Involved'],
   ['/contact/', 'Contact'],
@@ -81,9 +81,9 @@ const pageContent = {
       <p><a href="/get-involved/">Get Involved!</a></p>
     </section>
   `,
-  '/team/': `
+  '/people/': `
     <section>
-      <h1>Team</h1>
+      <h1>People</h1>
       <p>Researcher, Supervisors &amp; Advisors</p>
       <h2>Charlie Tak Hei Kwong 鄺德希</h2>
       <p>Doctoral Researcher</p>
@@ -100,7 +100,7 @@ const pageContent = {
     <section>
       <h2>Doctoral Research Supervision</h2>
       <p>This research is developed under the guidance of an interdisciplinary supervisory team:</p>
-      <ul><li>Dr Jennifer Young, Director of Studies, Dean, Faculty of Business &amp; Design</li><li>Prof. Neil Fox, Professor of Film Practice and Pedagogy</li><li>Prof. Russell Crawford, Deputy Vice-Chancellor (Interim)</li></ul>
+      <ul><li>Dr Jennifer Young, Director of Studies, Dean, Faculty of Design &amp; Culture</li><li>Prof. Neil Fox, Professor of Film Practice and Pedagogy</li><li>Prof. Russell Crawford, Deputy Vice-Chancellor (Interim)</li></ul>
     </section>
   `,
   '/what-we-care/': `
@@ -284,8 +284,8 @@ const routeFiles = [
   ['/', 'index.html'],
   ['/about/', 'about/index.html'],
   ['/about/', 'about.html'],
-  ['/team/', 'team/index.html'],
-  ['/team/', 'team.html'],
+  ['/people/', 'people/index.html'],
+  ['/people/', 'people.html'],
   ['/what-we-care/', 'what-we-care/index.html'],
   ['/what-we-care/', 'what-we-care.html'],
   ['/research-update/', 'research-update/index.html'],

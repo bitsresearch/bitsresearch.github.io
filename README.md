@@ -5,7 +5,7 @@ This export has been refactored from a hash-routed React/Vite single-page app in
 ## Main changes
 
 - Replaced `HashRouter` with `BrowserRouter`.
-- Added real static page shells for routes such as `/about/`, `/what-we-care/`, `/research-update/`, `/team/`, and other existing pages.
+- Added real static page shells for routes such as `/about/`, `/what-we-care/`, `/research-update/`, `/people/`, and other existing pages.
 - Added `.html` fallback page shells such as `about.html` for hosts or links that prefer file-based URLs.
 - Kept the existing React UI, Tailwind styling, animations, Google Sheet CSV video loading, embedded videos, accessibility controls, and responsive behaviour.
 - Added multi-page Vite build inputs in `vite.config.ts`.
@@ -26,8 +26,8 @@ This export has been refactored from a hash-routed React/Vite single-page app in
 ├── what-we-care.html
 ├── research-update/index.html
 ├── research-update.html
-├── team/index.html
-├── team.html
+├── people/index.html
+├── people.html
 ├── output-resources/index.html
 ├── get-involved/index.html
 ├── contact/index.html

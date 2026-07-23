@@ -22,7 +22,7 @@ export interface ResourceItem {
 export enum PageRoute {
   HOME = '/',
   ABOUT = '/about',
-  TEAM = '/team',
+  PEOPLE = '/people',
   CARE = '/what-we-care',
   RESEARCH = '/research-update',
   OUTPUT = '/output-resources',
