@@ -8,8 +8,27 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
+
+// Keep the static SEO fallback hidden only until React replaces it.
+const revealApp = () => {
+  document.documentElement.classList.remove('app-loading');
+};
+
+const mountObserver = new MutationObserver(() => {
+  mountObserver.disconnect();
+  revealApp();
+});
+
+mountObserver.observe(rootElement, { childList: true });
+
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
+// Safety fallback so the page is never left hidden if mounting is interrupted.
+window.setTimeout(() => {
+  mountObserver.disconnect();
+  revealApp();
+}, 2000);

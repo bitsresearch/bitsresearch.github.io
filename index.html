@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="app-loading">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="https://raw.githubusercontent.com/thkwong/images/refs/heads/main/favicon.ico" />
@@ -42,6 +42,7 @@
       :focus-visible { outline: 2px solid #6B5B54; outline-offset: 2px; }
       .dark :focus-visible { outline: 2px solid #B4C4B7; }
       @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+      .app-loading #root { visibility: hidden; }
     </style>
   </head>
   <body class="bg-earth-50 text-earth-900 dark:bg-earth-900 dark:text-earth-50 transition-colors duration-300">
