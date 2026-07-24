@@ -751,11 +751,11 @@ const Home: React.FC = () => {
   }, [location.pathname]);
 
   const heroImages = [
-    "https://charliekwong.myblog.arts.ac.uk/files/2026/02/IMG_20260213_144250-1-scaled.jpg",
-    "https://charliekwong.myblog.arts.ac.uk/files/2026/02/IMG_20260213_151557-scaled.jpg",
-    "https://charliekwong.myblog.arts.ac.uk/files/2026/02/IMG_20260216_161600.jpg",
-    "https://charliekwong.myblog.arts.ac.uk/files/2026/02/IMG_1771258966984.jpg",
-    "https://charliekwong.myblog.arts.ac.uk/files/2026/02/IMG_20260213_145913-scaled.jpg"
+    "/images/workshop-gallery-01.jpg",
+    "/images/workshop-gallery-02.jpg",
+    "/images/workshop-gallery-03.jpg",
+    "/images/workshop-gallery-04.jpg",
+    "/images/workshop-gallery-05.jpg"
   ];
 
   const { videos, loading: videosLoading } = useVideoSheet();
@@ -1026,10 +1026,10 @@ const Home: React.FC = () => {
             </p>
             <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 transition-all duration-500">
                 <a href="https://www.arts.ac.uk/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://journal.falmouth.ac.uk/transitmedia/files/2025/11/ual.png" alt="University of the Arts London Logo" className="h-16 md:h-24 w-auto object-contain mix-blend-multiply dark:mix-blend-screen dark:invert transition-all hover:scale-105 select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
+                    <img src="/images/ual-logo.png" alt="University of the Arts London Logo" className="h-16 md:h-24 w-auto object-contain mix-blend-multiply dark:mix-blend-screen dark:invert transition-all hover:scale-105 select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
                 </a>
                 <a href="https://www.falmouth.ac.uk/" target="_blank" rel="noopener noreferrer">
-                    <img src="https://journal.falmouth.ac.uk/transitmedia/files/2025/11/falmouth.png" alt="Falmouth University Logo" className="h-16 md:h-24 w-auto object-contain mix-blend-multiply dark:mix-blend-screen dark:invert transition-all hover:scale-105 select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
+                    <img src="/images/falmouth-university-logo.png" alt="Falmouth University Logo" className="h-16 md:h-24 w-auto object-contain mix-blend-multiply dark:mix-blend-screen dark:invert transition-all hover:scale-105 select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
                 </a>
             </div>
         </div>
@@ -1152,7 +1152,7 @@ const About: React.FC = () => {
               <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-10">How This Project Brings Different Ideas Together</h3>
               <div className="mb-10 flex justify-center">
                   <img 
-                      src="http://charliekwong.myblog.arts.ac.uk/files/2026/03/Transmedia-Storytelling-Workshop.png" 
+                      src="/images/transmedia-storytelling-workshop.png" 
                       alt="Diagram showing the research framework of the BITS project. At the centre are Transmedia Storytelling Workshops. Surrounding layers show the project as an Educational Intervention, situated within Inclusive Education and Practice, and informed by Participatory Arts Practice." 
                       className="max-w-md w-full h-auto select-none"
                       onContextMenu={(e) => e.preventDefault()}
@@ -1220,7 +1220,7 @@ const People: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
               <div className="md:col-span-5 relative">
                   <div className="relative rounded-3xl overflow-hidden shadow-lg group">
-                      <img src="https://journal.falmouth.ac.uk/transitmedia/files/2025/11/profilepic.jpg" alt="Charlie Tak Hei Kwong" className="w-full h-auto object-cover select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
+                      <img src="/images/charlie-kwong-profile.jpg" alt="Charlie Tak Hei Kwong" className="w-full h-auto object-cover select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
                   </div>
                   <div className="absolute top-6 left-6 bg-white text-sage-600 px-5 py-2 rounded-full shadow-lg text-sm font-medium tracking-wide z-20">Doctoral Researcher</div>
               </div>

@@ -213,7 +213,7 @@ export const Layout: React.FC = () => {
             <div className="flex-shrink-0 flex items-center">
               <NavLink to={PageRoute.HOME} className="flex items-center gap-3 group" aria-label="bits(~) Home">
                 <img 
-                    src="https://raw.githubusercontent.com/thkwong/images/refs/heads/main/logo.png" 
+                    src="/images/bits-research-logo.png" 
                     alt="bits(~) Logo" 
                     className="h-12 w-auto md:h-16 block dark:invert transition-all select-none"
                     draggable={false}
@@ -489,7 +489,7 @@ export const Layout: React.FC = () => {
             <div className="lg:col-span-4">
               <div className="flex items-center gap-2 mb-6">
                 <img 
-                    src="https://raw.githubusercontent.com/thkwong/images/refs/heads/main/logo.png" 
+                    src="/images/bits-research-logo.png" 
                     alt="bits(~) Logo" 
                     className="h-14 w-auto block dark:invert select-none"
                     draggable={false}

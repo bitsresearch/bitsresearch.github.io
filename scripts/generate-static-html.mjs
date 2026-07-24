@@ -73,7 +73,7 @@ const pageContent = {
     <section>
       <h2>How This Project Brings Different Ideas Together</h2>
       <p>This research connects participatory arts practice with inclusive education to develop transmedia storytelling workshops for students with diverse learning journeys transitioning into higher education. Through transmedia storytelling, students will explore identity, belonging, and their learning journeys in different ways.</p>
-      <img src="http://charliekwong.myblog.arts.ac.uk/files/2026/03/Transmedia-Storytelling-Workshop.png" alt="Diagram showing the research framework of the BITS project." />
+      <img src="/images/transmedia-storytelling-workshop.png" alt="Diagram showing the research framework of the BITS project." />
     </section>
     <section>
       <h2>Ethical Approval</h2>
@@ -90,7 +90,7 @@ const pageContent = {
       <p>Charlie is a doctoral researcher and registered teacher passionate about the intersection of creative media and inclusive education. His fully funded research explores how transmedia storytelling can create supportive spaces for students with diverse needs as they navigate their journey into higher education.</p>
       <p><a href="https://thkwong.uk">Website</a></p>
       <p><a href="mailto:c.kwong1220251@arts.ac.uk,tk290331@falmouth.ac.uk">Email</a></p>
-      <img src="https://journal.falmouth.ac.uk/transitmedia/files/2025/11/profilepic.jpg" alt="Charlie Tak Hei Kwong" />
+      <img src="/images/charlie-kwong-profile.jpg" alt="Charlie Tak Hei Kwong" />
     </section>
     <section>
       <h2>Experience and Research Focus</h2>
