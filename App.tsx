@@ -16,8 +16,8 @@ import {
 const SITE_ORIGIN = 'https://bitsresearch.github.io';
 const SITE_NAME = 'BITS | Building Identity through Stories';
 const SITE_AUTHOR = 'Charlie Tak Hei Kwong 鄺德希';
-const OG_IMAGE = `${SITE_ORIGIN}/og-image.jpg`;
-const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics', 'upcomingworkshops', 'upcomingworkshop'].flatMap(slug => [slug, `${slug}.html`]);
+const OG_IMAGE = `${SITE_ORIGIN}/images/og-image.jpg`;
+const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics'].flatMap(slug => [slug, `${slug}.html`]);
 
 const personSchema = {
   "@type": "Person",
@@ -739,16 +739,13 @@ const Home: React.FC = () => {
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
-    if (location.pathname === PageRoute.WORKSHOPS || location.pathname === '/upcomingworkshops.html' || location.pathname === '/upcomingworkshop' || location.pathname === '/upcomingworkshop.html') {
+    if (location.hash === '#upcoming-workshops') {
       const element = document.getElementById('upcoming-workshops');
       if (element) {
-        // Small delay to ensure component is rendered
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 100);
       }
     }
-  }, [location.pathname]);
+  }, [location.hash]);
 
   const heroImages = [
     "/images/workshop-gallery-01.jpg",
@@ -862,7 +859,7 @@ const Home: React.FC = () => {
       <SEO 
         title="Home | Building Identity through Stories"
         description="Building Identity Through Stories is doctoral research by Charlie Tak Hei Kwong 鄺德希, exploring how transmedia storytelling may support identity exploration for students with diverse learning journeys during the transition into higher education."
-        canonicalPath={location.pathname === PageRoute.WORKSHOPS || location.pathname === "/upcomingworkshops.html" ? "/upcomingworkshops/" : "/"}
+        canonicalPath="/"
         ogTitle="Home | Building Identity through Stories"
         ogDescription="A doctoral research project by Charlie Tak Hei Kwong 鄺德希 exploring transmedia storytelling, identity exploration, and student transition into higher education."
       />
@@ -2127,7 +2124,6 @@ const App: React.FC = () => {
           <Route path={PageRoute.OUTPUT} element={<Output />} />
           <Route path={PageRoute.INVOLVED} element={<GetInvolved />} />
           <Route path={PageRoute.CONTACT} element={<Contact />} />
-          <Route path={PageRoute.WORKSHOPS} element={<Home />} />
           <Route path={PageRoute.PRIVACY} element={<PrivacyPolicy />} />
           <Route path={PageRoute.TERMS} element={<TermsOfUse />} />
           <Route path={PageRoute.ACCESSIBILITY} element={<Accessibility />} />
@@ -2139,9 +2135,10 @@ const App: React.FC = () => {
           <Route path="/output-resources.html" element={<Output />} />
           <Route path="/get-involved.html" element={<GetInvolved />} />
           <Route path="/contact.html" element={<Contact />} />
-          <Route path="/upcomingworkshops.html" element={<Home />} />
-          <Route path="/upcomingworkshop" element={<Navigate to={PageRoute.WORKSHOPS} replace />} />
-          <Route path="/upcomingworkshop.html" element={<Navigate to={PageRoute.WORKSHOPS} replace />} />
+          <Route path="/upcomingworkshops" element={<Navigate to="/#upcoming-workshops" replace />} />
+          <Route path="/upcomingworkshops.html" element={<Navigate to="/#upcoming-workshops" replace />} />
+          <Route path="/upcomingworkshop" element={<Navigate to="/#upcoming-workshops" replace />} />
+          <Route path="/upcomingworkshop.html" element={<Navigate to="/#upcoming-workshops" replace />} />
           <Route path="/privacy-policy.html" element={<PrivacyPolicy />} />
           <Route path="/terms-of-use.html" element={<TermsOfUse />} />
           <Route path="/accessibility.html" element={<Accessibility />} />

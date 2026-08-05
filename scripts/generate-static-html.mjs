@@ -275,39 +275,20 @@ const pageContent = {
   `,
 };
 
-const aliases = {
-  '/upcomingworkshops/': '/',
-  '/upcomingworkshop/': '/',
-};
-
+const SITE_ORIGIN = 'https://bitsresearch.github.io';
 const routeFiles = [
   ['/', 'index.html'],
   ['/about/', 'about/index.html'],
-  ['/about/', 'about.html'],
   ['/people/', 'people/index.html'],
-  ['/people/', 'people.html'],
   ['/what-we-care/', 'what-we-care/index.html'],
-  ['/what-we-care/', 'what-we-care.html'],
   ['/research-update/', 'research-update/index.html'],
-  ['/research-update/', 'research-update.html'],
   ['/output-resources/', 'output-resources/index.html'],
-  ['/output-resources/', 'output-resources.html'],
   ['/get-involved/', 'get-involved/index.html'],
-  ['/get-involved/', 'get-involved.html'],
   ['/contact/', 'contact/index.html'],
-  ['/contact/', 'contact.html'],
   ['/privacy-policy/', 'privacy-policy/index.html'],
-  ['/privacy-policy/', 'privacy-policy.html'],
   ['/terms-of-use/', 'terms-of-use/index.html'],
-  ['/terms-of-use/', 'terms-of-use.html'],
   ['/accessibility/', 'accessibility/index.html'],
-  ['/accessibility/', 'accessibility.html'],
   ['/research-ethics/', 'research-ethics/index.html'],
-  ['/research-ethics/', 'research-ethics.html'],
-  ['/upcomingworkshops/', 'upcomingworkshops/index.html'],
-  ['/upcomingworkshops/', 'upcomingworkshops.html'],
-  ['/upcomingworkshop/', 'upcomingworkshop/index.html'],
-  ['/upcomingworkshop/', 'upcomingworkshop.html'],
   ['/404.html', '404.html'],
 ];
 
@@ -322,12 +303,11 @@ const absolutizeLocalLinks = (html, prefix) => {
 };
 
 const buildFallback = (route, file) => {
-  const contentRoute = aliases[route] || route;
   const prefix = linkPrefix(file);
   const mainNav = [...nav, ...legalNav]
     .map(([href, label]) => `<li><a href="${href}">${label}</a></li>`)
     .join('');
-  const content = pageContent[contentRoute];
+  const content = pageContent[route];
   return absolutizeLocalLinks(`
       <div id="root">
         <!-- BEGIN_STATIC_SEO_CONTENT -->
@@ -354,4 +334,26 @@ for (const [route, file] of routeFiles) {
     .replace(/<div id="root">\s*<!-- BEGIN_STATIC_SEO_CONTENT -->[\s\S]*?<!-- END_STATIC_SEO_CONTENT -->\s*<\/div>/, fallback)
     .replace(/<div id="root">[\s\S]*?<\/div>(\s*<script type="module")/, `${fallback}$1`);
   fs.writeFileSync(filePath, next);
+}
+
+const redirectHtml = (target, canonical, label) => `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, follow"><link rel="canonical" href="${canonical}">
+<meta http-equiv="refresh" content="0; url=${target}"><title>Redirecting | Building Identity through Stories</title>
+<script>window.location.replace(${JSON.stringify(target)});</script></head>
+<body><p>Redirecting to <a href="${target}">${label}</a>.</p></body></html>`;
+
+const redirects = [
+  ...['about','people','what-we-care','research-update','output-resources','get-involved','contact','privacy-policy','terms-of-use','accessibility','research-ethics']
+    .map(slug => [`${slug}.html`, `/${slug}/`, `${SITE_ORIGIN}/${slug}/`, slug.replaceAll('-', ' ')]),
+  ['upcomingworkshops.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
+  ['upcomingworkshops/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
+  ['upcomingworkshop.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
+  ['upcomingworkshop/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
+];
+
+for (const [file, target, canonical, label] of redirects) {
+  const filePath = path.join(rootDir, file);
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, redirectHtml(target, canonical, label));
 }

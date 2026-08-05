@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/generate-static-html.mjs dist",
+    "build": "vite build && node scripts/generate-static-html.mjs dist && node scripts/validate-seo.mjs dist",
     "seo:static": "node scripts/generate-static-html.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "seo:validate": "node scripts/validate-seo.mjs dist"
   },
   "dependencies": {
     "react": "^19.2.0",
