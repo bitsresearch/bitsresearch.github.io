@@ -7,6 +7,17 @@ const rootDir = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
   : path.resolve(__dirname, '..');
 
+const projectDir = path.resolve(__dirname, '..');
+
+// Vite does not reliably copy dotfiles from public, and 404.html lives at the
+// project root. Copy these GitHub Pages deployment files explicitly.
+fs.mkdirSync(rootDir, { recursive: true });
+fs.writeFileSync(path.join(rootDir, '.nojekyll'), '');
+const source404 = path.join(projectDir, '404.html');
+if (fs.existsSync(source404)) {
+  fs.copyFileSync(source404, path.join(rootDir, '404.html'));
+}
+
 const nav = [
   ['/', 'Home'],
   ['/about/', 'About'],

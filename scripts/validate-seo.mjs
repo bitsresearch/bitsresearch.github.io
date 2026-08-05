@@ -52,7 +52,9 @@ for (const legacyTeamFile of ['team.html', 'team/index.html']) {
 }
 
 const notFoundHtml = read(path.join(dist, '404.html'));
-assert(notFoundHtml.includes("window.location.replace('/people/')"), '404.html must redirect legacy Team URLs to /people/');
+assert(notFoundHtml.includes('<h1>Page Not Found</h1>'), '404.html must remain a standalone Page Not Found page');
+assert(!notFoundHtml.includes('window.location.replace'), '404.html must not redirect visitors');
+assert(notFoundHtml.includes('name="robots" content="noindex, follow"'), '404.html must remain noindex, follow');
 
 if (failures.length) {
   console.error(`SEO validation failed (${failures.length}):`);
