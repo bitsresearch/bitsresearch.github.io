@@ -30,7 +30,8 @@ assert(!/<lastmod>|<priority>|<changefreq>/.test(sitemap), 'Sitemap contains unr
 
 const redirectChecks = [
   ['upcomingworkshops/index.html','/#upcoming-workshops'], ['upcomingworkshops.html','/#upcoming-workshops'],
-  ['upcomingworkshop/index.html','/#upcoming-workshops'], ['upcomingworkshop.html','/#upcoming-workshops']
+  ['upcomingworkshop/index.html','/#upcoming-workshops'], ['upcomingworkshop.html','/#upcoming-workshops'],
+  ['team/index.html','/people/'], ['team.html','/people/']
 ];
 for (const [file,target] of redirectChecks) {
   const html=read(path.join(dist,file));
@@ -47,13 +48,10 @@ for (const marker of ['2PACX-1vSHQGTMTLaBAyxMZYxyjG1JrhOtHwvzZmDCgJ_3jaBJnCg81qm
   assert(js.includes(marker), `Protected Google CSV integration missing: ${marker.slice(0,24)}…`);
 }
 
-for (const legacyTeamFile of ['team.html', 'team/index.html']) {
-  assert(!fs.existsSync(path.join(dist, legacyTeamFile)), `Legacy Team page artifact must not exist: ${legacyTeamFile}`);
-}
-
 const notFoundHtml = read(path.join(dist, '404.html'));
-assert(notFoundHtml.includes('<h1>Page Not Found</h1>'), '404.html must remain a standalone Page Not Found page');
-assert(!notFoundHtml.includes('window.location.replace'), '404.html must not redirect visitors');
+assert(notFoundHtml.includes('<h1>Page Not Found</h1>'), '404.html must contain a static Page Not Found fallback');
+assert(notFoundHtml.includes('http-equiv="refresh" content="7; url=https://bitsresearch.github.io/get-involved/"'), '404.html must redirect to Get Involved after 7 seconds');
+assert(!notFoundHtml.includes('src="./index.tsx"'), '404.html must use the production application bundle');
 assert(notFoundHtml.includes('name="robots" content="noindex, follow"'), '404.html must remain noindex, follow');
 
 if (failures.length) {

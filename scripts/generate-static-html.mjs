@@ -7,16 +7,9 @@ const rootDir = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
   : path.resolve(__dirname, '..');
 
-const projectDir = path.resolve(__dirname, '..');
-
-// Vite does not reliably copy dotfiles from public, and 404.html lives at the
-// project root. Copy these GitHub Pages deployment files explicitly.
+// Vite does not reliably copy dotfiles from public.
 fs.mkdirSync(rootDir, { recursive: true });
 fs.writeFileSync(path.join(rootDir, '.nojekyll'), '');
-const source404 = path.join(projectDir, '404.html');
-if (fs.existsSync(source404)) {
-  fs.copyFileSync(source404, path.join(rootDir, '404.html'));
-}
 
 const nav = [
   ['/', 'Home'],
@@ -281,7 +274,8 @@ const pageContent = {
     <section>
       <h1>Page Not Found</h1>
       <p>This page could not be found on the BITS doctoral research website.</p>
-      <p><a href="/">Return Home</a></p>
+      <p>You will be redirected to Get Involved in <strong>7</strong> seconds.</p>
+      <p><a href="/get-involved/">Go to Get Involved now</a></p>
     </section>
   `,
 };
@@ -361,6 +355,8 @@ const redirects = [
   ['upcomingworkshops/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
   ['upcomingworkshop.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
   ['upcomingworkshop/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
+  ['team.html', '/people/', `${SITE_ORIGIN}/people/`, 'People'],
+  ['team/index.html', '/people/', `${SITE_ORIGIN}/people/`, 'People'],
 ];
 
 for (const [file, target, canonical, label] of redirects) {

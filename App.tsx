@@ -2083,8 +2083,24 @@ const ResearchEthics: React.FC = () => {
 };
 
 const NotFound: React.FC = () => {
+  const [secondsRemaining, setSecondsRemaining] = useState(7);
+
+  useEffect(() => {
+    const countdown = window.setInterval(() => {
+      setSecondsRemaining(current => Math.max(0, current - 1));
+    }, 1000);
+    const redirect = window.setTimeout(() => {
+      window.location.replace('https://bitsresearch.github.io/get-involved/');
+    }, 7000);
+
+    return () => {
+      window.clearInterval(countdown);
+      window.clearTimeout(redirect);
+    };
+  }, []);
+
   return (
-    <div className="py-24 max-w-3xl mx-auto px-4 text-center">
+    <div className="py-20 md:py-28 max-w-5xl mx-auto px-4 sm:px-6 text-center">
       <SEO
         title="Page Not Found | Building Identity through Stories"
         description="The page you are looking for could not be found. Return to the Building Identity Through Stories research website."
@@ -2101,11 +2117,20 @@ const NotFound: React.FC = () => {
           "url": `${SITE_ORIGIN}/404.html`
         }}
       />
-      <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">Page Not Found</h1>
-      <p className="text-xl text-earth-600 dark:text-earth-400 mb-10">The page you are looking for could not be found.</p>
-      <Link to={PageRoute.HOME} className="inline-flex items-center gap-2 px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors">
-        Return to Home <ArrowRight size={16} />
-      </Link>
+      <div className="bg-white dark:bg-earth-800 border border-earth-200 dark:border-earth-700 rounded-4xl shadow-sm px-6 py-14 sm:px-12 md:py-20">
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-sage-700 dark:text-sage-300 mb-5">404 Error</p>
+        <h1 className="text-5xl md:text-7xl font-serif text-earth-900 dark:text-earth-50 mb-6">Page Not Found</h1>
+        <p className="text-lg md:text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto mb-9 leading-relaxed">
+          The page you are looking for could not be found. You will be redirected to Get Involved automatically.
+        </p>
+        <div className="w-24 h-24 mx-auto mb-9 rounded-full bg-sage-100 dark:bg-sage-900/50 border border-sage-200 dark:border-sage-800 flex flex-col items-center justify-center" aria-live="polite" aria-atomic="true">
+          <strong className="font-serif text-4xl leading-none text-sage-700 dark:text-sage-300">{secondsRemaining}</strong>
+          <span className="text-[10px] uppercase tracking-widest text-earth-500 dark:text-earth-400 mt-1">seconds</span>
+        </div>
+        <Link to={PageRoute.INVOLVED} className="inline-flex items-center gap-2 px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-sm">
+          Go to Get Involved now <ArrowRight size={16} />
+        </Link>
+      </div>
     </div>
   );
 };

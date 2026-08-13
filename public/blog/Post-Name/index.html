@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- ================================================================
+      BLOG POST SEO — REPLACE EVERY VALUE WRITTEN IN SQUARE BRACKETS.
+      Before publishing, change "noindex, follow" to "index, follow".
+      Recommended limits: SEO title 50–60 characters; description 140–160.
+    ================================================================= -->
+    <title>[SEO TITLE] | Building Identity Through Stories</title>
+    <meta name="description" content="[SEO DESCRIPTION]">
+    <meta name="author" content="Charlie Tak Hei Kwong 鄺德希">
+    <meta name="keywords" content="[KEYWORD 1], [KEYWORD 2], [KEYWORD 3]">
+    <meta name="robots" content="noindex, follow">
+    <meta name="googlebot" content="noindex, follow, max-image-preview:large">
+    <!-- Rename the Post-Name folder and replace Post-Name in all three URLs below. -->
+    <link rel="canonical" href="https://bitsresearch.github.io/blog/Post-Name/">
+
+    <!-- Publication dates must use ISO 8601, for example 2026-08-13T09:00:00+01:00. -->
+    <meta property="article:published_time" content="[YYYY-MM-DDTHH:MM:SS+01:00]">
+    <meta property="article:modified_time" content="[YYYY-MM-DDTHH:MM:SS+01:00]">
+    <meta property="article:author" content="Charlie Tak Hei Kwong">
+    <meta property="article:section" content="[POST CATEGORY]">
+    <meta property="article:tag" content="[KEYWORD 1]">
+    <meta property="article:tag" content="[KEYWORD 2]">
+    <meta property="article:tag" content="[KEYWORD 3]">
+
+    <!-- Open Graph: used by Facebook, LinkedIn, Slack and other link previews. -->
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:site_name" content="BITS | Building Identity Through Stories">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="[SOCIAL SHARING TITLE]">
+    <meta property="og:description" content="[SOCIAL SHARING DESCRIPTION]">
+    <meta property="og:url" content="https://bitsresearch.github.io/blog/Post-Name/">
+    <meta property="og:image" content="https://bitsresearch.github.io/images/[FEATURED-IMAGE-FILENAME.jpg]">
+    <meta property="og:image:alt" content="[FEATURED IMAGE ALT TEXT]">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- X / Twitter card. -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="[SOCIAL SHARING TITLE]">
+    <meta name="twitter:description" content="[SOCIAL SHARING DESCRIPTION]">
+    <meta name="twitter:image" content="https://bitsresearch.github.io/images/[FEATURED-IMAGE-FILENAME.jpg]">
+    <meta name="twitter:image:alt" content="[FEATURED IMAGE ALT TEXT]">
+
+    <meta name="theme-color" content="#f5f2ed">
+    <link rel="icon" href="/images/favicon.ico">
+
+    <!-- Structured data: keep these values consistent with the tags above. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[POST TITLE]",
+        "description": "[SEO DESCRIPTION]",
+        "image": ["https://bitsresearch.github.io/images/[FEATURED-IMAGE-FILENAME.jpg]"],
+        "datePublished": "[YYYY-MM-DDTHH:MM:SS+01:00]",
+        "dateModified": "[YYYY-MM-DDTHH:MM:SS+01:00]",
+        "inLanguage": "en-GB",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://bitsresearch.github.io/blog/Post-Name/"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Charlie Tak Hei Kwong",
+          "alternateName": "鄺德希",
+          "url": "https://bitsresearch.github.io/people/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Building Identity Through Stories",
+          "alternateName": "BITS",
+          "url": "https://bitsresearch.github.io/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://bitsresearch.github.io/images/bits-research-logo.png"
+          }
+        },
+        "articleSection": "[POST CATEGORY]",
+        "keywords": ["[KEYWORD 1]", "[KEYWORD 2]", "[KEYWORD 3]"]
+      }
+    </script>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Chewy&family=Inter:wght@300;400;500;600;700&display=swap");
+
+      :root {
+        color-scheme: light;
+        --paper: #f5f2ed;
+        --surface: #ffffff;
+        --surface-soft: #ebe8e1;
+        --ink: #1a1614;
+        --muted: #6f675f;
+        --line: #dad5cb;
+        --sage: #728070;
+        --sage-dark: #566054;
+        --focus: #5c5148;
+        --shadow: 0 18px 48px rgba(62, 54, 48, 0.1);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 17px;
+        line-height: 1.75;
+        -webkit-font-smoothing: antialiased;
+      }
+      body.menu-open { overflow: hidden; }
+      img { display: block; max-width: 100%; }
+      a { color: inherit; }
+      button, a { -webkit-tap-highlight-color: transparent; }
+      :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+      ::selection { background: #6b5b54; color: #fff; }
+
+      .skip-link {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 100;
+        transform: translateY(-180%);
+        padding: 0.65rem 1rem;
+        border-radius: 999px;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .skip-link:focus { transform: translateY(0); }
+
+      .site-header {
+        position: sticky;
+        top: 1rem;
+        z-index: 40;
+        width: min(1240px, calc(100% - 2rem));
+        margin: 1rem auto 0;
+      }
+      .nav-shell {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 82px;
+        padding: 0.65rem 1.35rem;
+        border: 1px solid rgba(218, 213, 203, 0.9);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 8px 28px rgba(62, 54, 48, 0.07);
+        backdrop-filter: blur(14px);
+      }
+      .brand img { width: auto; height: 58px; }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 0.15rem;
+        margin: 0;
+        padding: 0.3rem;
+        border-radius: 999px;
+        background: var(--surface-soft);
+        list-style: none;
+      }
+      .nav-links a {
+        display: block;
+        padding: 0.6rem 0.85rem;
+        border-radius: 999px;
+        color: #5c5148;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.09em;
+        line-height: 1.15;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .nav-links a:hover { background: #dad5cb; color: var(--ink); }
+      .menu-button {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 50%;
+        background: var(--surface-soft);
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .menu-button svg { width: 22px; height: 22px; }
+
+      .hero {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 5.5rem auto 2.5rem;
+        text-align: center;
+      }
+      .eyebrow {
+        margin: 0 0 1rem;
+        color: var(--sage-dark);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      h1, h2, h3 { font-family: "Chewy", "Trebuchet MS", cursive; font-weight: 400; line-height: 1.08; }
+      h1 {
+        max-width: 960px;
+        margin: 0 auto;
+        font-size: clamp(2.75rem, 7vw, 5.7rem);
+        letter-spacing: -0.02em;
+      }
+      .standfirst {
+        max-width: 760px;
+        margin: 1.5rem auto 1.25rem;
+        color: #5c5148;
+        font-size: clamp(1.05rem, 2vw, 1.28rem);
+        line-height: 1.65;
+      }
+      .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem 0.85rem;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+      .post-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: #948d81; }
+
+      .featured-image {
+        width: min(560px, calc(100% - 2rem));
+        margin: 2.75rem auto 0;
+      }
+      .featured-image img {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 2rem;
+        object-fit: cover;
+        box-shadow: var(--shadow);
+      }
+      .featured-image figcaption {
+        margin-top: 0.7rem;
+        color: var(--muted);
+        font-size: 0.76rem;
+        text-align: center;
+      }
+
+      .article-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1120px) 86px;
+        gap: 2rem;
+        justify-content: center;
+        width: min(1240px, calc(100% - 2rem));
+        margin: 4rem auto 6rem;
+      }
+      .article-card {
+        min-width: 0;
+        padding: clamp(1.5rem, 5vw, 4.5rem);
+        border: 1px solid var(--line);
+        border-radius: 2rem;
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .article-body > :first-child { margin-top: 0; }
+      .article-body > :last-child { margin-bottom: 0; }
+      .article-body p { margin: 0 0 1.55rem; }
+      .article-body h2 { margin: 3.25rem 0 1rem; font-size: clamp(2rem, 4vw, 2.75rem); }
+      .article-body h3 { margin: 2.3rem 0 0.75rem; font-size: clamp(1.55rem, 3vw, 2rem); }
+      .article-body ul, .article-body ol { margin: 0 0 1.6rem; padding-left: 1.4rem; }
+      .article-body li { margin-bottom: 0.55rem; padding-left: 0.3rem; }
+      .article-body a { color: var(--sage-dark); font-weight: 600; text-decoration-thickness: 0.1em; text-underline-offset: 0.16em; }
+      .article-body blockquote {
+        margin: 2.25rem 0;
+        padding: 1.3rem 1.6rem;
+        border-left: 5px solid var(--sage);
+        border-radius: 0 1rem 1rem 0;
+        background: #f2f5f3;
+        color: #3e3630;
+        font-size: 1.08rem;
+      }
+      .article-body figure { margin: 2.5rem 0; }
+      .article-body figure img { width: 100%; border-radius: 1.25rem; }
+      .article-body figcaption { margin-top: 0.55rem; color: var(--muted); font-size: 0.78rem; }
+      .article-body code { padding: 0.12em 0.35em; border-radius: 0.35rem; background: var(--surface-soft); font-size: 0.9em; }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 3.5rem;
+        padding-top: 1.6rem;
+        border-top: 1px solid var(--line);
+      }
+      .tag {
+        padding: 0.42rem 0.75rem;
+        border: 1px solid #cdd8cf;
+        border-radius: 999px;
+        background: #f2f5f3;
+        color: var(--sage-dark);
+        font-size: 0.76rem;
+        font-weight: 600;
+      }
+      .author-box {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 1.25rem;
+        align-items: center;
+        margin-top: 2.5rem;
+        padding: 1.35rem;
+        border-radius: 1.3rem;
+        background: var(--surface-soft);
+      }
+      .author-box img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; }
+      .author-box h2 { margin: 0 0 0.15rem; font-family: "Inter", sans-serif; font-size: 0.9rem; font-weight: 700; }
+      .author-box p { margin: 0; color: var(--muted); font-size: 0.82rem; line-height: 1.55; }
+
+      .share-rail { align-self: start; position: sticky; top: 8rem; }
+      .share-label {
+        display: block;
+        margin-bottom: 0.75rem;
+        color: var(--muted);
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .share-actions { display: flex; flex-direction: column; align-items: center; gap: 0.65rem; }
+      .share-button {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        background: var(--surface);
+        color: #5c5148;
+        box-shadow: 0 7px 18px rgba(62, 54, 48, 0.07);
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+      }
+      .share-button:hover { transform: translateY(-2px); background: var(--sage-dark); color: #fff; }
+      .share-button svg { width: 19px; height: 19px; }
+      .share-status {
+        position: absolute;
+        top: calc(100% + 0.7rem);
+        left: 50%;
+        width: max-content;
+        max-width: 140px;
+        transform: translateX(-50%);
+        color: var(--sage-dark);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .site-footer {
+        margin: 0 0.75rem;
+        padding: 3.5rem 1.25rem 2rem;
+        border-radius: 2rem 2rem 0 0;
+        background: var(--surface-soft);
+      }
+      .footer-inner { width: min(1120px, 100%); margin: 0 auto; }
+      .footer-top { display: flex; justify-content: space-between; gap: 2rem; align-items: center; }
+      .footer-brand img { width: auto; height: 54px; }
+      .footer-links { display: flex; flex-wrap: wrap; gap: 0.8rem 1.25rem; }
+      .footer-links a { color: #5c5148; font-size: 0.8rem; text-decoration: none; }
+      .footer-links a:hover { text-decoration: underline; }
+      .copyright { margin: 2.5rem 0 0; padding-top: 1.25rem; border-top: 1px solid #d1c7be; color: var(--muted); font-size: 0.73rem; }
+
+      @media (max-width: 960px) {
+        .nav-links { display: none; position: absolute; top: calc(100% + 0.75rem); left: 0; right: 0; padding: 1rem; border: 1px solid var(--line); border-radius: 1.4rem; background: var(--surface); box-shadow: var(--shadow); }
+        .nav-links.open { display: grid; gap: 0.25rem; }
+        .nav-links a { padding: 0.85rem 1rem; font-size: 0.78rem; }
+        .menu-button { display: grid; place-items: center; }
+        .article-layout { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+        .share-rail {
+          position: sticky;
+          bottom: 1rem;
+          top: auto;
+          z-index: 30;
+          order: 2;
+          width: max-content;
+          max-width: calc(100vw - 2rem);
+          margin: 0 auto;
+          padding: 0.55rem 0.75rem;
+          border: 1px solid var(--line);
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.94);
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(12px);
+        }
+        .share-label { display: none; }
+        .share-actions { flex-direction: row; }
+        .share-button { width: 42px; height: 42px; box-shadow: none; }
+        .share-status { top: auto; bottom: calc(100% + 0.65rem); padding: 0.3rem 0.55rem; border-radius: 0.5rem; background: var(--ink); color: #fff; }
+      }
+      @media (max-width: 640px) {
+        body { font-size: 16px; }
+        .site-header { width: calc(100% - 1rem); top: 0.5rem; margin-top: 0.5rem; }
+        .nav-shell { min-height: 68px; padding: 0.45rem 0.8rem 0.45rem 1rem; }
+        .brand img { height: 46px; }
+        .hero { margin-top: 3.75rem; }
+        .featured-image { width: calc(100% - 1rem); }
+        .featured-image img { border-radius: 1.3rem; }
+        .article-layout { width: calc(100% - 1rem); margin-top: 2rem; }
+        .article-card { padding: 1.4rem; border-radius: 1.4rem; }
+        .author-box { grid-template-columns: 56px 1fr; gap: 0.85rem; }
+        .author-box img { width: 56px; height: 56px; }
+        .footer-top { align-items: flex-start; flex-direction: column; }
+      }
+      @media print {
+        .site-header, .share-rail, .site-footer { display: none !important; }
+        body { background: #fff; color: #000; font-size: 11pt; }
+        .hero, .article-layout { width: 100%; margin: 1rem 0; }
+        .featured-image { width: 100%; margin: 1rem 0; }
+        .article-card { padding: 0; border: 0; box-shadow: none; }
+        a { color: #000; text-decoration: underline; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to article</a>
+
+    <!-- Existing site navigation only: no Blog button has been added. -->
+    <header class="site-header">
+      <nav class="nav-shell" aria-label="Main navigation">
+        <a class="brand" href="/" aria-label="BITS home">
+          <img src="/images/bits-research-logo.png" alt="BITS research project" width="270" height="80">
+        </a>
+        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></svg>
+        </button>
+        <ul class="nav-links" id="site-menu">
+          <li><a href="/about/">About</a></li>
+          <li><a href="/what-we-care/">What We Care About</a></li>
+          <li><a href="/people/">People</a></li>
+          <li><a href="/output-resources/">Output</a></li>
+          <li><a href="/get-involved/">Get Involved</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <!-- ==============================================================
+        POST HEADER — replace the category, title, summary and dates.
+        The datetime value must stay in YYYY-MM-DD format.
+      =============================================================== -->
+      <header class="hero">
+        <p class="eyebrow">[POST CATEGORY]</p>
+        <h1>[PASTE THE BLOG POST TITLE HERE]</h1>
+        <p class="standfirst">[Paste a concise one- or two-sentence summary that explains what readers will learn from this post.]</p>
+        <div class="post-meta" role="group" aria-label="Post details">
+          <span>By <a href="/people/" rel="author">Charlie Tak Hei Kwong 鄺德希</a></span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>Published <time datetime="[YYYY-MM-DD]">[DAY MONTH YEAR]</time></span>
+          <span class="dot" aria-hidden="true"></span>
+          <span><span id="reading-time">1</span> min read</span>
+        </div>
+      </header>
+
+      <!-- Remove this entire figure if the post has no featured image. -->
+      <figure class="featured-image">
+        <img
+          src="/images/[FEATURED-IMAGE-FILENAME.jpg]"
+          alt="[Describe the featured image for someone who cannot see it]"
+          width="1200"
+          height="675"
+          fetchpriority="high"
+       >
+        <figcaption>[Optional image caption and credit]</figcaption>
+      </figure>
+
+      <div class="article-layout">
+        <article class="article-card">
+          <!-- ============================================================
+            BLOG CONTENT — paste and format the post between these markers.
+            Use one H1 only (above). Start content headings with H2.
+          ============================================================= -->
+          <!-- BEGIN BLOG POST CONTENT -->
+          <div class="article-body">
+            <p>[Paste the opening paragraph here. Introduce the question, experience, research update or resource in clear language.]</p>
+
+            <h2>[First section heading]</h2>
+            <p>[Paste the section content here.]</p>
+            <p>[Add further paragraphs as needed.]</p>
+
+            <blockquote>
+              <p>[Optional key quotation or takeaway.]</p>
+            </blockquote>
+
+            <h2>[Second section heading]</h2>
+            <p>[Paste the section content here.]</p>
+
+            <h3>[Optional subsection heading]</h3>
+            <ul>
+              <li>[Optional list item]</li>
+              <li>[Optional list item]</li>
+              <li>[Optional list item]</li>
+            </ul>
+
+            <h2>[References or further reading]</h2>
+            <p>[Add references or links here using descriptive link text.]</p>
+          </div>
+          <!-- END BLOG POST CONTENT -->
+
+          <!-- Keep visible tags aligned with meta keywords and JSON-LD keywords. -->
+          <div class="tags" role="group" aria-label="Topics">
+            <span class="tag">[KEYWORD 1]</span>
+            <span class="tag">[KEYWORD 2]</span>
+            <span class="tag">[KEYWORD 3]</span>
+          </div>
+
+          <aside class="author-box" aria-label="About the author">
+            <img src="/images/charlie-kwong-profile.jpg" alt="Charlie Tak Hei Kwong" width="144" height="144" loading="lazy">
+            <div>
+              <h2>Charlie Tak Hei Kwong 鄺德希</h2>
+              <p>Doctoral researcher exploring identity, transmedia storytelling and transition into higher education.</p>
+            </div>
+          </aside>
+        </article>
+
+        <!-- Sticky on desktop; compact sticky bar on tablets and phones. -->
+        <aside class="share-rail" aria-label="Share this post">
+          <span class="share-label">Share</span>
+          <div class="share-actions">
+            <button class="share-button native-share" type="button" aria-label="Share using your device" title="Share">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m8.7 10.7 6.6-4.2M8.7 13.3l6.6 4.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+            </button>
+            <a class="share-button linkedin-share" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn" title="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9v9M6 6.5v.1M10.5 18v-5a3.5 3.5 0 0 1 7 0v5M10.5 9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>
+            <a class="share-button facebook-share" href="#" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook" title="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4.5A12 12 0 0 0 14.5 4C12 4 10 5.8 10 9v2H7v4h3v6h4v-6h3l.6-4H14V9c0-.7.3-1 1-1Z" fill="currentColor"/></svg>
+            </a>
+            <a class="share-button email-share" href="#" aria-label="Share by email" title="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m4.5 7 7.5 6 7.5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            </a>
+            <button class="share-button copy-link" type="button" aria-label="Copy post link" title="Copy link">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <span class="share-status" role="status" aria-live="polite"></span>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <a class="footer-brand" href="/" aria-label="BITS home">
+            <img src="/images/bits-research-logo.png" alt="BITS research project" width="270" height="80" loading="lazy">
+          </a>
+          <nav class="footer-links" aria-label="Legal navigation">
+            <a href="/research-ethics/">Research Ethics</a>
+            <a href="/accessibility/">Accessibility</a>
+            <a href="/privacy-policy/">Privacy Policy</a>
+            <a href="/terms-of-use/">Terms of Use</a>
+          </nav>
+        </div>
+        <p class="copyright">© <span id="current-year"></span> BITS Research Project. Original content is licensed under CC BY-NC 4.0 unless otherwise stated.</p>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const pageUrl = window.location.href.split("#")[0];
+        const pageTitle = document.querySelector("h1")?.textContent.trim() || document.title;
+        const shareText = document.querySelector(".standfirst")?.textContent.trim() || "";
+        const articleText = document.querySelector(".article-body")?.textContent.trim() || "";
+        const wordCount = articleText ? articleText.split(/\s+/).filter(Boolean).length : 0;
+        const readingMinutes = Math.max(1, Math.ceil(wordCount / 200));
+        const status = document.querySelector(".share-status");
+        const nativeButton = document.querySelector(".native-share");
+        const menuButton = document.querySelector(".menu-button");
+        const menu = document.querySelector(".nav-links");
+
+        document.getElementById("current-year").textContent = new Date().getFullYear();
+        document.getElementById("reading-time").textContent = readingMinutes;
+        document.querySelector(".linkedin-share").href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
+        document.querySelector(".facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+        document.querySelector(".email-share").href = `mailto:?subject=${encodeURIComponent(pageTitle)}&body=${encodeURIComponent(`${pageTitle}\n\n${pageUrl}`)}`;
+
+        const showStatus = (message) => {
+          status.textContent = message;
+          window.clearTimeout(showStatus.timeoutId);
+          showStatus.timeoutId = window.setTimeout(() => { status.textContent = ""; }, 2500);
+        };
+
+        nativeButton.addEventListener("click", async () => {
+          if (navigator.share) {
+            try { await navigator.share({ title: pageTitle, text: shareText, url: pageUrl }); }
+            catch (error) { if (error.name !== "AbortError") showStatus("Sharing unavailable"); }
+          } else {
+            document.querySelector(".copy-link").click();
+          }
+        });
+
+        document.querySelector(".copy-link").addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(pageUrl);
+            showStatus("Link copied");
+          } catch {
+            const input = document.createElement("textarea");
+            input.value = pageUrl;
+            input.setAttribute("readonly", "");
+            input.style.position = "fixed";
+            input.style.opacity = "0";
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand("copy");
+            input.remove();
+            showStatus("Link copied");
+          }
+        });
+
+        menuButton.addEventListener("click", () => {
+          const isOpen = menu.classList.toggle("open");
+          menuButton.setAttribute("aria-expanded", String(isOpen));
+          menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+          document.body.classList.toggle("menu-open", isOpen);
+        });
+
+        menu.addEventListener("click", (event) => {
+          if (event.target.closest("a")) {
+            menu.classList.remove("open");
+            menuButton.setAttribute("aria-expanded", "false");
+            document.body.classList.remove("menu-open");
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

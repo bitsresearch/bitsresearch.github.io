@@ -15,6 +15,7 @@ const pageInputs = {
   termsOfUse: path.resolve(__dirname, 'terms-of-use/index.html'),
   accessibility: path.resolve(__dirname, 'accessibility/index.html'),
   researchEthics: path.resolve(__dirname, 'research-ethics/index.html'),
+  notFound: path.resolve(__dirname, '404.html'),
 };
 
 export default defineConfig(({ mode }) => {
