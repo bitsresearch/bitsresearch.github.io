@@ -348,8 +348,22 @@ const redirectHtml = (target, canonical, label) => `<!doctype html>
 <script>window.location.replace(${JSON.stringify(target)});</script></head>
 <body><p>Redirecting to <a href="${target}">${label}</a>.</p></body></html>`;
 
+// These are the preferred, indexable navigation pages. Do not generate
+// duplicate .html aliases for them: stale aliases previously exposed a
+// `noindex` meta tag and produced misleading Search Console exclusions.
+// GitHub Pages serves each page from its canonical trailing-slash URL.
+const indexableNavigationSlugs = new Set([
+  'about',
+  'what-we-care',
+  'people',
+  'output-resources',
+  'get-involved',
+  'contact',
+]);
+
 const redirects = [
   ...['about','people','what-we-care','research-update','output-resources','get-involved','contact','privacy-policy','terms-of-use','accessibility','research-ethics']
+    .filter(slug => !indexableNavigationSlugs.has(slug))
     .map(slug => [`${slug}.html`, `/${slug}/`, `${SITE_ORIGIN}/${slug}/`, slug.replaceAll('-', ' ')]),
   ['upcomingworkshops.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
   ['upcomingworkshops/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],

@@ -4,6 +4,7 @@ import path from 'node:path';
 const dist = path.resolve(process.cwd(), process.argv[2] || 'dist');
 const origin = 'https://bitsresearch.github.io';
 const routes = ['/', '/about/', '/people/', '/what-we-care/', '/research-update/', '/output-resources/', '/get-involved/', '/contact/', '/privacy-policy/', '/terms-of-use/', '/accessibility/', '/research-ethics/'];
+const indexableNavigationRoutes = ['/about/', '/what-we-care/', '/people/', '/output-resources/', '/get-involved/', '/contact/'];
 const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
 const read = file => fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
@@ -18,6 +19,14 @@ for (const route of routes) {
   assert(!html.includes('visibility: hidden'), `Static content hidden: ${route}`);
 }
 
+for (const route of indexableNavigationRoutes) {
+  const file = path.join(dist, route.slice(1), 'index.html');
+  const html = read(file);
+  assert(/<meta\s+name=["']robots["']\s+content=["']index,\s*follow["']\s*\/?\s*>/i.test(html), `Page is not explicitly indexable: ${route}`);
+  assert(!/<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(html), `Page contains noindex: ${route}`);
+  assert(!fs.existsSync(path.join(dist, `${route.slice(1, -1)}.html`)), `Duplicate .html alias exists for indexable page: ${route}`);
+}
+
 for (const file of ['sitemap.xml','robots.txt','.nojekyll']) {
   assert(fs.existsSync(path.join(dist,file)) || fs.existsSync(path.join(dist,'public',file)), `Missing deployment file: ${file}`);
 }
@@ -27,6 +36,10 @@ const sitemap = read(path.join(dist,'sitemap.xml'));
 for (const route of routes) assert(sitemap.includes(`<loc>${origin}${route}</loc>`), `Sitemap missing: ${route}`);
 assert(!/upcomingworkshops|upcomingworkshop|team\//.test(sitemap), 'Sitemap contains retired route');
 assert(!/<lastmod>|<priority>|<changefreq>/.test(sitemap), 'Sitemap contains unreliable optional metadata');
+
+const robots = read(path.join(dist, 'robots.txt')) || read(path.join(dist, 'public', 'robots.txt'));
+assert(/User-agent:\s*\*/i.test(robots) && /Allow:\s*\//i.test(robots), 'robots.txt must allow site crawling');
+assert(!/^\s*Disallow:\s*\/(?:about|what-we-care|people|output-resources|get-involved|contact)\/?\s*$/im.test(robots), 'robots.txt blocks an indexable navigation page');
 
 const redirectChecks = [
   ['upcomingworkshops/index.html','/#upcoming-workshops'], ['upcomingworkshops.html','/#upcoming-workshops'],
