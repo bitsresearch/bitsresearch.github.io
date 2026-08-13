@@ -85,6 +85,25 @@
       }
     </script>
 
+    <!-- The live BITS header and footer use the same Tailwind design tokens and Lucide icons as the main site. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              earth: { 50: "#F5F2ED", 100: "#EBE8E1", 200: "#DAD5CB", 300: "#D1C7BE", 400: "#B8AEA4", 500: "#948D81", 600: "#7A7267", 700: "#5C5148", 800: "#3E3630", 900: "#1A1614" },
+              sage: { 50: "#F2F5F3", 100: "#E6EBE7", 200: "#CDD8CF", 300: "#B4C4B7", 400: "#9BB1A0", 500: "#8F9F8C", 600: "#728070", 700: "#566054", 800: "#3A4038", 900: "#1D201C" }
+            },
+            fontFamily: { sans: ["Inter", "sans-serif"], serif: ["Chewy", "cursive"] },
+            borderRadius: { "3xl": "1.5rem", "4xl": "2rem" }
+          }
+        }
+      };
+    </script>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Chewy&family=Inter:wght@300;400;500;600;700&display=swap");
 
@@ -102,6 +121,20 @@
         --shadow: 0 18px 48px rgba(62, 54, 48, 0.1);
       }
 
+      .dark {
+        color-scheme: dark;
+        --paper: #1a1614;
+        --surface: #3e3630;
+        --surface-soft: #2c2825;
+        --ink: #f5f2ed;
+        --muted: #d1c7be;
+        --line: #5c5148;
+        --sage: #b4c4b7;
+        --sage-dark: #cdd8cf;
+        --focus: #b4c4b7;
+        --shadow: 0 18px 48px rgba(0, 0, 0, 0.24);
+      }
+
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body {
@@ -114,6 +147,10 @@
         -webkit-font-smoothing: antialiased;
       }
       body.menu-open { overflow: hidden; }
+      body.font-dyslexic, body.font-dyslexic * { font-family: "Comic Sans MS", "Comic Sans", cursive !important; }
+      body.spacing-enhanced p, body.spacing-enhanced span, body.spacing-enhanced h1, body.spacing-enhanced h2, body.spacing-enhanced h3, body.spacing-enhanced h4, body.spacing-enhanced h5, body.spacing-enhanced h6, body.spacing-enhanced li, body.spacing-enhanced a { line-height: 2 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+      body.spacing-enhanced p { margin-bottom: 2em !important; }
+      html.text-enlarged { font-size: 120%; }
       img { display: block; max-width: 100%; }
       a { color: inherit; }
       button, a { -webkit-tap-highlight-color: transparent; }
@@ -217,6 +254,7 @@
         font-size: clamp(1.05rem, 2vw, 1.28rem);
         line-height: 1.65;
       }
+      .dark .standfirst { color: #d1c7be; }
       .post-meta {
         display: flex;
         flex-wrap: wrap;
@@ -227,6 +265,7 @@
         font-size: 0.86rem;
       }
       .post-meta .dot { width: 4px; height: 4px; border-radius: 50%; background: #948d81; }
+      .dark .post-meta .dot { background: #b8aea4; }
 
       .featured-image {
         width: min(560px, calc(100% - 2rem));
@@ -279,6 +318,7 @@
         color: #3e3630;
         font-size: 1.08rem;
       }
+      .dark .article-body blockquote { background: #3a4038; color: #f2f5f3; }
       .article-body figure { margin: 2.5rem 0; }
       .article-body figure img { width: 100%; border-radius: 1.25rem; }
       .article-body figcaption { margin-top: 0.55rem; color: var(--muted); font-size: 0.78rem; }
@@ -301,6 +341,7 @@
         font-size: 0.76rem;
         font-weight: 600;
       }
+      .dark .tag { border-color: #566054; background: #3a4038; }
       .author-box {
         display: grid;
         grid-template-columns: 72px 1fr;
@@ -342,6 +383,7 @@
         transition: transform 160ms ease, background 160ms ease, color 160ms ease;
       }
       .share-button:hover { transform: translateY(-2px); background: var(--sage-dark); color: #fff; }
+      .dark .share-button:hover { color: #1a1614; }
       .share-button svg { width: 19px; height: 19px; }
       .share-status {
         position: absolute;
@@ -392,6 +434,7 @@
           box-shadow: var(--shadow);
           backdrop-filter: blur(12px);
         }
+        .dark .share-rail { background: rgba(62, 54, 48, 0.94); }
         .share-label { display: none; }
         .share-actions { flex-direction: row; }
         .share-button { width: 42px; height: 42px; box-shadow: none; }
@@ -412,7 +455,7 @@
         .footer-top { align-items: flex-start; flex-direction: column; }
       }
       @media print {
-        .site-header, .share-rail, .site-footer { display: none !important; }
+        #site-header, .share-rail, #site-footer, #back-to-top { display: none !important; }
         body { background: #fff; color: #000; font-size: 11pt; }
         .hero, .article-layout { width: 100%; margin: 1rem 0; }
         .featured-image { width: 100%; margin: 1rem 0; }
@@ -428,24 +471,77 @@
   <body>
     <a class="skip-link" href="#main-content">Skip to article</a>
 
-    <!-- Existing site navigation only: no Blog button has been added. -->
-    <header class="site-header">
-      <nav class="nav-shell" aria-label="Main navigation">
-        <a class="brand" href="/" aria-label="BITS home">
-          <img src="/images/bits-research-logo.png" alt="BITS research project" width="270" height="80">
-        </a>
-        <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open navigation menu">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></svg>
-        </button>
-        <ul class="nav-links" id="site-menu">
-          <li><a href="/about/">About</a></li>
-          <li><a href="/what-we-care/">What We Care About</a></li>
-          <li><a href="/people/">People</a></li>
-          <li><a href="/output-resources/">Output</a></li>
-          <li><a href="/get-involved/">Get Involved</a></li>
-          <li><a href="/contact/">Contact</a></li>
-        </ul>
-      </nav>
+    <!-- Exact standalone equivalent of the live BITS header. No Blog navigation item is added. -->
+    <header id="site-header" class="sticky top-4 z-50 w-full px-4 max-w-7xl mx-auto">
+      <div class="bg-white/80 dark:bg-earth-800/80 backdrop-blur-md rounded-full shadow-sm border border-earth-100 dark:border-earth-700 px-6 sm:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="/" class="flex items-center gap-3 group" aria-label="bits(~) Home">
+              <img src="/images/bits-research-logo.png" alt="bits(~) Logo" class="h-12 w-auto md:h-16 block dark:invert transition-all select-none" draggable="false">
+            </a>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-2">
+            <nav class="flex items-center bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 mr-4" aria-label="Main navigation">
+              <a href="/about/" class="px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800">About</a>
+              <a href="/what-we-care/" class="px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800">What We Care About</a>
+              <a href="/people/" class="px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800">People</a>
+              <a href="/output-resources/" class="px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800">Output</a>
+              <a href="/get-involved/" class="px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800">Get Involved</a>
+              <a href="/contact/" class="px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800">Contact</a>
+            </nav>
+
+            <div class="flex items-center space-x-2">
+              <div class="relative" id="accessibility-wrapper">
+                <button id="accessibility-button" class="p-2 rounded-full hover:bg-earth-100 dark:hover:bg-earth-700 text-earth-600 dark:text-earth-300 transition-all" type="button" aria-expanded="false" aria-controls="accessibility-menu" aria-label="Accessibility Options" title="Accessibility Options">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="7.5" r="1.5" fill="currentColor" stroke="none"></circle><path d="M7 11.5h10"></path><path d="M12 11.5v3.5"></path><path d="m9 19 3-4 3 4"></path></svg>
+                </button>
+                <div id="accessibility-menu" class="hidden absolute right-0 mt-3 w-72 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-50">
+                  <div class="flex items-center justify-between px-4 py-3 border-b border-earth-100 dark:border-earth-700 bg-earth-50/50 dark:bg-earth-900/30">
+                    <h3 class="font-serif text-lg text-earth-900 dark:text-earth-50">Accessibility</h3>
+                    <button id="accessibility-close" type="button" class="p-1.5 rounded-full hover:bg-earth-200 dark:hover:bg-earth-700 text-earth-500 hover:text-earth-900 dark:hover:text-earth-100 transition-colors" aria-label="Close Accessibility Menu"><i data-lucide="x" class="w-[18px] h-[18px]" aria-hidden="true"></i></button>
+                  </div>
+                  <div class="p-3 space-y-1">
+                    <button data-accessibility="dyslexic" type="button" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300 transition-colors"><span class="flex items-center gap-3"><i data-lucide="type" class="w-[18px] h-[18px]" aria-hidden="true"></i><span class="text-sm font-medium">Dyslexic Font</span></span><i data-check="dyslexic" data-lucide="check" class="hidden w-4 h-4" aria-hidden="true"></i></button>
+                    <button data-accessibility="spacing" type="button" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300 transition-colors"><span class="flex items-center gap-3"><i data-lucide="move-horizontal" class="w-[18px] h-[18px]" aria-hidden="true"></i><span class="text-sm font-medium">Text Spacing</span></span><i data-check="spacing" data-lucide="check" class="hidden w-4 h-4" aria-hidden="true"></i></button>
+                    <button data-accessibility="enlarge" type="button" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300 transition-colors"><span class="flex items-center gap-3"><i data-lucide="zoom-in" class="w-[18px] h-[18px]" aria-hidden="true"></i><span class="text-sm font-medium">Enlarge Text</span></span><i data-check="enlarge" data-lucide="check" class="hidden w-4 h-4" aria-hidden="true"></i></button>
+                    <button data-accessibility="tts" type="button" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300 transition-colors"><span class="flex items-center gap-3"><i data-tts-icon data-lucide="volume-x" class="w-[18px] h-[18px]" aria-hidden="true"></i><span class="text-sm font-medium">Text to Speech</span></span><span data-tts-indicator class="hidden w-2 h-2 bg-green-500 rounded-full animate-pulse"></span></button>
+                    <div class="h-px bg-earth-100 dark:bg-earth-700 my-1 mx-2"></div>
+                    <button data-theme="light" type="button" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300 transition-colors"><span class="flex items-center gap-3"><i data-lucide="sun" class="w-[18px] h-[18px]" aria-hidden="true"></i><span class="text-sm font-medium">Light Theme</span></span><i data-check="light" data-lucide="check" class="w-4 h-4" aria-hidden="true"></i></button>
+                    <button data-theme="dark" type="button" class="w-full flex items-center justify-between px-4 py-3 rounded-2xl hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300 transition-colors"><span class="flex items-center gap-3"><i data-lucide="moon" class="w-[18px] h-[18px]" aria-hidden="true"></i><span class="text-sm font-medium">Dark Theme</span></span><i data-check="dark" data-lucide="check" class="hidden w-4 h-4" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+              <button id="theme-toggle" type="button" class="p-2 rounded-full hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors text-earth-600 dark:text-earth-300" aria-label="Toggle Dark Mode" title="Toggle Dark Mode"><i data-theme-icon data-lucide="moon" class="w-[18px] h-[18px]" aria-hidden="true"></i></button>
+            </div>
+          </div>
+
+          <div class="md:hidden flex items-center">
+            <button id="mobile-menu-button" type="button" class="p-2 text-earth-800 dark:text-earth-200" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu"><i data-mobile-icon data-lucide="menu" class="w-6 h-6" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-menu" class="hidden md:hidden absolute top-24 left-4 right-4 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-40">
+        <div class="p-4 space-y-2">
+          <a href="/about/" class="block px-4 py-3 text-base font-medium rounded-xl text-earth-800 dark:text-earth-200 hover:bg-sage-50 dark:hover:bg-sage-900/50 hover:text-sage-600 transition-colors">About</a>
+          <a href="/what-we-care/" class="block px-4 py-3 text-base font-medium rounded-xl text-earth-800 dark:text-earth-200 hover:bg-sage-50 dark:hover:bg-sage-900/50 hover:text-sage-600 transition-colors">What We Care About</a>
+          <a href="/people/" class="block px-4 py-3 text-base font-medium rounded-xl text-earth-800 dark:text-earth-200 hover:bg-sage-50 dark:hover:bg-sage-900/50 hover:text-sage-600 transition-colors">People</a>
+          <a href="/output-resources/" class="block px-4 py-3 text-base font-medium rounded-xl text-earth-800 dark:text-earth-200 hover:bg-sage-50 dark:hover:bg-sage-900/50 hover:text-sage-600 transition-colors">Output</a>
+          <a href="/get-involved/" class="block px-4 py-3 text-base font-medium rounded-xl text-earth-800 dark:text-earth-200 hover:bg-sage-50 dark:hover:bg-sage-900/50 hover:text-sage-600 transition-colors">Get Involved</a>
+          <a href="/contact/" class="block px-4 py-3 text-base font-medium rounded-xl text-earth-800 dark:text-earth-200 hover:bg-sage-50 dark:hover:bg-sage-900/50 hover:text-sage-600 transition-colors">Contact</a>
+          <div class="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-earth-100 dark:border-earth-700">
+            <button data-accessibility="dyslexic" type="button" class="flex items-center justify-center py-3 rounded-xl bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200" aria-label="Dyslexic Font"><i data-lucide="type" class="w-5 h-5" aria-hidden="true"></i></button>
+            <button data-accessibility="spacing" type="button" class="flex items-center justify-center py-3 rounded-xl bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200" aria-label="Text Spacing"><i data-lucide="move-horizontal" class="w-5 h-5" aria-hidden="true"></i></button>
+            <button data-accessibility="enlarge" type="button" class="flex items-center justify-center py-3 rounded-xl bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200" aria-label="Enlarge Text"><i data-lucide="zoom-in" class="w-5 h-5" aria-hidden="true"></i></button>
+            <button data-accessibility="tts" type="button" class="flex items-center justify-center py-3 rounded-xl bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200" aria-label="Text to Speech"><i data-tts-icon data-lucide="volume-x" class="w-5 h-5" aria-hidden="true"></i></button>
+          </div>
+          <div class="grid grid-cols-2 gap-2 mt-2">
+            <button data-theme="light" type="button" class="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium bg-sage-100 text-sage-700" aria-label="Light Theme"><i data-lucide="sun" class="w-5 h-5" aria-hidden="true"></i><span>Light Theme</span></button>
+            <button data-theme="dark" type="button" class="flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200" aria-label="Dark Theme"><i data-lucide="moon" class="w-5 h-5" aria-hidden="true"></i><span>Dark Theme</span></button>
+          </div>
+        </div>
+      </div>
     </header>
 
     <main id="main-content">
@@ -552,20 +648,56 @@
       </div>
     </main>
 
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div class="footer-top">
-          <a class="footer-brand" href="/" aria-label="BITS home">
-            <img src="/images/bits-research-logo.png" alt="BITS research project" width="270" height="80" loading="lazy">
-          </a>
-          <nav class="footer-links" aria-label="Legal navigation">
-            <a href="/research-ethics/">Research Ethics</a>
-            <a href="/accessibility/">Accessibility</a>
-            <a href="/privacy-policy/">Privacy Policy</a>
-            <a href="/terms-of-use/">Terms of Use</a>
-          </nav>
+    <button id="back-to-top" type="button" class="hidden fixed bottom-8 right-8 p-4 bg-sage-500 text-white rounded-full shadow-lg z-50 hover:bg-sage-600 transition-all duration-300 hover:-translate-y-1" aria-label="Back to top"><i data-lucide="arrow-up" class="w-5 h-5" aria-hidden="true"></i></button>
+
+    <!-- Exact standalone equivalent of the live BITS footer. -->
+    <footer id="site-footer" class="bg-earth-100 dark:bg-earth-800 py-16 mt-12 rounded-t-4xl mx-2">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          <div class="lg:col-span-4">
+            <div class="flex items-center gap-2 mb-6">
+              <img src="/images/bits-research-logo.png" alt="bits(~) Logo" class="h-14 w-auto block dark:invert select-none" draggable="false">
+            </div>
+            <p class="text-earth-600 dark:text-earth-400 max-w-sm text-sm leading-loose">Every story, every one matters in transition. Join our workshops to co-create support for your journey and others’ as students with diverse learning journey.</p>
+          </div>
+
+          <div class="lg:col-span-2">
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-6 text-earth-900 dark:text-earth-100">Social</h3>
+            <div class="flex flex-col space-y-4">
+              <a href="https://www.instagram.com/bits.research#" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 transition-colors group" aria-label="Follow us on Instagram"><span class="p-2 bg-white dark:bg-earth-900 rounded-full group-hover:bg-sage-100 dark:group-hover:bg-sage-900 transition-colors"><i data-lucide="instagram" class="w-4 h-4" aria-hidden="true"></i></span>Instagram</a>
+              <a href="https://www.youtube.com/@bits-research" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 transition-colors group" aria-label="Subscribe to our YouTube Channel"><span class="p-2 bg-white dark:bg-earth-900 rounded-full group-hover:bg-sage-100 dark:group-hover:bg-sage-900 transition-colors"><i data-lucide="youtube" class="w-4 h-4" aria-hidden="true"></i></span>YouTube Channel</a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2">
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-6 text-earth-900 dark:text-earth-100">Legal</h3>
+            <nav class="flex flex-col space-y-3" aria-label="Legal navigation">
+              <a href="/research-ethics/" class="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Research Ethics</a>
+              <a href="/accessibility/" class="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Accessibility</a>
+              <a href="/privacy-policy/" class="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Privacy Policy</a>
+              <a href="/terms-of-use/" class="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Terms of Use</a>
+            </nav>
+          </div>
+
+          <div class="lg:col-span-4">
+            <h3 class="text-xs font-bold uppercase tracking-widest mb-6 text-earth-900 dark:text-earth-100">Newsletter</h3>
+            <p class="text-sm text-earth-700 dark:text-earth-300 mb-4 leading-relaxed">Receive project updates, transition tips, and teaching resources on transmedia storytelling.</p>
+            <form id="newsletter-form" class="flex flex-col gap-4">
+              <input type="hidden" name="name" value="Newsletter Subscriber">
+              <input type="hidden" name="role" value="Subscriber">
+              <input type="hidden" name="message" value="Footer Subscription">
+              <label for="newsletter-email" class="sr-only">Your Email Address</label>
+              <input id="newsletter-email" type="email" name="email" placeholder="Your Email Address" required pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Please enter a valid email address (e.g. user@example.com)" class="w-full px-0 py-3 bg-transparent border-b border-earth-300 dark:border-earth-700 focus:outline-none focus:border-sage-500 dark:focus:border-sage-400 text-earth-900 dark:text-earth-100 placeholder-earth-500 text-sm transition-all rounded-none">
+              <button id="newsletter-submit" type="submit" class="w-full py-3 bg-sage-600 text-white rounded-xl font-medium hover:bg-sage-700 transition-colors text-sm disabled:opacity-70 shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500">Subscribe Now</button>
+            </form>
+            <div id="newsletter-status" aria-live="polite"></div>
+          </div>
         </div>
-        <p class="copyright">© <span id="current-year"></span> BITS Research Project. Original content is licensed under CC BY-NC 4.0 unless otherwise stated.</p>
+
+        <div class="mt-16 pt-8 border-t border-earth-200 dark:border-earth-700 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-xs text-earth-500 dark:text-earth-500">© <span id="current-year"></span> bits(~) Research Project. All rights reserved.</p>
+          <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-xs text-earth-500 font-medium hover:text-sage-600 dark:hover:text-sage-400 transition-colors">Attribution-NonCommercial (CC BY-NC 4.0)</a>
+        </div>
       </div>
     </footer>
 
@@ -579,14 +711,45 @@
         const readingMinutes = Math.max(1, Math.ceil(wordCount / 200));
         const status = document.querySelector(".share-status");
         const nativeButton = document.querySelector(".native-share");
-        const menuButton = document.querySelector(".menu-button");
-        const menu = document.querySelector(".nav-links");
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const accessibilityButton = document.getElementById("accessibility-button");
+        const accessibilityMenu = document.getElementById("accessibility-menu");
+        const accessibilityWrapper = document.getElementById("accessibility-wrapper");
+        const themeToggle = document.getElementById("theme-toggle");
+        const backToTop = document.getElementById("back-to-top");
+        const newsletterForm = document.getElementById("newsletter-form");
+        const newsletterButton = document.getElementById("newsletter-submit");
+        const newsletterStatus = document.getElementById("newsletter-status");
+        const state = { dark: false, dyslexic: false, spacing: false, enlarge: false, tts: false };
+
+        const refreshIcons = () => {
+          if (window.lucide) window.lucide.createIcons({ attrs: { "stroke-width": 1.8 } });
+        };
+
+        const setIcon = (selector, iconName) => {
+          document.querySelectorAll(selector).forEach((element) => {
+            element.setAttribute("data-lucide", iconName);
+          });
+          refreshIcons();
+        };
+
+        const setPressedStyle = (selector, active) => {
+          document.querySelectorAll(selector).forEach((button) => {
+            button.setAttribute("aria-pressed", String(active));
+            button.classList.toggle("bg-sage-100", active);
+            button.classList.toggle("text-sage-700", active);
+            button.classList.toggle("dark:bg-sage-900", active);
+            button.classList.toggle("dark:text-sage-200", active);
+          });
+        };
 
         document.getElementById("current-year").textContent = new Date().getFullYear();
         document.getElementById("reading-time").textContent = readingMinutes;
         document.querySelector(".linkedin-share").href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
         document.querySelector(".facebook-share").href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
         document.querySelector(".email-share").href = `mailto:?subject=${encodeURIComponent(pageTitle)}&body=${encodeURIComponent(`${pageTitle}\n\n${pageUrl}`)}`;
+        refreshIcons();
 
         const showStatus = (message) => {
           status.textContent = message;
@@ -621,18 +784,120 @@
           }
         });
 
-        menuButton.addEventListener("click", () => {
-          const isOpen = menu.classList.toggle("open");
-          menuButton.setAttribute("aria-expanded", String(isOpen));
-          menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+        const closeMobileMenu = () => {
+          mobileMenu.classList.add("hidden");
+          mobileMenuButton.setAttribute("aria-expanded", "false");
+          document.body.classList.remove("menu-open");
+          setIcon("[data-mobile-icon]", "menu");
+        };
+
+        mobileMenuButton.addEventListener("click", () => {
+          const isOpen = mobileMenu.classList.contains("hidden");
+          mobileMenu.classList.toggle("hidden", !isOpen);
+          mobileMenuButton.setAttribute("aria-expanded", String(isOpen));
           document.body.classList.toggle("menu-open", isOpen);
+          setIcon("[data-mobile-icon]", isOpen ? "x" : "menu");
         });
 
-        menu.addEventListener("click", (event) => {
-          if (event.target.closest("a")) {
-            menu.classList.remove("open");
-            menuButton.setAttribute("aria-expanded", "false");
-            document.body.classList.remove("menu-open");
+        mobileMenu.addEventListener("click", (event) => {
+          if (event.target.closest("a")) closeMobileMenu();
+        });
+
+        const closeAccessibilityMenu = () => {
+          accessibilityMenu.classList.add("hidden");
+          accessibilityButton.setAttribute("aria-expanded", "false");
+        };
+
+        accessibilityButton.addEventListener("click", () => {
+          const isOpen = accessibilityMenu.classList.contains("hidden");
+          accessibilityMenu.classList.toggle("hidden", !isOpen);
+          accessibilityButton.setAttribute("aria-expanded", String(isOpen));
+        });
+        document.getElementById("accessibility-close").addEventListener("click", closeAccessibilityMenu);
+
+        document.addEventListener("mousedown", (event) => {
+          if (!accessibilityWrapper.contains(event.target)) closeAccessibilityMenu();
+          if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) closeMobileMenu();
+        });
+
+        const applyTheme = (dark) => {
+          state.dark = dark;
+          document.documentElement.classList.toggle("dark", dark);
+          setIcon("[data-theme-icon]", dark ? "sun" : "moon");
+          document.querySelectorAll('[data-check="light"]').forEach((item) => item.classList.toggle("hidden", dark));
+          document.querySelectorAll('[data-check="dark"]').forEach((item) => item.classList.toggle("hidden", !dark));
+          setPressedStyle('[data-theme="light"]', !dark);
+          setPressedStyle('[data-theme="dark"]', dark);
+        };
+
+        themeToggle.addEventListener("click", () => applyTheme(!state.dark));
+        document.querySelectorAll("[data-theme]").forEach((button) => {
+          button.addEventListener("click", () => applyTheme(button.dataset.theme === "dark"));
+        });
+
+        const speakContent = () => {
+          window.speechSynthesis.cancel();
+          const text = document.querySelector("main")?.innerText;
+          if (!text) return;
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.onend = () => setTTS(false);
+          utterance.onerror = () => setTTS(false);
+          window.speechSynthesis.speak(utterance);
+        };
+
+        const setTTS = (active) => {
+          state.tts = active;
+          if (!active) window.speechSynthesis.cancel();
+          setIcon("[data-tts-icon]", active ? "volume-2" : "volume-x");
+          document.querySelectorAll("[data-tts-indicator]").forEach((item) => item.classList.toggle("hidden", !active));
+          setPressedStyle('[data-accessibility="tts"]', active);
+          if (active) speakContent();
+        };
+
+        document.querySelectorAll("[data-accessibility]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const option = button.dataset.accessibility;
+            if (option === "dyslexic") {
+              state.dyslexic = !state.dyslexic;
+              document.body.classList.toggle("font-dyslexic", state.dyslexic);
+              setPressedStyle('[data-accessibility="dyslexic"]', state.dyslexic);
+              document.querySelectorAll('[data-check="dyslexic"]').forEach((item) => item.classList.toggle("hidden", !state.dyslexic));
+            } else if (option === "spacing") {
+              state.spacing = !state.spacing;
+              document.body.classList.toggle("spacing-enhanced", state.spacing);
+              setPressedStyle('[data-accessibility="spacing"]', state.spacing);
+              document.querySelectorAll('[data-check="spacing"]').forEach((item) => item.classList.toggle("hidden", !state.spacing));
+            } else if (option === "enlarge") {
+              state.enlarge = !state.enlarge;
+              document.documentElement.classList.toggle("text-enlarged", state.enlarge);
+              setPressedStyle('[data-accessibility="enlarge"]', state.enlarge);
+              document.querySelectorAll('[data-check="enlarge"]').forEach((item) => item.classList.toggle("hidden", !state.enlarge));
+            } else if (option === "tts") {
+              setTTS(!state.tts);
+            }
+          });
+        });
+
+        window.addEventListener("scroll", () => {
+          backToTop.classList.toggle("hidden", window.scrollY <= 300);
+        });
+        backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+        newsletterForm.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          newsletterButton.disabled = true;
+          newsletterButton.textContent = "Subscribing...";
+          newsletterStatus.innerHTML = "";
+          const data = new URLSearchParams(new FormData(newsletterForm));
+          try {
+            await fetch("https://script.google.com/macros/s/AKfycbymxKunnSr9kHmSx-ClxRjudSQwdgJkg48V0w8dk6F6Jd9D8y6FrxQ8_1HTqVj6lEQN/exec", { method: "POST", body: data, mode: "no-cors" });
+            newsletterForm.reset();
+            newsletterStatus.innerHTML = '<p class="mt-3 text-xs text-sage-700 dark:text-sage-300 font-medium" role="status">Thank you! You are subscribed.</p>';
+          } catch {
+            newsletterStatus.innerHTML = '<p class="mt-3 text-xs text-red-600 font-medium" role="alert">Error! Please try again.</p>';
+          } finally {
+            newsletterButton.disabled = false;
+            newsletterButton.textContent = "Subscribe Now";
           }
         });
       })();
