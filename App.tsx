@@ -7,7 +7,7 @@ import { PageRoute, TeamMember } from './types';
 import { BlogPostPage } from './components/BlogPostPage';
 import { 
   ArrowRight, Mail, MapPin, Phone, Play, Pause, 
-  Facebook, Twitter, Linkedin, CheckCircle2,
+  Facebook, Twitter, Linkedin, CheckCircle2, Check,
   BookOpen, FileText, Presentation, Mic, Globe, Instagram, Calendar, Clock, MapPin as MapPinIcon, AlertCircle, CalendarPlus,
   ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake
 } from 'lucide-react';
@@ -283,16 +283,57 @@ const WorkshopSection: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState<number>(0);
 
-  const campusOptions: Array<{ value: 'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online'; label: string }> = [
-    { value: 'all', label: 'All' },
-    { value: 'Penryn Campus', label: 'Penryn Campus' },
-    { value: 'Woodlane Campus', label: 'Woodlane Campus' },
-    { value: 'Online', label: 'Online' },
+  const campusOptions: Array<{ value: 'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online'; label: string; shortLabel: string }> = [
+    { value: 'all', label: 'All campuses', shortLabel: 'All' },
+    { value: 'Penryn Campus', label: 'Penryn Campus', shortLabel: 'Penryn' },
+    { value: 'Woodlane Campus', label: 'Woodlane Campus', shortLabel: 'Woodlane' },
+    { value: 'Online', label: 'Online', shortLabel: 'Online' },
   ];
 
   const filteredWorkshops = campusFilter === 'all'
     ? workshops
     : workshops.filter((workshop) => workshop.venue.trim().toLowerCase() === campusFilter.toLowerCase());
+
+  const getVenueTheme = (venue: string) => {
+    const normalized = venue.trim().toLowerCase();
+
+    if (normalized === 'woodlane campus') {
+      return {
+        card: 'bg-[#F2F6F1] border-[#667A63] dark:bg-[#263128] dark:border-[#9EB19A]',
+        badge: 'bg-[#D8E3D6] text-[#263528] dark:bg-[#3D4D3E] dark:text-[#F4F7F4]',
+        icon: 'text-[#667A63] dark:text-[#9EB19A]',
+      };
+    }
+
+    if (normalized === 'penryn campus') {
+      return {
+        card: 'bg-[#F7F2EC] border-[#8A6A52] dark:bg-[#332B25] dark:border-[#B49A82]',
+        badge: 'bg-[#EADCCE] text-[#3B2C22] dark:bg-[#4A3D34] dark:text-[#FBF7F2]',
+        icon: 'text-[#8A6A52] dark:text-[#B49A82]',
+      };
+    }
+
+    if (normalized === 'online') {
+      return {
+        card: 'bg-[#F1F5F7] border-[#5F7584] dark:bg-[#263139] dark:border-[#8FA2B0]',
+        badge: 'bg-[#D9E3E9] text-[#26363F] dark:bg-[#394751] dark:text-[#F4F8FB]',
+        icon: 'text-[#5F7584] dark:text-[#8FA2B0]',
+      };
+    }
+
+    return {
+      card: 'bg-white border-earth-300 dark:bg-earth-800 dark:border-earth-600',
+      badge: 'bg-sage-100 text-sage-800 dark:bg-sage-900/50 dark:text-sage-200',
+      icon: 'text-sage-700 dark:text-sage-300',
+    };
+  };
+
+  const getSelectedFilterTheme = (value: 'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online') => {
+    if (value === 'Woodlane Campus') return 'bg-[#D8E3D6] border-[#667A63] text-[#263528] dark:bg-[#3D4D3E] dark:border-[#9EB19A] dark:text-[#F4F7F4]';
+    if (value === 'Penryn Campus') return 'bg-[#EADCCE] border-[#8A6A52] text-[#3B2C22] dark:bg-[#4A3D34] dark:border-[#B49A82] dark:text-[#FBF7F2]';
+    if (value === 'Online') return 'bg-[#D9E3E9] border-[#5F7584] text-[#26363F] dark:bg-[#394751] dark:border-[#8FA2B0] dark:text-[#F4F8FB]';
+    return 'bg-sage-700 border-sage-700 text-white dark:bg-sage-200 dark:border-sage-200 dark:text-earth-900';
+  };
 
   // Responsive Carousel Logic
   useEffect(() => {
@@ -565,16 +606,20 @@ const WorkshopSection: React.FC = () => {
       className="py-16 px-4 max-w-7xl mx-auto select-none" 
       aria-label="Upcoming Workshops Carousel"
     >
-        <div className="flex flex-col items-center justify-center mb-10 gap-6 px-2">
-            <div className="flex items-center gap-4">
-                <span className="h-px w-12 bg-sage-600"></span>
+        <div className="mb-7 md:mb-10 px-1 sm:px-2">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-7 md:mb-8">
+                <span className="h-px w-8 sm:w-12 bg-sage-600" aria-hidden="true"></span>
                 <h2 className="text-3xl font-serif text-center text-earth-900 dark:text-earth-50">Upcoming Workshops</h2>
-                <span className="h-px w-12 bg-sage-600"></span>
+                <span className="h-px w-8 sm:w-12 bg-sage-600" aria-hidden="true"></span>
             </div>
-            
-            <div className="w-full flex flex-col items-center gap-4">
-                <div className="flex flex-wrap items-center justify-center gap-2" role="group" aria-label="Filter workshops by campus">
-                    <span className="text-sm font-semibold text-earth-800 dark:text-earth-200 mr-1">Campus:</span>
+
+            <div className="max-w-2xl mx-auto">
+                <p id="campus-filter-label" className="text-sm font-bold text-earth-800 dark:text-earth-200 mb-2.5 md:text-center">Campus</p>
+                <div
+                    className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center"
+                    role="group"
+                    aria-labelledby="campus-filter-label"
+                >
                     {campusOptions.map((option) => {
                         const isSelected = campusFilter === option.value;
                         return (
@@ -583,54 +628,48 @@ const WorkshopSection: React.FC = () => {
                                 type="button"
                                 onClick={() => setCampusFilter(option.value)}
                                 aria-pressed={isSelected}
-                                className={`min-h-11 px-4 py-2 rounded-full border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300 ${
+                                aria-label={`Show ${option.label} workshops`}
+                                className={`min-h-11 w-full sm:w-auto px-4 py-2.5 rounded-xl sm:rounded-full border-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300 ${
                                     isSelected
-                                        ? 'bg-sage-700 border-sage-700 text-white dark:bg-sage-200 dark:border-sage-200 dark:text-earth-900'
+                                        ? getSelectedFilterTheme(option.value)
                                         : 'bg-white dark:bg-earth-800 border-earth-300 dark:border-earth-600 text-earth-800 dark:text-earth-200 hover:bg-earth-100 dark:hover:bg-earth-700'
                                 }`}
                             >
-                                {option.label}
+                                <span className="inline-flex items-center justify-center gap-1.5">
+                                    {isSelected && <Check size={15} strokeWidth={2.5} aria-hidden="true" />}
+                                    <span className="sm:hidden">{option.shortLabel}</span>
+                                    <span className="hidden sm:inline">{option.label}</span>
+                                </span>
                             </button>
                         );
                     })}
                 </div>
 
-                <p className="text-sm text-earth-700 dark:text-earth-300 text-center">
-                    Not sure if this time works for you?{' '}
-                    <a
-                        href="https://mytimetable.falmouth.ac.uk/schedule"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-semibold underline underline-offset-4 decoration-sage-500 hover:text-sage-700 dark:hover:text-sage-200 focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-sm"
-                    >
-                        Check your class timetable <ExternalLink size={14} className="inline-block ml-0.5 -mt-0.5" aria-hidden="true" />
-                        <span className="sr-only"> (opens in a new tab)</span>
-                    </a>
-                </p>
-
-                {filteredWorkshops.length > itemsPerPage && (
-                    <div className="flex gap-2" aria-label="Workshop carousel controls">
-                        <button 
-                            onClick={prevSlide} 
+                {filteredWorkshops.length > 0 && (
+                    <div className="mt-5 flex items-center justify-center gap-4" aria-label="Workshop carousel controls">
+                        <button
+                            onClick={prevSlide}
                             disabled={currentIndex === 0}
-                            className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
-                            aria-label="Previous workshop slide"
+                            className="min-w-11 min-h-11 inline-flex items-center justify-center rounded-full border border-earth-300 dark:border-earth-600 text-earth-800 dark:text-earth-200 bg-white/70 dark:bg-earth-800 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                            aria-label="Previous workshop"
                         >
-                            <ChevronLeft size={20} />
+                            <ChevronLeft size={20} aria-hidden="true" />
                         </button>
-                        <button 
-                            onClick={nextSlide} 
+                        <p className="min-w-[5.5rem] text-center text-sm font-semibold text-earth-700 dark:text-earth-300" aria-live="polite">
+                            {Math.min(currentIndex + 1, filteredWorkshops.length)}{itemsPerPage > 1 && filteredWorkshops.length > 1 ? `–${Math.min(currentIndex + itemsPerPage, filteredWorkshops.length)}` : ''} of {filteredWorkshops.length}
+                        </p>
+                        <button
+                            onClick={nextSlide}
                             disabled={currentIndex >= filteredWorkshops.length - itemsPerPage}
-                            className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
-                            aria-label="Next workshop slide"
+                            className="min-w-11 min-h-11 inline-flex items-center justify-center rounded-full border border-earth-300 dark:border-earth-600 text-earth-800 dark:text-earth-200 bg-white/70 dark:bg-earth-800 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                            aria-label="Next workshop"
                         >
-                            <ChevronRight size={20} />
+                            <ChevronRight size={20} aria-hidden="true" />
                         </button>
                     </div>
                 )}
             </div>
         </div>
-
         {workshops.length === 0 || error ? (
             <div className="bg-white dark:bg-earth-800 rounded-3xl p-10 text-center border border-earth-200 dark:border-earth-700 shadow-sm max-w-2xl mx-auto">
                 <div className="w-16 h-16 bg-sage-100 dark:bg-sage-900/50 text-sage-700 dark:text-sage-300 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -681,24 +720,27 @@ const WorkshopSection: React.FC = () => {
                             aria-roledescription="slide"
                             aria-label={`${idx + 1} of ${filteredWorkshops.length}`}
                         >
-                            <div className="bg-white dark:bg-earth-800 rounded-3xl p-6 md:p-8 shadow-sm border border-earth-200 dark:border-earth-700 hover:shadow-lg hover:border-sage-400 transition-all duration-300 flex flex-col h-full group">
+                            {(() => {
+                                const venueTheme = getVenueTheme(ws.venue);
+                                return (
+                            <div className={`${venueTheme.card} rounded-3xl p-6 md:p-8 shadow-sm border-2 hover:shadow-lg transition-shadow duration-300 motion-reduce:transition-none flex flex-col h-full group`}>
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="px-4 py-2 bg-sage-100 dark:bg-sage-900/50 text-sage-800 dark:text-sage-200 text-xs font-bold uppercase tracking-widest rounded-full">
+                                    <div className={`px-4 py-2 ${venueTheme.badge} text-xs font-bold uppercase tracking-widest rounded-full`}>
                                         {ws.parsedDate.toLocaleDateString('en-GB', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                                     </div>
                                 </div>
 
-                                <h3 className="text-xl font-serif font-bold text-earth-900 dark:text-earth-50 mb-4 leading-tight group-hover:text-sage-700 dark:group-hover:text-sage-300 transition-colors line-clamp-2">
+                                <h3 className="text-xl font-serif font-bold text-earth-900 dark:text-earth-50 mb-4 leading-tight line-clamp-2">
                                     {ws.title}
                                 </h3>
 
                                 <div className="space-y-3 mb-6 flex-grow">
-                                    <div className="flex items-start gap-3 text-earth-700 dark:text-earth-400 text-sm">
-                                        <Clock size={16} className="mt-0.5 flex-shrink-0 text-sage-600" />
+                                    <div className="flex items-start gap-3 text-earth-700 dark:text-earth-300 text-sm">
+                                        <Clock size={16} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
                                         <span>{ws.time}</span>
                                     </div>
-                                    <div className="flex items-start gap-3 text-earth-700 dark:text-earth-400 text-sm">
-                                        <MapPinIcon size={16} className="mt-0.5 flex-shrink-0 text-sage-600" />
+                                    <div className="flex items-start gap-3 text-earth-700 dark:text-earth-300 text-sm">
+                                        <MapPinIcon size={16} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
                                         <span>{ws.venue}</span>
                                     </div>
                                     {ws.remarks && (
@@ -735,11 +777,26 @@ const WorkshopSection: React.FC = () => {
                                     </button>
                                 </div>
                             </div>
+                                );
+                            })()}
                         </div>
                     ))}
                 </div>
             </div>
         )}
+
+        <p className="mt-7 md:mt-9 text-sm text-earth-700 dark:text-earth-300 text-center leading-relaxed">
+            <span>Not sure if this time works for you?</span>{' '}
+            <a
+                href="https://mytimetable.falmouth.ac.uk/schedule"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold underline underline-offset-4 decoration-sage-500 hover:text-sage-700 dark:hover:text-sage-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-sm"
+            >
+                Check your class timetable <ExternalLink size={14} className="inline-block ml-0.5 -mt-0.5" aria-hidden="true" />
+                <span className="sr-only"> (opens in a new tab)</span>
+            </a>
+        </p>
     </section>
   );
 };
