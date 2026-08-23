@@ -411,7 +411,7 @@ if (fs.existsSync(blogDataPath)) {
         <main id="content" role="main">
           <article>
             <header>
-              <p>${escapeHtml(post.category)}</p>
+              <p class="text-sm md:text-base font-bold uppercase tracking-[0.16em] text-sage-700 dark:text-sage-300 mb-4">${escapeHtml(post.category)}</p>
               <h1>${escapeHtml(post.title)}</h1>
               <p>${escapeHtml(post.standfirst)}</p>
               <p>By <a href="/people/">Charlie Tak Hei Kwong 鄺德希</a> · <time datetime="${escapeHtml(post.dateISO)}">${escapeHtml(post.dateText)}</time></p>

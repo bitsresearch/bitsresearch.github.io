@@ -1,16 +1,46 @@
--
+# Building Identity Through Stories
 
-## Shared page and blog layout architecture
+This repository contains the project website for **Building Identity Through Stories**, a doctoral research project by **Charlie Tak Hei Kwong 鄺德希** exploring how transmedia storytelling can support students with SEND in exploring identity during the transition into higher education.
 
-The website now has a single runtime source of truth for shared page chrome:
+🌐 **Website:** https://bitsresearch.github.io
 
-- `components/Layout.tsx` — site header, desktop/mobile navigation, accessibility controls, dark mode, TTS, skip navigation, back-to-top control, newsletter, and global footer. Every React page **and every blog post** is rendered inside this layout.
-- `components/BlogPostPage.tsx` — the one reusable visual/semantic template for all blog posts. Do not copy a header/footer into individual posts.
-- `content/blog-posts.json` — blog content and metadata. Add or edit posts here; the shared blog template supplies the layout automatically.
-- `scripts/generate-static-html.mjs` — creates static HTML entry points after the Vite build so direct GitHub Pages visits and search engines can reach each route. The generated HTML is output, not a second source to edit by hand.
+## About
 
-### Important maintenance rule
+The website brings together information about the research, people involved, workshops, research ethics, opportunities to get involved, and project outputs and updates.
 
-Never manually edit a generated `blog/<slug>/index.html` header, footer, accessibility menu, or navigation. Those files are rebuilt. To change the site-wide header/footer/accessibility experience, edit **only `components/Layout.tsx`**. To change the appearance/structure of every blog post, edit **only `components/BlogPostPage.tsx`**. To change one post's content or metadata, edit its entry in **`content/blog-posts.json`**.
+The site is built with **React, TypeScript, Vite and Tailwind CSS**, and deployed through **GitHub Pages**.
 
-This prevents accessibility fixes from being applied to the main site while older blog posts are accidentally left behind.
+## Accessibility
+
+The website is developed with reference to **WCAG 2.2 Level AA**. Accessibility is built into the main website rather than provided as a separate version, with features including keyboard navigation, visible focus, accessible colour contrast, responsive reflow, reduced-motion support, dark/light modes, text controls and optional Text-to-Speech.
+
+## Shared Structure
+
+The website uses shared components so changes remain consistent across normal pages and blog posts.
+
+```text
+components/Layout.tsx
+→ shared header, navigation, accessibility tools and footer
+
+components/BlogPostPage.tsx
+→ shared template for every blog post
+
+content/blog-posts.json
+→ individual blog content and metadata
+```
+
+Site-wide elements should not be copied into individual pages. Shared changes should be made once in the relevant component.
+
+## Development
+
+```bash
+npm install
+npm run dev
+npm run build
+```
+
+The build process generates static HTML for deployment and discoverability.
+
+## Licence
+
+Unless otherwise stated, project materials are shared under the terms shown on the website. Third-party materials, institutional logos, photographs and participant-created content may have separate copyright conditions.

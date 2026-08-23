@@ -71,7 +71,7 @@ export const BlogPostPage: React.FC = () => {
     <div className="max-w-5xl mx-auto px-6 py-12 md:py-16">
       <article aria-labelledby="blog-post-title">
         <header className="text-center max-w-4xl mx-auto mb-10">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-sage-700 dark:text-sage-300 mb-4">{post.category}</p>
+          <p className="text-sm md:text-base font-bold uppercase tracking-[0.16em] text-sage-700 dark:text-sage-300 mb-4">{post.category}</p>
           <h1 id="blog-post-title" className="text-4xl md:text-6xl font-serif text-earth-900 dark:text-earth-50 leading-tight mb-6">{post.title}</h1>
           <p className="text-lg md:text-xl text-earth-700 dark:text-earth-300 leading-relaxed mb-6">{post.standfirst}</p>
           <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-sm text-earth-700 dark:text-earth-300" aria-label="Post details">
