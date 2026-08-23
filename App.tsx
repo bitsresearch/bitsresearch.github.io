@@ -658,7 +658,7 @@ const WorkshopSection: React.FC = () => {
                                             href={ensureAbsoluteUrl(ws.link)} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
-                                            className="w-full py-3 bg-sage-600 text-white rounded-xl font-medium text-center hover:bg-sage-700 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500"
+                                            className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500"
                                             onMouseDown={(e) => e.stopPropagation()}
                                         >
                                             Register Now <ArrowRight size={16} />
@@ -1178,7 +1178,7 @@ const About: React.FC = () => {
               href={PageRoute.INVOLVED} 
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+              className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
           >
               Get Involved!
           </a>
@@ -1312,7 +1312,7 @@ const WhatWeCare: React.FC = () => {
               href={PageRoute.INVOLVED} 
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+              className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
           >
               Get Involved!
           </a>
@@ -1549,7 +1549,7 @@ const GetInvolved: React.FC = () => {
                       href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/upcoming-workshop/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Session Details
                   </a>
@@ -1557,7 +1557,7 @@ const GetInvolved: React.FC = () => {
                       href="https://forms.office.com/e/FPSgmUxEhD" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-earth-800 text-white rounded-full font-bold hover:bg-earth-900 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Join the Session
                   </a>
@@ -1578,7 +1578,7 @@ const GetInvolved: React.FC = () => {
                       href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/community-advisors-wanted-supporting-identity-transition-in-higher-education/#roles" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Learn More
                   </a>
@@ -1586,7 +1586,7 @@ const GetInvolved: React.FC = () => {
                       href="https://forms.cloud.microsoft/e/LM0sFix788" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-earth-800 text-white rounded-full font-bold hover:bg-earth-900 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Expression of Interest
                   </a>
@@ -2095,7 +2095,7 @@ const ResearchEthics: React.FC = () => {
                     href="https://charliekwong.myblog.arts.ac.uk/doctoral-research/research-ethics/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-full text-white bg-sage-600 hover:bg-sage-700 transition-colors shadow-sm hover:shadow-md"
+                    className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-full text-white bg-sage-600 hover:bg-sage-800 transition-colors shadow-sm hover:shadow-md"
                 >
                     Read the Full Research Ethics
                 </a>
@@ -2152,7 +2152,7 @@ const NotFound: React.FC = () => {
           <strong className="font-serif text-4xl leading-none text-sage-700 dark:text-sage-300">{secondsRemaining}</strong>
           <span className="text-[10px] uppercase tracking-widest text-earth-500 dark:text-earth-400 mt-1">seconds</span>
         </div>
-        <Link to={PageRoute.INVOLVED} className="inline-flex items-center gap-2 px-8 py-4 bg-sage-600 text-white rounded-full font-bold hover:bg-sage-700 transition-colors shadow-sm">
+        <Link to={PageRoute.INVOLVED} className="inline-flex items-center gap-2 px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-sm">
           Go to Get Involved now <ArrowRight size={16} />
         </Link>
       </div>

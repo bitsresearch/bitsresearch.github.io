@@ -33,6 +33,7 @@ export const Layout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isTTSActive, setIsTTSActive] = useState(false);
+  const [ttsStatus, setTtsStatus] = useState('Text to Speech is off.');
   const [isDyslexic, setIsDyslexic] = useState(false);
   const [isTextSpacing, setIsTextSpacing] = useState(false);
   const [isEnlarged, setIsEnlarged] = useState(false);
@@ -132,8 +133,10 @@ export const Layout: React.FC = () => {
     if (isTTSActive) {
       window.speechSynthesis.cancel();
       setIsTTSActive(false);
+      setTtsStatus('Text to Speech stopped.');
     } else {
       setIsTTSActive(true);
+      setTtsStatus('Text to Speech started. Activate again to stop.');
       speakContent();
     }
   };
@@ -144,7 +147,14 @@ export const Layout: React.FC = () => {
     const mainContent = document.querySelector('main')?.innerText;
     if (mainContent) {
       const utterance = new SpeechSynthesisUtterance(mainContent);
-      utterance.onend = () => setIsTTSActive(false);
+      utterance.onend = () => {
+        setIsTTSActive(false);
+        setTtsStatus('Text to Speech finished.');
+      };
+      utterance.onerror = () => {
+        setIsTTSActive(false);
+        setTtsStatus('Text to Speech could not play.');
+      };
       window.speechSynthesis.speak(utterance);
     }
   };
@@ -205,6 +215,7 @@ export const Layout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans transition-colors duration-500 bg-earth-50 dark:bg-earth-900">
+      <div id="tts-status" role="status" aria-live="polite" aria-atomic="true" className="sr-only">{ttsStatus}</div>
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-5 focus:py-3 focus:rounded-xl focus:bg-earth-900 focus:text-white focus:shadow-xl"
@@ -331,6 +342,7 @@ export const Layout: React.FC = () => {
                                 <button 
                                     onClick={toggleTTS}
                                     aria-pressed={isTTSActive}
+                                    aria-describedby="tts-status"
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         isTTSActive 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -339,7 +351,7 @@ export const Layout: React.FC = () => {
                                 >
                                     <div className="flex items-center gap-3">
                                         {isTTSActive ? <Volume2 size={18} /> : <VolumeX size={18} />}
-                                        <span className="text-sm font-medium">Text to Speech</span>
+                                        <span className="text-sm font-medium">{isTTSActive ? 'Stop Text to Speech' : 'Text to Speech'}</span>
                                     </div>
                                     {isTTSActive && <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />}
                                 </button>
@@ -456,8 +468,9 @@ export const Layout: React.FC = () => {
                  <button 
                     onClick={toggleTTS} 
                     className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isTTSActive ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
-                    aria-label="Text to Speech"
+                    aria-label={isTTSActive ? "Stop Text to Speech" : "Start Text to Speech"}
                     aria-pressed={isTTSActive}
+                    aria-describedby="tts-status"
                  >
                     {isTTSActive ? <Volume2 size={20} /> : <VolumeX size={20} />}
                  </button>
@@ -596,7 +609,7 @@ export const Layout: React.FC = () => {
                        <button 
                           type="submit" 
                           disabled={emailStatus === 'submitting'}
-                          className="w-full py-3 bg-sage-600 text-white rounded-xl font-medium hover:bg-sage-700 transition-colors text-sm disabled:opacity-70 shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500"
+                          className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium hover:bg-sage-800 transition-colors text-sm disabled:opacity-70 shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500"
                        >
                           {emailStatus === 'submitting' ? 'Subscribing...' : 'Subscribe Now'}
                        </button>
