@@ -382,3 +382,76 @@ for (const [file, target, canonical, label] of redirects) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, redirectHtml(target, canonical, label));
 }
+
+// Blog posts are part of the React application and therefore use the same
+// Layout.tsx header, footer, accessibility controls, and navigation as every
+// other page. This generator only creates route-specific static HTML entry
+// points for GitHub Pages/SEO; React replaces the fallback after hydration.
+const blogDataPath = path.resolve(__dirname, '..', 'content', 'blog-posts.json');
+if (fs.existsSync(blogDataPath)) {
+  const blogPosts = JSON.parse(fs.readFileSync(blogDataPath, 'utf8'));
+  const appEntryPath = path.join(rootDir, 'index.html');
+  const appEntryHtml = fs.existsSync(appEntryPath) ? fs.readFileSync(appEntryPath, 'utf8') : '';
+
+  const escapeHtml = (value = '') => String(value)
+    .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;').replaceAll("'", '&#039;');
+
+  const buildBlogFallback = (post, file) => {
+    const prefix = linkPrefix(file);
+    const mainNav = [...nav, ...legalNav]
+      .map(([href, label]) => `<li><a href="${href}">${label}</a></li>`)
+      .join('');
+    const image = post.image ? `<figure><img src="${post.image}" alt="${escapeHtml(post.imageAlt)}">${post.caption ? `<figcaption>${escapeHtml(post.caption)}</figcaption>` : ''}</figure>` : '';
+    return absolutizeLocalLinks(`
+      <div id="root">
+        <!-- BEGIN_STATIC_SEO_CONTENT -->
+        <a class="sr-only" href="#content">Skip to content</a>
+        <header role="banner"><nav aria-label="Main navigation"><ul>${mainNav}</ul></nav></header>
+        <main id="content" role="main">
+          <article>
+            <header>
+              <p>${escapeHtml(post.category)}</p>
+              <h1>${escapeHtml(post.title)}</h1>
+              <p>${escapeHtml(post.standfirst)}</p>
+              <p>By <a href="/people/">Charlie Tak Hei Kwong 鄺德希</a> · <time datetime="${escapeHtml(post.dateISO)}">${escapeHtml(post.dateText)}</time></p>
+            </header>
+            ${image}
+            <div>${post.bodyHtml}</div>
+          </article>
+        </main>
+        <!-- END_STATIC_SEO_CONTENT -->
+      </div>`, prefix);
+  };
+
+  for (const post of blogPosts) {
+    const file = `blog/${post.slug}/index.html`;
+    const filePath = path.join(rootDir, file);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    const canonicalUrl = `${SITE_ORIGIN}/blog/${post.slug}/`;
+    const fallback = buildBlogFallback(post, file);
+    let html = appEntryHtml.replace('src="./index.tsx"', 'src="../../index.tsx"');
+    html = html
+      .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(post.title)} | BITS</title>`)
+      .replace(/<meta name="description" content="[^"]*"\s*\/?\>/, `<meta name="description" content="${escapeHtml(post.description)}" />`)
+      .replace(/<link rel="canonical" href="[^"]*"\s*\/?\>/, `<link rel="canonical" href="${canonicalUrl}" />`)
+      .replace(/<meta property="og:type" content="[^"]*"\s*\/?\>/, '<meta property="og:type" content="article" />')
+      .replace(/<meta property="og:title" content="[^"]*"\s*\/?\>/, `<meta property="og:title" content="${escapeHtml(post.title)}" />`)
+      .replace(/<meta property="og:description" content="[^"]*"\s*\/?\>/, `<meta property="og:description" content="${escapeHtml(post.description)}" />`)
+      .replace(/<meta property="og:url" content="[^"]*"\s*\/?\>/, `<meta property="og:url" content="${canonicalUrl}" />`)
+      .replace(/<meta property="og:image" content="[^"]*"\s*\/?\>/, `<meta property="og:image" content="${post.image ? SITE_ORIGIN + post.image : `${SITE_ORIGIN}/images/og-image.jpg`}" />`)
+      .replace(/<meta name="twitter:title" content="[^"]*"\s*\/?\>/, `<meta name="twitter:title" content="${escapeHtml(post.title)}" />`)
+      .replace(/<meta name="twitter:description" content="[^"]*"\s*\/?\>/, `<meta name="twitter:description" content="${escapeHtml(post.description)}" />`)
+      .replace(/<div id="root">[\s\S]*?<\/div>(\s*<script type="module")/, `${fallback}$1`);
+    fs.writeFileSync(filePath, html);
+  }
+
+  // Preserve the old accommodation URL as a redirect to its canonical slug.
+  const oldAccommodation = path.join(rootDir, 'blog', 'finding-private-accommodation-falmouth-penryn', 'index.html');
+  fs.mkdirSync(path.dirname(oldAccommodation), { recursive: true });
+  fs.writeFileSync(oldAccommodation, redirectHtml(
+    '/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/',
+    `${SITE_ORIGIN}/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/`,
+    'the private accommodation guide'
+  ));
+}

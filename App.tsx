@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { PageRoute, TeamMember } from './types';
+import { BlogPostPage } from './components/BlogPostPage';
 import { 
   ArrowRight, Mail, MapPin, Phone, Play, Pause, 
   Facebook, Twitter, Linkedin, CheckCircle2,
@@ -2204,6 +2205,9 @@ const App: React.FC = () => {
           <Route path="/terms-of-use.html" element={<TermsOfUse />} />
           <Route path="/accessibility.html" element={<Accessibility />} />
           <Route path="/research-ethics.html" element={<ResearchEthics />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/blog/finding-private-accommodation-falmouth-penryn" element={<Navigate to="/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/" replace />} />
+          <Route path="/blog/finding-private-accommodation-falmouth-penryn/" element={<Navigate to="/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/" replace />} />
           <Route path="/404.html" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
         </Route>
