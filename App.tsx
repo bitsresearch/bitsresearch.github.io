@@ -268,6 +268,7 @@ interface Workshop {
 
 const WorkshopSection: React.FC = () => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
+  const [campusFilter, setCampusFilter] = useState<'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online'>('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   
@@ -281,6 +282,17 @@ const WorkshopSection: React.FC = () => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState<number>(0);
+
+  const campusOptions: Array<{ value: 'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online'; label: string }> = [
+    { value: 'all', label: 'All' },
+    { value: 'Penryn Campus', label: 'Penryn Campus' },
+    { value: 'Woodlane Campus', label: 'Woodlane Campus' },
+    { value: 'Online', label: 'Online' },
+  ];
+
+  const filteredWorkshops = campusFilter === 'all'
+    ? workshops
+    : workshops.filter((workshop) => workshop.venue.trim().toLowerCase() === campusFilter.toLowerCase());
 
   // Responsive Carousel Logic
   useEffect(() => {
@@ -299,15 +311,17 @@ const WorkshopSection: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Reset index if out of bounds (e.g., resizing window)
+  // Reset index if out of bounds (e.g., resizing window or changing the campus filter)
   useEffect(() => {
-     if (workshops.length > 0) {
-         const maxIndex = Math.max(0, workshops.length - itemsPerPage);
-         if (currentIndex > maxIndex) {
-             setCurrentIndex(maxIndex);
-         }
+     const maxIndex = Math.max(0, filteredWorkshops.length - itemsPerPage);
+     if (currentIndex > maxIndex) {
+         setCurrentIndex(maxIndex);
      }
-  }, [itemsPerPage, workshops.length]);
+  }, [itemsPerPage, filteredWorkshops.length, currentIndex]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [campusFilter]);
 
   useEffect(() => {
     const fetchWorkshops = async () => {
@@ -488,7 +502,7 @@ const WorkshopSection: React.FC = () => {
   };
 
   const nextSlide = () => {
-    if (currentIndex < workshops.length - itemsPerPage) {
+    if (currentIndex < filteredWorkshops.length - itemsPerPage) {
         setCurrentIndex(prev => prev + 1);
     }
   };
@@ -558,26 +572,63 @@ const WorkshopSection: React.FC = () => {
                 <span className="h-px w-12 bg-sage-600"></span>
             </div>
             
-            {workshops.length > itemsPerPage && (
-                <div className="flex gap-2">
-                    <button 
-                        onClick={prevSlide} 
-                        disabled={currentIndex === 0}
-                        className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
-                        aria-label="Previous workshop slide"
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-                    <button 
-                        onClick={nextSlide} 
-                        disabled={currentIndex >= workshops.length - itemsPerPage}
-                        className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
-                        aria-label="Next workshop slide"
-                    >
-                        <ChevronRight size={20} />
-                    </button>
+            <div className="w-full flex flex-col items-center gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-2" role="group" aria-label="Filter workshops by campus">
+                    <span className="text-sm font-semibold text-earth-800 dark:text-earth-200 mr-1">Campus:</span>
+                    {campusOptions.map((option) => {
+                        const isSelected = campusFilter === option.value;
+                        return (
+                            <button
+                                key={option.value}
+                                type="button"
+                                onClick={() => setCampusFilter(option.value)}
+                                aria-pressed={isSelected}
+                                className={`min-h-11 px-4 py-2 rounded-full border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300 ${
+                                    isSelected
+                                        ? 'bg-sage-700 border-sage-700 text-white dark:bg-sage-200 dark:border-sage-200 dark:text-earth-900'
+                                        : 'bg-white dark:bg-earth-800 border-earth-300 dark:border-earth-600 text-earth-800 dark:text-earth-200 hover:bg-earth-100 dark:hover:bg-earth-700'
+                                }`}
+                            >
+                                {option.label}
+                            </button>
+                        );
+                    })}
                 </div>
-            )}
+
+                <p className="text-sm text-earth-700 dark:text-earth-300 text-center">
+                    Not sure if this time works for you?{' '}
+                    <a
+                        href="https://mytimetable.falmouth.ac.uk/schedule"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold underline underline-offset-4 decoration-sage-500 hover:text-sage-700 dark:hover:text-sage-200 focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-sm"
+                    >
+                        Check your class timetable <ExternalLink size={14} className="inline-block ml-0.5 -mt-0.5" aria-hidden="true" />
+                        <span className="sr-only"> (opens in a new tab)</span>
+                    </a>
+                </p>
+
+                {filteredWorkshops.length > itemsPerPage && (
+                    <div className="flex gap-2" aria-label="Workshop carousel controls">
+                        <button 
+                            onClick={prevSlide} 
+                            disabled={currentIndex === 0}
+                            className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                            aria-label="Previous workshop slide"
+                        >
+                            <ChevronLeft size={20} />
+                        </button>
+                        <button 
+                            onClick={nextSlide} 
+                            disabled={currentIndex >= filteredWorkshops.length - itemsPerPage}
+                            className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                            aria-label="Next workshop slide"
+                        >
+                            <ChevronRight size={20} />
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
 
         {workshops.length === 0 || error ? (
@@ -596,6 +647,11 @@ const WorkshopSection: React.FC = () => {
                     Contact Us <ArrowRight size={16} />
                 </Link>
             </div>
+        ) : filteredWorkshops.length === 0 ? (
+            <div className="bg-white dark:bg-earth-800 rounded-3xl p-8 text-center border border-earth-200 dark:border-earth-700 shadow-sm max-w-2xl mx-auto" role="status">
+                <h3 className="text-xl font-serif text-earth-900 dark:text-earth-50 mb-3">No upcoming workshops at this campus</h3>
+                <p className="text-earth-700 dark:text-earth-300">Try another campus filter or choose <strong>All</strong> to see every upcoming workshop.</p>
+            </div>
         ) : (
             <div 
                 className="overflow-hidden -mx-4 px-4 py-4 cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-xl"
@@ -613,17 +669,17 @@ const WorkshopSection: React.FC = () => {
                 ref={carouselRef}
             >
                 <div 
-                    className={`flex transition-transform duration-500 ease-out will-change-transform motion-reduce:transition-none ${workshops.length <= itemsPerPage ? 'justify-center' : 'justify-start'}`} 
+                    className={`flex transition-transform duration-500 ease-out will-change-transform motion-reduce:transition-none ${filteredWorkshops.length <= itemsPerPage ? 'justify-center' : 'justify-start'}`} 
                     style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}
                 >
-                    {workshops.map((ws, idx) => (
+                    {filteredWorkshops.map((ws, idx) => (
                         <div 
                             key={idx} 
                             style={{ width: `${100 / itemsPerPage}%` }} 
                             className="flex-shrink-0 px-3"
                             role="group"
                             aria-roledescription="slide"
-                            aria-label={`${idx + 1} of ${workshops.length}`}
+                            aria-label={`${idx + 1} of ${filteredWorkshops.length}`}
                         >
                             <div className="bg-white dark:bg-earth-800 rounded-3xl p-6 md:p-8 shadow-sm border border-earth-200 dark:border-earth-700 hover:shadow-lg hover:border-sage-400 transition-all duration-300 flex flex-col h-full group">
                                 <div className="flex justify-between items-start mb-4">
