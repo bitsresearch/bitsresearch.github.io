@@ -335,6 +335,15 @@ const WorkshopSection: React.FC = () => {
     return 'bg-sage-700 border-sage-700 text-white dark:bg-sage-200 dark:border-sage-200 dark:text-earth-900';
   };
 
+  const hasConfirmedDateTime = (workshop: Workshop) => {
+    const time = workshop.time.trim();
+    if (!time || /^(tbc|tbd|to be confirmed|to be decided)$/i.test(time)) return false;
+
+    const colonRange = /^\s*\d{1,2}:\d{2}\s*(?:am|pm)?\s*[-–—]\s*\d{1,2}:\d{2}\s*(?:am|pm)?\s*$/i;
+    const compactRange = /^\s*\d{4}\s*[-–—]\s*\d{4}\s*$/;
+    return colonRange.test(time) || compactRange.test(time);
+  };
+
   // Responsive Carousel Logic
   useEffect(() => {
     const handleResize = () => {
@@ -752,29 +761,37 @@ const WorkshopSection: React.FC = () => {
                                 </div>
 
                                 <div className="space-y-2 mt-auto">
-                                    {ws.link ? (
+                                    {ws.link.trim() ? (
                                         <a 
                                             href={ensureAbsoluteUrl(ws.link)} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
-                                            className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                                            className="w-full min-h-11 py-3 bg-sage-700 text-white rounded-xl font-semibold text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
                                             onMouseDown={(e) => e.stopPropagation()}
                                         >
-                                            Register Now <ArrowRight size={16} />
+                                            Save My Place · 1 min <ArrowRight size={16} aria-hidden="true" />
+                                            <span className="sr-only"> (opens in a new tab)</span>
                                         </a>
                                     ) : (
-                                        <button disabled className="w-full py-3 bg-earth-200 text-earth-700 rounded-xl font-medium text-center cursor-not-allowed">
-                                            Registration Closed
+                                        <button
+                                            type="button"
+                                            disabled
+                                            aria-disabled="true"
+                                            className="w-full min-h-11 py-3 bg-earth-200 dark:bg-earth-700 text-earth-700 dark:text-earth-300 border border-earth-300 dark:border-earth-600 rounded-xl font-semibold text-center cursor-not-allowed opacity-80"
+                                        >
+                                            Booking Opens Soon
                                         </button>
                                     )}
                                     
-                                    <button
-                                        onClick={() => downloadICS(ws)}
-                                        className="w-full py-3 bg-transparent border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 rounded-xl font-medium text-center hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-earth-500"
-                                        onMouseDown={(e) => e.stopPropagation()}
-                                    >
-                                        <CalendarPlus size={16} /> Add to My Calendar
-                                    </button>
+                                    {hasConfirmedDateTime(ws) && (
+                                        <button
+                                            onClick={() => downloadICS(ws)}
+                                            className="w-full min-h-11 py-3 bg-transparent border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 rounded-xl font-medium text-center hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-earth-500"
+                                            onMouseDown={(e) => e.stopPropagation()}
+                                        >
+                                            <CalendarPlus size={16} aria-hidden="true" /> Add to My Calendar
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                                 );
@@ -785,18 +802,20 @@ const WorkshopSection: React.FC = () => {
             </div>
         )}
 
-        <p className="mt-7 md:mt-9 text-sm text-earth-700 dark:text-earth-300 text-center leading-relaxed">
-            <span>Not sure if this time works for you?</span>{' '}
-            <a
-                href="https://mytimetable.falmouth.ac.uk/schedule"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold underline underline-offset-4 decoration-sage-500 hover:text-sage-700 dark:hover:text-sage-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-sm"
-            >
-                Check your class timetable <ExternalLink size={14} className="inline-block ml-0.5 -mt-0.5" aria-hidden="true" />
-                <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-        </p>
+        <div className="mt-7 md:mt-9 text-sm text-earth-700 dark:text-earth-300 text-center leading-relaxed">
+            <p className="font-medium">Not sure if this time works for you?</p>
+            <p className="mt-1">
+                <a
+                    href="https://mytimetable.falmouth.ac.uk/schedule"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 font-semibold underline underline-offset-4 decoration-sage-500 hover:text-sage-700 dark:hover:text-sage-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-sm"
+                >
+                    Check your class timetable <ExternalLink size={14} aria-hidden="true" />
+                    <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+            </p>
+        </div>
     </section>
   );
 };
@@ -1032,12 +1051,22 @@ const Home: React.FC = () => {
                 </p>
             </div>
 
-            <a 
-                href={PageRoute.ABOUT} 
-                className="inline-flex items-center gap-2 px-10 py-5 bg-earth-800 text-earth-50 rounded-full text-sm uppercase tracking-widest hover:bg-earth-900 hover:scale-105 transition-all duration-300 shadow-lg"
-            >
-                Read More
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+              <a 
+                  href={PageRoute.ABOUT} 
+                  className="inline-flex min-h-11 items-center justify-center gap-2 px-10 py-4 bg-earth-800 text-earth-50 rounded-full text-sm uppercase tracking-widest hover:bg-earth-900 transition-colors duration-300 shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-earth-900 dark:focus-visible:outline-earth-50"
+              >
+                  Read More
+              </a>
+              <a
+                  href="#upcoming-workshops"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 px-8 py-4 bg-white/90 dark:bg-earth-900/90 text-earth-900 dark:text-earth-50 border-2 border-earth-800 dark:border-earth-200 rounded-full text-sm uppercase tracking-widest hover:bg-earth-100 dark:hover:bg-earth-800 transition-colors duration-300 shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-earth-900 dark:focus-visible:outline-earth-50"
+                  aria-label="See upcoming workshop sessions"
+              >
+                  Upcoming Sessions
+                  <span aria-hidden="true">↓</span>
+              </a>
+            </div>
         </div>
         <button
           type="button"
