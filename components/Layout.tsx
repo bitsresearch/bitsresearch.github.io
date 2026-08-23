@@ -205,6 +205,13 @@ export const Layout: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col font-sans transition-colors duration-500 bg-earth-50 dark:bg-earth-900">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-5 focus:py-3 focus:rounded-xl focus:bg-earth-900 focus:text-white focus:shadow-xl"
+      >
+        Skip to main content
+      </a>
+
       {/* Header */}
       <header className="sticky top-4 z-50 w-full px-4 max-w-7xl mx-auto">
         <div className="bg-white/80 dark:bg-earth-800/80 backdrop-blur-md rounded-full shadow-sm border border-earth-100 dark:border-earth-700 px-6 sm:px-8">
@@ -252,14 +259,16 @@ export const Layout: React.FC = () => {
                             ? 'bg-earth-200 dark:bg-earth-700 text-earth-900 dark:text-earth-100' 
                             : 'hover:bg-earth-100 dark:hover:bg-earth-700 text-earth-600 dark:text-earth-300'
                         }`}
-                        aria-label="Accessibility Options"
+                        aria-label="Accessibility options"
+                        aria-expanded={isAccessMenuOpen}
+                        aria-controls="accessibility-menu"
                         title="Accessibility Options"
                     >
                         <AccessibilityIcon size={20} />
                     </button>
 
                     {isAccessMenuOpen && (
-                        <div className="absolute right-0 mt-3 w-72 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-50 transform origin-top-right transition-all">
+                        <div id="accessibility-menu" className="absolute right-0 mt-3 w-72 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-50 transform origin-top-right transition-all">
                              <div className="flex items-center justify-between px-4 py-3 border-b border-earth-100 dark:border-earth-700 bg-earth-50/50 dark:bg-earth-900/30">
                                 <h3 className="font-serif text-lg text-earth-900 dark:text-earth-50">Accessibility</h3>
                                 <button 
@@ -273,6 +282,7 @@ export const Layout: React.FC = () => {
                              <div className="p-3 space-y-1">
                                 <button 
                                     onClick={() => setIsDyslexic(!isDyslexic)}
+                                    aria-pressed={isDyslexic}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         isDyslexic 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -288,6 +298,7 @@ export const Layout: React.FC = () => {
 
                                 <button 
                                     onClick={() => setIsTextSpacing(!isTextSpacing)}
+                                    aria-pressed={isTextSpacing}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         isTextSpacing 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -303,6 +314,7 @@ export const Layout: React.FC = () => {
 
                                 <button 
                                     onClick={() => setIsEnlarged(!isEnlarged)}
+                                    aria-pressed={isEnlarged}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         isEnlarged 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -318,6 +330,7 @@ export const Layout: React.FC = () => {
                                 
                                 <button 
                                     onClick={toggleTTS}
+                                    aria-pressed={isTTSActive}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         isTTSActive 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -335,6 +348,7 @@ export const Layout: React.FC = () => {
 
                                 <button 
                                     onClick={() => setIsDarkMode(false)}
+                                    aria-pressed={!isDarkMode}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         !isDarkMode 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -350,6 +364,7 @@ export const Layout: React.FC = () => {
 
                                 <button 
                                     onClick={() => setIsDarkMode(true)}
+                                    aria-pressed={isDarkMode}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
                                         isDarkMode 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
@@ -370,7 +385,8 @@ export const Layout: React.FC = () => {
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
                   className="p-2 rounded-full hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors text-earth-600 dark:text-earth-300"
-                  aria-label="Toggle Dark Mode"
+                  aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+                  aria-pressed={isDarkMode}
                   title="Toggle Dark Mode"
                 >
                   {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
@@ -384,7 +400,9 @@ export const Layout: React.FC = () => {
                 ref={mobileBtnRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="p-2 text-earth-800 dark:text-earth-200"
-                aria-label="Toggle navigation menu"
+                aria-label="Main navigation menu"
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-navigation"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
@@ -395,6 +413,7 @@ export const Layout: React.FC = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div 
+            id="mobile-navigation"
             ref={mobileMenuRef}
             className="md:hidden absolute top-24 left-4 right-4 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-40"
           >
@@ -414,6 +433,7 @@ export const Layout: React.FC = () => {
                     onClick={() => setIsDyslexic(!isDyslexic)} 
                     className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isDyslexic ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Dyslexic Font"
+                    aria-pressed={isDyslexic}
                  >
                     <Type size={20} />
                  </button>
@@ -421,6 +441,7 @@ export const Layout: React.FC = () => {
                     onClick={() => setIsTextSpacing(!isTextSpacing)} 
                     className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isTextSpacing ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Text Spacing"
+                    aria-pressed={isTextSpacing}
                  >
                     <MoveHorizontal size={20} />
                  </button>
@@ -428,6 +449,7 @@ export const Layout: React.FC = () => {
                     onClick={() => setIsEnlarged(!isEnlarged)} 
                     className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isEnlarged ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Enlarge Text"
+                    aria-pressed={isEnlarged}
                  >
                     <ZoomIn size={20} />
                  </button>
@@ -435,6 +457,7 @@ export const Layout: React.FC = () => {
                     onClick={toggleTTS} 
                     className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isTTSActive ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Text to Speech"
+                    aria-pressed={isTTSActive}
                  >
                     {isTTSActive ? <Volume2 size={20} /> : <VolumeX size={20} />}
                  </button>
@@ -446,6 +469,7 @@ export const Layout: React.FC = () => {
                     onClick={() => setIsDarkMode(false)} 
                     className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium transition-colors ${!isDarkMode ? 'bg-sage-100 text-sage-700' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Light Theme"
+                    aria-pressed={!isDarkMode}
                  >
                     <Sun size={20} />
                     <span>Light Theme</span>
@@ -454,6 +478,7 @@ export const Layout: React.FC = () => {
                     onClick={() => setIsDarkMode(true)} 
                     className={`flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-medium transition-colors ${isDarkMode ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Dark Theme"
+                    aria-pressed={isDarkMode}
                  >
                     <Moon size={20} />
                     <span>Dark Theme</span>
@@ -465,7 +490,7 @@ export const Layout: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow">
+      <main id="main-content" className="flex-grow" tabIndex={-1}>
         <Outlet />
       </main>
 
@@ -473,7 +498,7 @@ export const Layout: React.FC = () => {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 p-4 bg-sage-500 text-white rounded-full shadow-lg z-50 hover:bg-sage-600 transition-all duration-300 hover:-translate-y-1"
+          className="fixed bottom-8 right-8 p-4 bg-sage-700 text-white rounded-full shadow-lg z-50 hover:bg-sage-800 transition-all duration-300 hover:-translate-y-1"
           aria-label="Back to top"
         >
           <ArrowUp size={20} />
@@ -556,12 +581,13 @@ export const Layout: React.FC = () => {
                        <input type="hidden" name="role" value="Subscriber" />
                        <input type="hidden" name="message" value="Footer Subscription" />
                        
-                       <label htmlFor="newsletter-email" className="sr-only">Your Email Address</label>
+                       <label htmlFor="newsletter-email" className="block text-sm font-medium text-earth-800 dark:text-earth-200">Email address</label>
                        <input 
                           id="newsletter-email"
                           type="email" 
                           name="email" 
-                          placeholder="Your Email Address" 
+                          autoComplete="email"
+                          placeholder="you@example.com" 
                           required
                           pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                           title="Please enter a valid email address (e.g. user@example.com)"

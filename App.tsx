@@ -914,7 +914,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Video Section */}
-      <section className="py-24 my-8 mx-4 md:mx-8 rounded-4xl bg-sage-500 text-earth-50">
+      <section className="py-24 my-8 mx-4 md:mx-8 rounded-4xl bg-sage-700 text-earth-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 md:mb-16 border-b border-sage-400 pb-8">
                 <div className="w-full md:w-auto">
@@ -1136,7 +1136,7 @@ const About: React.FC = () => {
                       "Evaluate and position this intervention as a participatory, student agency-driven framework to foster identity exploration during higher education transition, thereby addressing the limitations of top-down institutional approach."
                   ].map((obj, i) => (
                       <div key={i} className="flex items-start gap-6 bg-white dark:bg-earth-700/50 p-6 md:p-8 rounded-3xl shadow-sm hover:shadow-md hover:border-sage-400 dark:hover:border-sage-500 border border-transparent transition-all">
-                          <div className="flex-shrink-0 w-10 h-10 bg-sage-500 rounded-full flex items-center justify-center text-white font-serif font-bold text-lg">{i + 1}</div>
+                          <div className="flex-shrink-0 w-10 h-10 bg-sage-700 rounded-full flex items-center justify-center text-white font-serif font-bold text-lg">{i + 1}</div>
                           <p className="text-lg text-earth-800 dark:text-earth-200 leading-relaxed font-light">{obj}</p>
                       </div>
                   ))}
@@ -1163,7 +1163,7 @@ const About: React.FC = () => {
           </div>
       </div>
       
-      <div className="mt-12 bg-sage-500 text-earth-50 rounded-3xl p-8 flex items-start gap-4 shadow-sm mx-auto max-w-4xl">
+      <div className="mt-12 bg-sage-700 text-earth-50 rounded-3xl p-8 flex items-start gap-4 shadow-sm mx-auto max-w-4xl">
            <CheckCircle2 size={32} className="flex-shrink-0 mt-1" />
            <div>
                <h4 className="font-serif text-xl font-bold mb-2">Ethical Approval</h4>
@@ -1231,8 +1231,8 @@ const People: React.FC = () => {
                       Charlie is a doctoral researcher and registered teacher passionate about the intersection of creative media and inclusive education. His fully funded research explores how transmedia storytelling can create supportive spaces for students with diverse needs as they navigate their journey into higher education.
                   </p>
                   <div className="flex gap-4">
-                      <a href="https://thkwong.uk" target="_blank" rel="noopener noreferrer" className="p-3 bg-earth-100 dark:bg-earth-700 rounded-full hover:bg-sage-500 hover:text-white transition-colors" title="Website"><Globe size={20} /></a>
-                      <a href="mailto:c.kwong1220251@arts.ac.uk,tk290331@falmouth.ac.uk" className="p-3 bg-earth-100 dark:bg-earth-700 rounded-full hover:bg-sage-500 hover:text-white transition-colors" title="Email"><Mail size={20} /></a>
+                      <a href="https://thkwong.uk" target="_blank" rel="noopener noreferrer" className="p-3 bg-earth-100 dark:bg-earth-700 rounded-full hover:bg-sage-700 hover:text-white transition-colors" aria-label="Visit Charlie Kwong’s website"><Globe size={20} /></a>
+                      <a href="mailto:c.kwong1220251@arts.ac.uk,tk290331@falmouth.ac.uk" className="p-3 bg-earth-100 dark:bg-earth-700 rounded-full hover:bg-sage-700 hover:text-white transition-colors" aria-label="Email Charlie Kwong"><Mail size={20} /></a>
                   </div>
                   <div>
                       <h2 className="font-serif text-2xl text-earth-900 dark:text-earth-50 mb-6">Experience and Research Focus</h2>
@@ -1389,6 +1389,10 @@ const Output: React.FC = () => {
   const onTouchEnd = () => { if (!touchStart || !touchEnd) return; const dist = touchStart - touchEnd; if (dist > 50) nextSlide(); if (dist < -50) prevSlide(); };
   const onMouseDown = (e: React.MouseEvent) => { setIsDragging(true); setDragStartX(e.clientX); };
   const onMouseUp = (e: React.MouseEvent) => { if(!isDragging) return; setIsDragging(false); if(dragStartX - e.clientX > 50) nextSlide(); if(dragStartX - e.clientX < -50) prevSlide(); };
+  const handleCommunityKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  };
 
   const getIcon = (type: string) => {
       const t = type.toLowerCase();
@@ -1428,14 +1432,35 @@ const Output: React.FC = () => {
                          <div className="flex items-center justify-between mb-8 px-2">
                              <h3 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Community Resources</h3>
                              <div className="flex gap-2">
-                                <button onClick={prevSlide} disabled={currentIndex === 0} className="p-2 rounded-full border border-earth-300 hover:bg-earth-100 disabled:opacity-30 dark:border-earth-600 dark:text-earth-300 dark:hover:bg-earth-800"><ChevronLeft size={20} /></button>
-                                <button onClick={nextSlide} disabled={currentIndex >= communityItems.length - itemsPerPage} className="p-2 rounded-full border border-earth-300 hover:bg-earth-100 disabled:opacity-30 dark:border-earth-600 dark:text-earth-300 dark:hover:bg-earth-800"><ChevronRight size={20} /></button>
+                                <button onClick={prevSlide} disabled={currentIndex === 0} aria-label="Previous community resource" className="p-2 rounded-full border border-earth-300 hover:bg-earth-100 disabled:opacity-30 dark:border-earth-600 dark:text-earth-300 dark:hover:bg-earth-800"><ChevronLeft size={20} /></button>
+                                <button onClick={nextSlide} disabled={currentIndex >= communityItems.length - itemsPerPage} aria-label="Next community resource" className="p-2 rounded-full border border-earth-300 hover:bg-earth-100 disabled:opacity-30 dark:border-earth-600 dark:text-earth-300 dark:hover:bg-earth-800"><ChevronRight size={20} /></button>
                              </div>
                          </div>
-                         <div className="overflow-hidden -mx-4 px-4 py-4 cursor-grab active:cursor-grabbing" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} onMouseDown={onMouseDown} onMouseUp={onMouseUp} onMouseLeave={() => setIsDragging(false)}>
+                         <div
+                            className="overflow-hidden -mx-4 px-4 py-4 cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-sage-700 rounded-xl"
+                            onTouchStart={onTouchStart}
+                            onTouchMove={onTouchMove}
+                            onTouchEnd={onTouchEnd}
+                            onMouseDown={onMouseDown}
+                            onMouseUp={onMouseUp}
+                            onMouseLeave={() => setIsDragging(false)}
+                            onKeyDown={handleCommunityKeyDown}
+                            tabIndex={0}
+                            role="region"
+                            aria-roledescription="carousel"
+                            aria-label="Community resources"
+                            aria-live="polite"
+                         >
                             <div className={`flex transition-transform duration-500 ease-out`} style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}>
                                 {communityItems.map((item, idx) => (
-                                    <div key={idx} style={{ width: `${100 / itemsPerPage}%` }} className="flex-shrink-0 px-3">
+                                    <div
+                                        key={idx}
+                                        style={{ width: `${100 / itemsPerPage}%` }}
+                                        className="flex-shrink-0 px-3"
+                                        role="group"
+                                        aria-roledescription="slide"
+                                        aria-label={`${idx + 1} of ${communityItems.length}`}
+                                    >
                                         <a href={item.link} target="_blank" rel="noopener noreferrer" className="block bg-white dark:bg-earth-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-earth-100 dark:border-earth-700 h-full group relative">
                                             <div className="aspect-[3/2] bg-earth-200 dark:bg-earth-700 relative overflow-hidden group">
                                                 <div className="absolute inset-0 bg-sage-500 dark:bg-earth-800 mix-blend-color opacity-100 group-hover:opacity-0 transition-opacity duration-500 z-10 pointer-events-none"></div>
@@ -1457,7 +1482,7 @@ const Output: React.FC = () => {
                     <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-8 px-2">Academic Output</h2>
                     <div className="flex flex-wrap gap-2 mb-8 px-2">
                         {['All', 'Journal Article', 'Book Chapter', 'Conference Paper', 'Conference Presentation'].map(f => (
-                            <button key={f} onClick={() => setAcademicFilter(f)} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${academicFilter === f ? 'bg-sage-500 text-white shadow-md' : 'bg-earth-100 dark:bg-earth-800 text-earth-600 dark:text-earth-300 hover:bg-earth-200 dark:hover:bg-earth-700'}`}>{f}</button>
+                            <button key={f} onClick={() => setAcademicFilter(f)} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${academicFilter === f ? 'bg-sage-700 text-white shadow-md' : 'bg-earth-100 dark:bg-earth-800 text-earth-600 dark:text-earth-300 hover:bg-earth-200 dark:hover:bg-earth-700'}`}>{f}</button>
                         ))}
                     </div>
                     <div className="bg-white dark:bg-earth-800/50 rounded-4xl border border-earth-100 dark:border-earth-700 overflow-hidden">
@@ -1472,7 +1497,7 @@ const Output: React.FC = () => {
                                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-earth-600 dark:text-earth-400"><span>{item.year}</span><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span>{item.type}</span>{item.publication && <><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span className="italic">Published in {item.publication}</span></>}</div>
                                             </div>
                                         </div>
-                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="self-start md:self-center px-5 py-2.5 border border-earth-200 dark:border-earth-600 rounded-full text-sm font-medium text-earth-700 dark:text-earth-300 hover:bg-sage-500 hover:text-white hover:border-sage-500 transition-all flex items-center gap-2">View <ExternalLink size={14} /></a>
+                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="self-start md:self-center px-5 py-2.5 border border-earth-200 dark:border-earth-600 rounded-full text-sm font-medium text-earth-700 dark:text-earth-300 hover:bg-sage-700 hover:text-white hover:border-sage-700 transition-all flex items-center gap-2">View <ExternalLink size={14} /></a>
                                     </div>
                                 ))}
                             </div>
@@ -1618,12 +1643,12 @@ const Contact: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-earth-800 p-8 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700">
         
         <div>
-           <label htmlFor="name" className="sr-only">Name</label>
-           <input name="Name" id="name" placeholder="Name" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
+           <label htmlFor="name" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Name</label>
+           <input name="Name" id="name" autoComplete="name" placeholder="Your name" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
         <div>
-           <label htmlFor="role" className="sr-only">Role</label>
+           <label htmlFor="role" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Role</label>
            <div className="relative">
              <select name="Role" id="role" required defaultValue="" className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all text-earth-900 dark:text-earth-100 appearance-none cursor-pointer">
                 <option value="" disabled>Select your role</option>
@@ -1642,19 +1667,19 @@ const Contact: React.FC = () => {
         </div>
 
         <div>
-            <label htmlFor="email" className="sr-only">Email</label>
-            <input name="Email" id="email" type="email" placeholder="Email" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
+            <label htmlFor="email" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Email address</label>
+            <input name="Email" id="email" type="email" autoComplete="email" placeholder="you@example.com" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
         <div>
-            <label htmlFor="message" className="sr-only">Message</label>
-            <textarea name="Message" id="message" placeholder="Message" required rows={4} className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
+            <label htmlFor="message" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Message</label>
+            <textarea name="Message" id="message" placeholder="How can we help?" required rows={4} className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
         <button 
             type="submit" 
             disabled={status === 'submitting'}
-            className="w-full py-4 bg-sage-500 text-white rounded-xl font-bold text-lg hover:bg-sage-600 transition-colors disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex justify-center items-center gap-2"
+            className="w-full py-4 bg-sage-700 text-white rounded-xl font-bold text-lg hover:bg-sage-800 transition-colors disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex justify-center items-center gap-2"
         >
             {status === 'submitting' ? (
                 <>
@@ -1664,14 +1689,14 @@ const Contact: React.FC = () => {
         </button>
 
         {status === 'success' && (
-            <div className="p-4 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-xl flex items-center gap-3 animate-fade-in">
+            <div role="status" aria-live="polite" className="p-4 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-xl flex items-center gap-3 animate-fade-in">
                 <CheckCircle2 size={20} />
                 <p>Thank you! Your message has been sent successfully.</p>
             </div>
         )}
 
         {status === 'error' && (
-            <div className="p-4 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-xl flex items-center gap-3 animate-fade-in">
+            <div role="alert" aria-live="assertive" className="p-4 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-xl flex items-center gap-3 animate-fade-in">
                 <AlertCircle size={20} />
                 <p>Something went wrong. Please try again later.</p>
             </div>
