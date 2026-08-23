@@ -12,7 +12,7 @@ The site is built with **React, TypeScript, Vite and Tailwind CSS**, and deploye
 
 ## Accessibility
 
-The website is developed with reference to **WCAG 2.2 Level AA**. Accessibility is built into the main website rather than provided as a separate version, with features including keyboard navigation, visible focus, accessible colour contrast, responsive reflow, reduced-motion support, dark/light modes, text controls and optional Text-to-Speech.
+The website is developed with reference to **WCAG 2.2 Level AA**. Accessibility is built into the main website rather than provided as a separate version, with features including keyboard navigation, visible focus, accessible colour contrast, responsive reflow, reduced-motion support, Verdana as the default reading font, optional Atkinson Hyperlegible, dark/light modes, text controls and optional Text-to-Speech. Display preferences are remembered locally in the visitor’s browser.
 
 ## Shared Structure
 

@@ -1752,7 +1752,7 @@ const PrivacyPolicy: React.FC = () => {
       />
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-4">Privacy Policy</h1>
-        <p className="text-earth-700 dark:text-earth-300">Revision Date: 11 March 2026</p>
+        <p className="text-earth-700 dark:text-earth-300">Revision Date: 23 August 2026</p>
       </div>
 
       <div className="bg-white dark:bg-earth-800 p-8 md:p-12 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700 space-y-10">
@@ -1799,12 +1799,23 @@ const PrivacyPolicy: React.FC = () => {
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">2. Third-Party Content and Services</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">2. Accessibility Preferences and Local Storage</h2>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                The website uses browser local storage to remember accessibility display preferences selected by the visitor, including colour theme, font choice, text spacing, and enlarged text. This information remains on the visitor’s device and is not sent to the researcher or used for analytics, advertising, or profiling.
+            </p>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                Text-to-Speech playback is not stored and will not start automatically on another page or future visit. Visitors can change their saved display preferences at any time using the accessibility controls.
+            </p>
+        </section>
+
+        <section className="space-y-4">
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">3. Third-Party Content and Services</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 This website may contain links to, or embedded content from, third-party platforms such as:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
                 <li>YouTube (for research information videos)</li>
+                <li>Google Fonts (for website typography)</li>
                 <li>university webpages</li>
                 <li>external participation or contact forms</li>
             </ul>
@@ -1817,7 +1828,7 @@ const PrivacyPolicy: React.FC = () => {
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">3. Hosting and Infrastructure</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">4. Hosting and Infrastructure</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 The website is hosted through Netlify, which may generate limited server logs for security and operational purposes.
             </p>
@@ -1830,7 +1841,7 @@ const PrivacyPolicy: React.FC = () => {
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">4. Data Protection and Legal Compliance</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">5. Data Protection and Legal Compliance</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 Research data collected through this project will be handled in accordance with relevant data protection laws, including:
             </p>
@@ -1846,7 +1857,7 @@ const PrivacyPolicy: React.FC = () => {
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">5. Your Rights</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">6. Your Rights</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 Depending on your jurisdiction, you may have the right to:
             </p>
@@ -1863,14 +1874,14 @@ const PrivacyPolicy: React.FC = () => {
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">6. Contact</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">7. Contact</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 If you have any questions about this Privacy Policy or how personal data may be handled in relation to this research project, you may contact the researcher using the <Link to={PageRoute.CONTACT} className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact form</Link> provided on this website.
             </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">7. Updates</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">8. Updates</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 This Privacy Policy may be updated from time to time to reflect changes in legal requirements, institutional policies, or the development of the research project.
             </p>
@@ -1991,7 +2002,7 @@ const Accessibility: React.FC = () => {
     <div className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="Accessibility | Building Identity through Stories"
-        description="Read the accessibility statement for Building Identity Through Stories, including clear language, readable design, text-to-speech, dyslexic-friendly fonts, and support options."
+        description="Read the accessibility statement for Building Identity Through Stories, including WCAG 2.2 AA design, keyboard access, readable typography, display preferences, text-to-speech, and support options."
         canonicalPath="/accessibility/"
         ogTitle="Accessibility | Building Identity through Stories"
         ogDescription="Accessibility information for the BITS website, including readable design, display options, text-to-speech, and support requests."
@@ -2014,60 +2025,60 @@ const Accessibility: React.FC = () => {
         <section className="space-y-4">
             <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Commitment to Accessibility</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This website aims to be accessible to as many users as possible. Efforts have been made to design the website in a way that supports a wide range of users, including those with diverse learning needs and accessibility preferences.
+                Building Identity Through Stories is committed to providing a website that is accessible to as many people as possible. The website is designed and developed with reference to the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA.
             </p>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Where possible, the website uses clear language, a simple layout, and readable design to improve usability and accessibility.
-            </p>
-        </section>
-
-        <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Accessibility Features</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                To support accessibility, the site includes features that allow visitors to adjust how content is displayed and read, including:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
-                <li>dyslexic-friendly fonts</li>
-                <li>adjustable text spacing</li>
-                <li>enlarged text</li>
-                <li>text-to-speech functionality</li>
-                <li>light and dark display modes</li>
-            </ul>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                These options allow users to customise the reading experience according to their individual needs and preferences.
+                Accessibility is considered in the underlying page structure and interaction design, rather than relying only on optional accessibility tools.
             </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Use of External Platforms</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">How Accessible This Website Is</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Some information related to the research activities (such as workshop details or event pages) may be hosted on external institutional platforms.
+                The website includes keyboard-accessible navigation, visible focus indicators, colour-contrast checks, responsive text and page reflow, semantic headings and landmarks, skip navigation, accessible forms, reduced-motion support, and appropriate alternative text for images.
             </p>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This approach allows participants to access content through systems that provide established accessibility tools and professional support services, which may include advanced reading tools, translation options, or assistive technologies designed for diverse learners.
+                Verdana is used as the default reading font. Visitors can switch to Atkinson Hyperlegible, increase text size, adjust text spacing, use light or dark display modes, and start optional Text-to-Speech from the accessibility menu.
             </p>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Using these platforms helps ensure that participants can access workshop information through environments designed to support inclusive access and diverse learning needs.
-            </p>
-        </section>
-
-        <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Third-Party Content</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This website may also link to external services (such as YouTube or university webpages). Accessibility features on those platforms are managed by the respective service providers and are outside the control of this website.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                While efforts are made to ensure that content is accessible, some third-party content or tools may not fully meet all accessibility standards.
+                Font, text-size, text-spacing, and colour-theme preferences are remembered in the visitor’s browser on that device so they remain consistent across pages and future visits. These preferences are stored locally and are not sent to the researcher. Text-to-Speech playback is not remembered or started automatically.
             </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Feedback and Support</h2>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">External and Third-Party Content</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                If you experience any accessibility difficulties when using this website, you are welcome to contact the researcher through the <Link to={PageRoute.CONTACT} className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact page</Link> so that alternative formats or additional support can be considered.
+                Some research information, event details, videos, or other resources may be provided through university or third-party platforms. The accessibility of these external services is managed by the organisations that provide them and may be outside the direct control of this website.
+            </p>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                Where possible, an accessible alternative or additional information will be considered if external content creates a barrier to access.
+            </p>
+        </section>
+
+        <section className="space-y-4">
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Feedback and Contact</h2>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                If you experience difficulty accessing any part of this website, or require information in an alternative format, please contact Charlie Tak Hei Kwong 鄺德希 through the <Link to={PageRoute.CONTACT} className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact page</Link>.
             </p>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 Reasonable efforts will be made to respond to accessibility requests within 14 days.
+            </p>
+        </section>
+
+        <section className="space-y-4">
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Technical Information and Testing</h2>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                This website is developed with reference to WCAG 2.2 Level AA. Accessibility is reviewed as the website develops, including page structure, colour contrast, keyboard navigation, responsive behaviour, zoom and reflow, and compatibility with assistive technologies.
+            </p>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                Testing uses a combination of code review, automated accessibility checks, and manual testing. A formal claim of full WCAG 2.2 AA conformance will only be made after final assistive-technology and browser testing has been completed.
+            </p>
+        </section>
+
+        <section className="space-y-4">
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Preparation of This Statement</h2>
+            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+                This statement was last reviewed in August 2026. It will be reviewed following substantial changes to the website, and accessibility testing will continue as new content and features are introduced.
             </p>
         </section>
 

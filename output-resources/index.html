@@ -21,17 +21,36 @@
     <meta name="twitter:description" content="Research outputs, resources, and materials from the BITS doctoral research project." />
     <meta name="twitter:image" content="https://bitsresearch.github.io/images/og-image.jpg" />
     <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "ResearchProject", "name": "Building Identity Through Stories", "alternateName": "BITS", "author": {"@type": "Person", "name": "Charlie Tak Hei Kwong", "alternateName": "鄺德希"}, "about": ["Transmedia storytelling", "Identity exploration", "Student transition", "Higher education transition", "Students with diverse learning journeys", "Inclusive education", "Arts-based educational research"]}, {"@type": "CollectionPage", "name": "Outputs and Resources", "url": "https://bitsresearch.github.io/output-resources/"}, {"@type": "ItemList", "name": "BITS research outputs and resources", "itemListElement": []}]}</script>
+    <script>
+      // Apply saved visual preferences before React renders to avoid theme/font flashing.
+      (() => {
+        try {
+          const key = 'bits.accessibilityPreferences.v1';
+          const saved = window.localStorage.getItem(key);
+          const prefs = saved ? JSON.parse(saved) : null;
+          const useDark = prefs?.theme === 'dark' || (!prefs?.theme && window.matchMedia?.('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', Boolean(useDark));
+          document.documentElement.classList.toggle('font-atkinson', prefs?.font === 'atkinson');
+          document.documentElement.classList.toggle('text-enlarged', Boolean(prefs?.enlargedText));
+          window.addEventListener('DOMContentLoaded', () => {
+            document.body?.classList.toggle('spacing-enhanced', Boolean(prefs?.textSpacing));
+          }, { once: true });
+        } catch {
+          // Ignore unavailable/corrupt storage and continue with accessible defaults.
+        }
+      })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         darkMode: 'class',
-        theme: { extend: { colors: { earth: { 50: '#F5F2ED', 100: '#EBE8E1', 200: '#DAD5CB', 300: '#D1C7BE', 400: '#B8AEA4', 500: '#948D81', 600: '#7A7267', 700: '#5C5148', 800: '#3E3630', 900: '#1A1614' }, sage: { 50:  '#F2F5F3', 100: '#E6EBE7', 200: '#CDD8CF', 300: '#B4C4B7', 400: '#9BB1A0', 500: '#8F9F8C', 600: '#728070', 700: '#566054', 800: '#3A4038', 900: '#1D201C' } }, fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Chewy', 'cursive'], dyslexic: ['"Comic Sans MS"', '"Comic Sans"', 'cursive'] }, borderRadius: { '3xl': '1.5rem', '4xl': '2rem' } } }
+        theme: { extend: { colors: { earth: { 50: '#F5F2ED', 100: '#EBE8E1', 200: '#DAD5CB', 300: '#D1C7BE', 400: '#B8AEA4', 500: '#948D81', 600: '#7A7267', 700: '#5C5148', 800: '#3E3630', 900: '#1A1614' }, sage: { 50:  '#F2F5F3', 100: '#E6EBE7', 200: '#CDD8CF', 300: '#B4C4B7', 400: '#9BB1A0', 500: '#8F9F8C', 600: '#728070', 700: '#566054', 800: '#3A4038', 900: '#1D201C' } }, fontFamily: { sans: ['Verdana', 'Geneva', 'Tahoma', 'sans-serif'], serif: ['Chewy', 'cursive'], hyperlegible: ['"Atkinson Hyperlegible"', 'Verdana', 'sans-serif'] }, borderRadius: { '3xl': '1.5rem', '4xl': '2rem' } } }
       }
     </script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Chewy&family=Inter:wght@300;400;500;600&display=swap');
-      body { font-family: 'Inter', sans-serif; }
-      body.font-dyslexic, body.font-dyslexic * { font-family: "Comic Sans MS", "Comic Sans", cursive !important; }
+      @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Chewy&display=swap');
+      body { font-family: Verdana, Geneva, Tahoma, sans-serif; }
+      html.font-atkinson body, html.font-atkinson body * { font-family: 'Atkinson Hyperlegible', Verdana, Geneva, Tahoma, sans-serif !important; }
       body.spacing-enhanced p, body.spacing-enhanced span, body.spacing-enhanced h1, body.spacing-enhanced h2, body.spacing-enhanced h3, body.spacing-enhanced h4, body.spacing-enhanced h5, body.spacing-enhanced h6, body.spacing-enhanced li, body.spacing-enhanced a { line-height: 2 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
       body.spacing-enhanced p { margin-bottom: 2em !important; }
       html.text-enlarged { font-size: 120%; }
@@ -46,6 +65,10 @@
   </head>
   <body class="bg-earth-50 text-earth-900 dark:bg-earth-900 dark:text-earth-50 transition-colors duration-300">
     
+      
+      
+      
+      
       
       
       

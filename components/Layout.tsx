@@ -31,14 +31,49 @@ const AccessibilityIcon = ({ size = 24, className }: { size?: number, className?
   </svg>
 );
 
+const ACCESSIBILITY_PREFS_KEY = 'bits.accessibilityPreferences.v1';
+
+type AccessibilityPreferences = {
+  theme: 'light' | 'dark';
+  font: 'verdana' | 'atkinson';
+  textSpacing: boolean;
+  enlargedText: boolean;
+};
+
+const getInitialAccessibilityPreferences = (): AccessibilityPreferences => {
+  const systemDark = typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches;
+  const fallback: AccessibilityPreferences = {
+    theme: systemDark ? 'dark' : 'light',
+    font: 'verdana',
+    textSpacing: false,
+    enlargedText: false,
+  };
+
+  if (typeof window === 'undefined') return fallback;
+  try {
+    const saved = window.localStorage.getItem(ACCESSIBILITY_PREFS_KEY);
+    if (!saved) return fallback;
+    const parsed = JSON.parse(saved) as Partial<AccessibilityPreferences>;
+    return {
+      theme: parsed.theme === 'dark' || parsed.theme === 'light' ? parsed.theme : fallback.theme,
+      font: parsed.font === 'atkinson' ? 'atkinson' : 'verdana',
+      textSpacing: Boolean(parsed.textSpacing),
+      enlargedText: Boolean(parsed.enlargedText),
+    };
+  } catch {
+    return fallback;
+  }
+};
+
 export const Layout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const initialPreferences = useRef<AccessibilityPreferences>(getInitialAccessibilityPreferences());
+  const [isDarkMode, setIsDarkMode] = useState(initialPreferences.current.theme === 'dark');
   const [isTTSActive, setIsTTSActive] = useState(false);
   const [ttsStatus, setTtsStatus] = useState('Text to Speech is off.');
-  const [isDyslexic, setIsDyslexic] = useState(false);
-  const [isTextSpacing, setIsTextSpacing] = useState(false);
-  const [isEnlarged, setIsEnlarged] = useState(false);
+  const [isAtkinsonFont, setIsAtkinsonFont] = useState(initialPreferences.current.font === 'atkinson');
+  const [isTextSpacing, setIsTextSpacing] = useState(initialPreferences.current.textSpacing);
+  const [isEnlarged, setIsEnlarged] = useState(initialPreferences.current.enlargedText);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [emailStatus, setEmailStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [isAccessMenuOpen, setIsAccessMenuOpen] = useState(false);
@@ -79,41 +114,29 @@ export const Layout: React.FC = () => {
     if (!location.hash) window.scrollTo(0, 0);
   }, [location.pathname, location.hash]);
 
-  // Handle Dark Mode
+  // Apply and persist accessibility preferences. Visual preferences are stored locally
+  // on this device; TTS playback is intentionally never auto-started or persisted.
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
+    document.documentElement.classList.toggle('dark', isDarkMode);
+    document.documentElement.classList.toggle('font-atkinson', isAtkinsonFont);
+    document.body.classList.toggle('spacing-enhanced', isTextSpacing);
+    document.documentElement.classList.toggle('text-enlarged', isEnlarged);
 
-  // Handle Dyslexic Font
-  useEffect(() => {
-    if (isDyslexic) {
-      document.body.classList.add('font-dyslexic');
-    } else {
-      document.body.classList.remove('font-dyslexic');
-    }
-  }, [isDyslexic]);
+    const preferences: AccessibilityPreferences = {
+      theme: isDarkMode ? 'dark' : 'light',
+      font: isAtkinsonFont ? 'atkinson' : 'verdana',
+      textSpacing: isTextSpacing,
+      enlargedText: isEnlarged,
+    };
 
-  // Handle Text Spacing
-  useEffect(() => {
-    if (isTextSpacing) {
-      document.body.classList.add('spacing-enhanced');
-    } else {
-      document.body.classList.remove('spacing-enhanced');
+    try {
+      window.localStorage.setItem(ACCESSIBILITY_PREFS_KEY, JSON.stringify(preferences));
+    } catch {
+      // The site remains fully usable if storage is unavailable or blocked.
     }
-  }, [isTextSpacing]);
+  }, [isDarkMode, isAtkinsonFont, isTextSpacing, isEnlarged]);
 
-  // Handle Enlarged Text
-  useEffect(() => {
-    if (isEnlarged) {
-      document.documentElement.classList.add('text-enlarged');
-    } else {
-      document.documentElement.classList.remove('text-enlarged');
-    }
-  }, [isEnlarged]);
+
 
   // Close menus when clicking outside
   useEffect(() => {
@@ -337,19 +360,19 @@ export const Layout: React.FC = () => {
                              </div>
                              <div className="p-3 space-y-1">
                                 <button 
-                                    onClick={() => setIsDyslexic(!isDyslexic)}
-                                    aria-pressed={isDyslexic}
+                                    onClick={() => setIsAtkinsonFont(!isAtkinsonFont)}
+                                    aria-pressed={isAtkinsonFont}
                                     className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl transition-colors ${
-                                        isDyslexic 
+                                        isAtkinsonFont 
                                         ? 'bg-sage-100 dark:bg-sage-900/40 text-sage-700 dark:text-sage-200' 
                                         : 'hover:bg-earth-50 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300'
                                     }`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <Type size={18} />
-                                        <span className="text-sm font-medium">Dyslexic Font</span>
+                                        <span className="text-sm font-medium">Atkinson Hyperlegible</span>
                                     </div>
-                                    {isDyslexic && <Check size={16} />}
+                                    {isAtkinsonFont && <Check size={16} />}
                                 </button>
 
                                 <button 
@@ -489,10 +512,10 @@ export const Layout: React.FC = () => {
               ))}
               <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-earth-100 dark:border-earth-700">
                  <button 
-                    onClick={() => setIsDyslexic(!isDyslexic)} 
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isDyslexic ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
-                    aria-label="Dyslexic Font"
-                    aria-pressed={isDyslexic}
+                    onClick={() => setIsAtkinsonFont(!isAtkinsonFont)} 
+                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isAtkinsonFont ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
+                    aria-label="Use Atkinson Hyperlegible font"
+                    aria-pressed={isAtkinsonFont}
                  >
                     <Type size={20} />
                  </button>

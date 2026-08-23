@@ -239,25 +239,32 @@ const pageContent = {
     <section>
       <h1>Accessibility</h1>
       <h2>Commitment to Accessibility</h2>
-      <p>This website aims to be accessible to as many users as possible. Efforts have been made to design the website in a way that supports a wide range of users, including those with diverse learning needs and accessibility preferences.</p>
-      <p>Where possible, the website uses clear language, a simple layout, and readable design to improve usability and accessibility.</p>
+      <p>Building Identity Through Stories is committed to providing a website that is accessible to as many people as possible. The website is designed and developed with reference to the Web Content Accessibility Guidelines (WCAG) 2.2 Level AA.</p>
+      <p>Accessibility is considered in the underlying page structure and interaction design, rather than relying only on optional accessibility tools.</p>
     </section>
     <section>
-      <h2>Accessibility Features</h2>
-      <p>To support accessibility, the site includes features that allow visitors to adjust how content is displayed and read, including dyslexic-friendly fonts, adjustable text spacing, enlarged text, text-to-speech functionality, and light and dark display modes.</p>
+      <h2>How Accessible This Website Is</h2>
+      <p>The website includes keyboard-accessible navigation, visible focus indicators, colour-contrast checks, responsive text and page reflow, semantic headings and landmarks, skip navigation, accessible forms, reduced-motion support, and appropriate alternative text for images.</p>
+      <p>Verdana is used as the default reading font. Visitors can switch to Atkinson Hyperlegible, increase text size, adjust text spacing, use light or dark display modes, and start optional Text-to-Speech.</p>
+      <p>Font, text-size, text-spacing, and colour-theme preferences are remembered in the visitor's browser on that device. These preferences are stored locally and are not sent to the researcher. Text-to-Speech playback is not remembered or started automatically.</p>
     </section>
     <section>
-      <h2>Use of External Platforms</h2>
-      <p>Some information related to the research activities may be hosted on external institutional platforms. This allows participants to access content through systems that provide established accessibility tools and professional support services.</p>
+      <h2>External and Third-Party Content</h2>
+      <p>Some research information, event details, videos, or other resources may be provided through university or third-party platforms. The accessibility of these external services is managed by the organisations that provide them and may be outside the direct control of this website.</p>
+      <p>Where possible, an accessible alternative or additional information will be considered if external content creates a barrier to access.</p>
     </section>
     <section>
-      <h2>Third-Party Content</h2>
-      <p>This website may also link to external services. Accessibility features on those platforms are managed by the respective service providers and are outside the control of this website.</p>
-    </section>
-    <section>
-      <h2>Feedback and Support</h2>
-      <p>If you experience any accessibility difficulties when using this website, you are welcome to contact the researcher through the <a href="/contact/">contact page</a> so that alternative formats or additional support can be considered.</p>
+      <h2>Feedback and Contact</h2>
+      <p>If you experience difficulty accessing any part of this website, or require information in an alternative format, please contact Charlie Tak Hei Kwong 鄺德希 through the <a href="/contact/">contact page</a>.</p>
       <p>Reasonable efforts will be made to respond to accessibility requests within 14 days.</p>
+    </section>
+    <section>
+      <h2>Technical Information and Testing</h2>
+      <p>This website is developed with reference to WCAG 2.2 Level AA. Testing uses a combination of code review, automated accessibility checks, and manual testing. A formal claim of full WCAG 2.2 AA conformance will only be made after final assistive-technology and browser testing has been completed.</p>
+    </section>
+    <section>
+      <h2>Preparation of This Statement</h2>
+      <p>This statement was last reviewed in August 2026. It will be reviewed following substantial changes to the website, and accessibility testing will continue as new content and features are introduced.</p>
     </section>
   `,
   '/research-ethics/': `
