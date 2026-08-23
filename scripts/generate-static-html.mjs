@@ -77,7 +77,7 @@ const pageContent = {
     <section>
       <h2>How This Project Brings Different Ideas Together</h2>
       <p>This research connects participatory arts practice with inclusive education to develop transmedia storytelling workshops for students with diverse learning journeys transitioning into higher education. Through transmedia storytelling, students will explore identity, belonging, and their learning journeys in different ways.</p>
-      <img src="/images/transmedia-storytelling-workshop.png" alt="Diagram showing the research framework of the BITS project." />
+      <img src="/images/transmedia-storytelling-workshop.png" alt="Diagram showing the BITS research framework: Transmedia Storytelling Workshops at the centre, framed as an Educational Intervention within Inclusive Education and Practice, informed by Participatory Arts Practice." />
     </section>
     <section>
       <h2>Ethical Approval</h2>
@@ -274,8 +274,12 @@ const pageContent = {
     <section>
       <h1>Page Not Found</h1>
       <p>This page could not be found on the BITS doctoral research website.</p>
-      <p>You will be redirected to Get Involved in <strong>7</strong> seconds.</p>
-      <p><a href="/get-involved/">Go to Get Involved now</a></p>
+      <p>Choose where you would like to go next.</p>
+      <ul>
+        <li><a href="/">Return Home</a></li>
+        <li><a href="/get-involved/">Get Involved</a></li>
+        <li><a href="/contact/">Contact Us</a></li>
+      </ul>
     </section>
   `,
 };

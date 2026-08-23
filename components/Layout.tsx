@@ -20,6 +20,8 @@ const AccessibilityIcon = ({ size = 24, className }: { size?: number, className?
     strokeLinecap="round" 
     strokeLinejoin="round" 
     className={className}
+    aria-hidden="true"
+    focusable="false"
   >
     <circle cx="12" cy="12" r="10" />
     <circle cx="12" cy="7.5" r="1.5" fill="currentColor" className="stroke-none" />
@@ -45,11 +47,37 @@ export const Layout: React.FC = () => {
   const accessMenuRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const mobileBtnRef = useRef<HTMLButtonElement>(null);
+  const previousPathRef = useRef(location.pathname);
+
+  // Keep the main landmark named by the page heading and manage focus on SPA route changes.
+  useEffect(() => {
+    const main = document.getElementById('main-content');
+    if (!main) return;
+
+    const heading = main.querySelector<HTMLElement>('h1');
+    if (heading) {
+      if (!heading.id) heading.id = 'page-heading';
+      main.setAttribute('aria-labelledby', heading.id);
+    } else {
+      main.removeAttribute('aria-labelledby');
+    }
+
+    if (previousPathRef.current !== location.pathname) {
+      setIsMenuOpen(false);
+      setIsAccessMenuOpen(false);
+      window.requestAnimationFrame(() => {
+        main.focus({ preventScroll: true });
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      });
+    }
+
+    previousPathRef.current = location.pathname;
+  }, [location.pathname]);
 
   // Auto scroll to top on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+    if (!location.hash) window.scrollTo(0, 0);
+  }, [location.pathname, location.hash]);
 
   // Handle Dark Mode
   useEffect(() => {
@@ -113,6 +141,23 @@ export const Layout: React.FC = () => {
     
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isAccessMenuOpen, isMenuOpen]);
+
+  // Allow keyboard users to dismiss open menus with Escape.
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      if (isAccessMenuOpen) {
+        setIsAccessMenuOpen(false);
+        accessMenuRef.current?.querySelector<HTMLButtonElement>('button[aria-controls="accessibility-menu"]')?.focus();
+      }
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+        mobileBtnRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [isAccessMenuOpen, isMenuOpen]);
 
   // Handle Scroll to Top Button Visibility
@@ -242,7 +287,7 @@ export const Layout: React.FC = () => {
 
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center space-x-2">
-              <nav className="flex items-center bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 mr-4">
+              <nav aria-label="Main navigation" className="flex items-center bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 mr-4">
                 {navLinks.map((link) => (
                   <NavLink
                     key={link.name}
@@ -251,7 +296,7 @@ export const Layout: React.FC = () => {
                       `px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 ${
                         isActive 
                         ? 'bg-earth-800 text-white shadow-md font-bold' 
-                        : 'text-earth-600 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800'
+                        : 'text-earth-700 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800'
                       }`
                     }
                   >
@@ -265,10 +310,10 @@ export const Layout: React.FC = () => {
                 <div className="relative" ref={accessMenuRef}>
                     <button
                         onClick={() => setIsAccessMenuOpen(!isAccessMenuOpen)}
-                        className={`p-2 rounded-full transition-all ${
+                        className={`min-w-11 min-h-11 inline-flex items-center justify-center p-2 rounded-full transition-all ${
                             isAccessMenuOpen 
                             ? 'bg-earth-200 dark:bg-earth-700 text-earth-900 dark:text-earth-100' 
-                            : 'hover:bg-earth-100 dark:hover:bg-earth-700 text-earth-600 dark:text-earth-300'
+                            : 'hover:bg-earth-100 dark:hover:bg-earth-700 text-earth-700 dark:text-earth-300'
                         }`}
                         aria-label="Accessibility options"
                         aria-expanded={isAccessMenuOpen}
@@ -284,7 +329,7 @@ export const Layout: React.FC = () => {
                                 <h3 className="font-serif text-lg text-earth-900 dark:text-earth-50">Accessibility</h3>
                                 <button 
                                   onClick={() => setIsAccessMenuOpen(false)}
-                                  className="p-1.5 rounded-full hover:bg-earth-200 dark:hover:bg-earth-700 text-earth-500 hover:text-earth-900 dark:hover:text-earth-100 transition-colors"
+                                  className="min-w-9 min-h-9 inline-flex items-center justify-center p-1.5 rounded-full hover:bg-earth-200 dark:hover:bg-earth-700 text-earth-500 hover:text-earth-900 dark:hover:text-earth-100 transition-colors"
                                   aria-label="Close Accessibility Menu"
                                 >
                                   <X size={18} />
@@ -396,7 +441,7 @@ export const Layout: React.FC = () => {
 
                 <button
                   onClick={() => setIsDarkMode(!isDarkMode)}
-                  className="p-2 rounded-full hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors text-earth-600 dark:text-earth-300"
+                  className="min-w-11 min-h-11 inline-flex items-center justify-center p-2 rounded-full hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors text-earth-700 dark:text-earth-300"
                   aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                   aria-pressed={isDarkMode}
                   title="Toggle Dark Mode"
@@ -411,7 +456,7 @@ export const Layout: React.FC = () => {
               <button
                 ref={mobileBtnRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 text-earth-800 dark:text-earth-200"
+                className="min-w-11 min-h-11 inline-flex items-center justify-center p-2 text-earth-800 dark:text-earth-200"
                 aria-label="Main navigation menu"
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-navigation"
@@ -426,6 +471,8 @@ export const Layout: React.FC = () => {
         {isMenuOpen && (
           <div 
             id="mobile-navigation"
+            role="navigation"
+            aria-label="Mobile navigation"
             ref={mobileMenuRef}
             className="md:hidden absolute top-24 left-4 right-4 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-40"
           >
@@ -534,7 +581,7 @@ export const Layout: React.FC = () => {
                     onContextMenu={(e) => e.preventDefault()}
                 />
               </div>
-              <p className="text-earth-600 dark:text-earth-400 max-w-sm text-sm leading-loose">
+              <p className="text-earth-700 dark:text-earth-300 max-w-sm text-sm leading-loose">
                 Every story, every one matters in transition. Join our workshops to co-create support for your journey and others’ as students with diverse learning journey.
               </p>
             </div>
@@ -604,12 +651,12 @@ export const Layout: React.FC = () => {
                           required
                           pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                           title="Please enter a valid email address (e.g. user@example.com)"
-                          className="w-full px-0 py-3 bg-transparent border-b border-earth-300 dark:border-earth-700 focus:outline-none focus:border-sage-500 dark:focus:border-sage-400 text-earth-900 dark:text-earth-100 placeholder-earth-500 text-sm transition-all rounded-none"
+                          className="w-full px-0 py-3 bg-transparent border-b border-earth-300 dark:border-earth-700 focus:outline-none focus:border-sage-700 dark:focus:border-sage-300 text-earth-900 dark:text-earth-100 placeholder-earth-700 dark:placeholder-earth-400 text-sm transition-all rounded-none"
                        />
                        <button 
                           type="submit" 
                           disabled={emailStatus === 'submitting'}
-                          className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium hover:bg-sage-800 transition-colors text-sm disabled:opacity-70 shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500"
+                          className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium hover:bg-sage-800 transition-colors text-sm disabled:opacity-70 shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
                        >
                           {emailStatus === 'submitting' ? 'Subscribing...' : 'Subscribe Now'}
                        </button>
@@ -623,14 +670,14 @@ export const Layout: React.FC = () => {
           </div>
           
           <div className="mt-16 pt-8 border-t border-earth-200 dark:border-earth-700 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-earth-500 dark:text-earth-500">
+            <p className="text-xs text-earth-700 dark:text-earth-300">
               © {new Date().getFullYear()} bits(~) Research Project. All rights reserved.
             </p>
             <a 
                 href="https://creativecommons.org/licenses/by-nc/4.0/deed.en"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-xs text-earth-500 font-medium hover:text-sage-600 dark:hover:text-sage-400 transition-colors"
+                className="flex items-center gap-2 text-xs text-earth-700 dark:text-earth-300 font-medium hover:text-sage-700 dark:hover:text-sage-300 transition-colors"
             >
                 Attribution-NonCommercial (CC BY-NC 4.0)
             </a>

@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react
 import { Layout } from './components/Layout';
 import { PageRoute, TeamMember } from './types';
 import { 
-  ArrowRight, Mail, MapPin, Phone, Play, 
+  ArrowRight, Mail, MapPin, Phone, Play, Pause, 
   Facebook, Twitter, Linkedin, CheckCircle2,
   BookOpen, FileText, Presentation, Mic, Globe, Instagram, Calendar, Clock, MapPin as MapPinIcon, AlertCircle, CalendarPlus,
   ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake
@@ -234,7 +234,7 @@ const linkify = (text: string) => {
           href={part} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-sage-600 dark:text-sage-400 hover:underline break-all"
+          className="text-sage-700 dark:text-sage-300 hover:underline break-all"
           onMouseDown={(e) => e.stopPropagation()} // Prevent drag/swipe interference
         >
           {part}
@@ -562,7 +562,7 @@ const WorkshopSection: React.FC = () => {
                     <button 
                         onClick={prevSlide} 
                         disabled={currentIndex === 0}
-                        className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-500"
+                        className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
                         aria-label="Previous workshop slide"
                     >
                         <ChevronLeft size={20} />
@@ -570,7 +570,7 @@ const WorkshopSection: React.FC = () => {
                     <button 
                         onClick={nextSlide} 
                         disabled={currentIndex >= workshops.length - itemsPerPage}
-                        className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-500"
+                        className="p-3 rounded-full border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 hover:bg-earth-100 dark:hover:bg-earth-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
                         aria-label="Next workshop slide"
                     >
                         <ChevronRight size={20} />
@@ -590,14 +590,14 @@ const WorkshopSection: React.FC = () => {
                 </p>
                 <Link 
                     to={PageRoute.CONTACT}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full text-sm font-medium hover:bg-sage-700 dark:hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-sage-500"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full text-sm font-medium hover:bg-sage-700 dark:hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300"
                 >
                     Contact Us <ArrowRight size={16} />
                 </Link>
             </div>
         ) : (
             <div 
-                className="overflow-hidden -mx-4 px-4 py-4 cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-sage-500 rounded-xl"
+                className="overflow-hidden -mx-4 px-4 py-4 cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-xl"
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
@@ -658,13 +658,13 @@ const WorkshopSection: React.FC = () => {
                                             href={ensureAbsoluteUrl(ws.link)} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
-                                            className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-500"
+                                            className="w-full py-3 bg-sage-700 text-white rounded-xl font-medium text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
                                             onMouseDown={(e) => e.stopPropagation()}
                                         >
                                             Register Now <ArrowRight size={16} />
                                         </a>
                                     ) : (
-                                        <button disabled className="w-full py-3 bg-earth-200 text-earth-600 rounded-xl font-medium text-center cursor-not-allowed">
+                                        <button disabled className="w-full py-3 bg-earth-200 text-earth-700 rounded-xl font-medium text-center cursor-not-allowed">
                                             Registration Closed
                                         </button>
                                     )}
@@ -712,14 +712,14 @@ const ResearchUpdate: React.FC = () => {
       />
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">Research Update</h1>
-        <p className="text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto font-light">
+        <p className="text-xl text-earth-700 dark:text-earth-300 max-w-2xl mx-auto font-light">
           Video updates loaded from the published research playlist.
         </p>
       </div>
       {loading ? (
         <div className="flex justify-center py-20"><Loader2 className="animate-spin text-sage-500" size={40} /></div>
       ) : researchVideos.length === 0 ? (
-        <div className="text-center py-12 text-earth-600 dark:text-earth-400">No updates available at the moment.</div>
+        <div className="text-center py-12 text-earth-700 dark:text-earth-300">No updates available at the moment.</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {researchVideos.map((video, idx) => (
@@ -737,12 +737,24 @@ const ResearchUpdate: React.FC = () => {
 const Home: React.FC = () => {
   const location = useLocation();
   const [bgIndex, setBgIndex] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 
   useEffect(() => {
     if (location.hash === '#upcoming-workshops') {
       const element = document.getElementById('upcoming-workshops');
       if (element) {
-        setTimeout(() => element.scrollIntoView({ behavior: 'smooth' }), 100);
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.setTimeout(() => {
+          element.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          const heading = element.querySelector<HTMLElement>('h2');
+          if (heading) {
+            heading.tabIndex = -1;
+            heading.focus({ preventScroll: true });
+            heading.addEventListener('blur', () => heading.removeAttribute('tabindex'), { once: true });
+          }
+        }, 100);
       }
     }
   }, [location.hash]);
@@ -848,11 +860,12 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (isHeroPaused) return;
+    const interval = window.setInterval(() => {
       setBgIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // Change image every 5 seconds
-    return () => clearInterval(interval);
-  }, [heroImages.length]);
+    }, 5000);
+    return () => window.clearInterval(interval);
+  }, [heroImages.length, isHeroPaused]);
 
   return (
     <div className="w-full">
@@ -885,7 +898,8 @@ const Home: React.FC = () => {
               <img 
                 key={src}
                 src={src} 
-                alt={`Studio Background ${index + 1}`} 
+                alt=""
+                aria-hidden="true" 
                 className={`absolute inset-0 w-full h-full object-cover select-none transition-opacity duration-1000 ease-in-out blur-[6px] scale-105 ${bgIndex === index ? 'opacity-100' : 'opacity-0'}`}
                 onContextMenu={(e) => e.preventDefault()}
                 draggable={false}
@@ -911,6 +925,15 @@ const Home: React.FC = () => {
                 Read More
             </a>
         </div>
+        <button
+          type="button"
+          onClick={() => setIsHeroPaused((paused) => !paused)}
+          className="absolute bottom-5 right-5 z-30 min-w-11 min-h-11 inline-flex items-center justify-center rounded-full bg-earth-900/80 text-white border border-white/40 shadow-md hover:bg-earth-900 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-earth-800"
+          aria-label={isHeroPaused ? 'Resume background slideshow' : 'Pause background slideshow'}
+          title={isHeroPaused ? 'Resume background slideshow' : 'Pause background slideshow'}
+        >
+          {isHeroPaused ? <Play size={18} aria-hidden="true" /> : <Pause size={18} aria-hidden="true" />}
+        </button>
       </section>
 
       {/* Video Section */}
@@ -1018,7 +1041,7 @@ const Home: React.FC = () => {
       {/* Institutional Affiliation Section */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto text-center border-t border-earth-200 dark:border-earth-800 pt-16">
-            <p className="text-earth-600 dark:text-earth-400 text-lg md:text-xl mb-12 font-light leading-relaxed">
+            <p className="text-earth-700 dark:text-earth-300 text-lg md:text-xl mb-12 font-light leading-relaxed">
                 This doctoral research is registered at the <span className="font-medium text-earth-800 dark:text-earth-200">University of the Arts London</span> and <span className="font-medium text-earth-800 dark:text-earth-200">Falmouth University</span> in the United Kingdom. This study received ethical approval from the Research Integrity & Ethics Committee (Ref: RIEC 25-222) and will be conducted from 1 January 2026 to 31 December 2028.
             </p>
             <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 transition-all duration-500">
@@ -1077,7 +1100,7 @@ const About: React.FC = () => {
       />
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">About the Research</h1>
-        <p className="text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto font-light">
+        <p className="text-xl text-earth-700 dark:text-earth-300 max-w-2xl mx-auto font-light">
           Supporting transition through transmedia storytelling.
         </p>
       </div>
@@ -1113,7 +1136,7 @@ const About: React.FC = () => {
              <h3 className="font-serif text-2xl mb-4 text-earth-900 dark:text-earth-100">Keywords</h3>
              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {['Transmedia Storytelling', 'Identity', 'Student Transition', 'Educational Intervention', 'Arts-based Educational Research'].map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm font-medium text-earth-600 dark:text-earth-400">
+                    <li key={i} className="flex items-start gap-2 text-sm font-medium text-earth-700 dark:text-earth-300">
                         <span className="w-2 h-2 mt-1.5 flex-shrink-0 bg-sage-500 rounded-full"></span>
                         <span>{item}</span>
                     </li>
@@ -1127,7 +1150,7 @@ const About: React.FC = () => {
           <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
                   <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Research Objectives</h3>
-                  <p className="text-earth-600 dark:text-earth-400">Our core goals driving this study forward.</p>
+                  <p className="text-earth-700 dark:text-earth-300">Our core goals driving this study forward.</p>
               </div>
               <div className="grid grid-cols-1 gap-6">
                   {[
@@ -1210,7 +1233,7 @@ const People: React.FC = () => {
       />
       <div className="text-center mb-20">
         <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">People</h1>
-        <p className="text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto font-light">Researcher, Supervisors & Advisors</p>
+        <p className="text-xl text-earth-700 dark:text-earth-300 max-w-2xl mx-auto font-light">Researcher, Supervisors & Advisors</p>
       </div>
 
       <div className="bg-white dark:bg-earth-800/50 rounded-4xl p-8 md:p-12 shadow-sm border border-earth-100 dark:border-earth-700">
@@ -1219,13 +1242,13 @@ const People: React.FC = () => {
                   <div className="relative rounded-3xl overflow-hidden shadow-lg group">
                       <img src="/images/charlie-kwong-profile.jpg" alt="Charlie Tak Hei Kwong" className="w-full h-auto object-cover select-none" onContextMenu={(e) => e.preventDefault()} draggable={false} />
                   </div>
-                  <div className="absolute top-6 left-6 bg-white text-sage-600 px-5 py-2 rounded-full shadow-lg text-sm font-medium tracking-wide z-20">Doctoral Researcher</div>
+                  <div className="absolute top-6 left-6 bg-white text-sage-700 px-5 py-2 rounded-full shadow-lg text-sm font-medium tracking-wide z-20">Doctoral Researcher</div>
               </div>
 
               <div className="md:col-span-7 space-y-8">
                   <div>
                       <h2 className="text-4xl font-serif text-earth-900 dark:text-earth-50 mb-2">Charlie Tak Hei Kwong 鄺德希</h2>
-                      <p className="text-earth-500 dark:text-earth-400 font-medium tracking-wide uppercase text-sm">Doctoral Researcher</p>
+                      <p className="text-earth-700 dark:text-earth-300 font-medium tracking-wide uppercase text-sm">Doctoral Researcher</p>
                   </div>
                   <p className="text-lg text-earth-700 dark:text-earth-300 leading-relaxed font-light">
                       Charlie is a doctoral researcher and registered teacher passionate about the intersection of creative media and inclusive education. His fully funded research explores how transmedia storytelling can create supportive spaces for students with diverse needs as they navigate their journey into higher education.
@@ -1249,13 +1272,13 @@ const People: React.FC = () => {
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-sage-300 via-earth-300 to-sage-300"></div>
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white dark:bg-earth-700 rounded-full mb-6 shadow-sm text-sage-600 dark:text-sage-300"><GraduationCap size={32} /></div>
           <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Doctoral Research Supervision</h3>
-          <p className="text-earth-600 dark:text-earth-400 mb-12 max-w-2xl mx-auto leading-relaxed">This research is developed under the guidance of an interdisciplinary supervisory team:</p>
+          <p className="text-earth-700 dark:text-earth-300 mb-12 max-w-2xl mx-auto leading-relaxed">This research is developed under the guidance of an interdisciplinary supervisory team:</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {[{name: "Dr Jennifer Young", role: <>Director of Studies<br/>Dean, Faculty of Design & Culture</>}, {name: "Prof. Neil Fox", role: "Professor of Film Practice and Pedagogy"}, {name: "Prof. Russell Crawford", role: "Deputy Vice-Chancellor (Interim)"}].map((sup, i) => (
                   <div key={i} className="bg-white dark:bg-earth-900/60 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all border border-transparent hover:border-sage-400 dark:hover:border-sage-500 group">
                       <h4 className="font-serif font-bold text-xl text-earth-900 dark:text-earth-100 mb-2">{sup.name}</h4>
                       <div className="h-px w-8 bg-sage-300 mx-auto mb-3"></div>
-                      <p className="text-sm text-earth-600 dark:text-earth-400 font-medium leading-snug">{sup.role}</p>
+                      <p className="text-sm text-earth-700 dark:text-earth-300 font-medium leading-snug">{sup.role}</p>
                   </div>
               ))}
           </div>
@@ -1293,7 +1316,7 @@ const WhatWeCare: React.FC = () => {
       />
       <div className="text-center mb-20">
         <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">What We Care About</h1>
-        <p className="text-xl text-earth-600 dark:text-earth-400 max-w-3xl mx-auto font-light">Our core values drive every aspect of the project.</p>
+        <p className="text-xl text-earth-700 dark:text-earth-300 max-w-3xl mx-auto font-light">Our core values drive every aspect of the project.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {values.map((item, index) => (
@@ -1302,7 +1325,7 @@ const WhatWeCare: React.FC = () => {
                <span className="font-serif text-xl font-bold group-hover:text-white">{index + 1}</span>
             </div>
             <h3 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">{item.title}</h3>
-            <p className="text-lg text-earth-600 dark:text-earth-300 leading-relaxed font-light">{item.description}</p>
+            <p className="text-lg text-earth-700 dark:text-earth-300 leading-relaxed font-light">{item.description}</p>
           </div>
         ))}
       </div>
@@ -1423,7 +1446,7 @@ const Output: React.FC = () => {
         />
         <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">Outputs and Resources</h1>
-            <p className="text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto font-light">Explore our community resources and research findings.</p>
+            <p className="text-xl text-earth-700 dark:text-earth-300 max-w-2xl mx-auto font-light">Explore our community resources and research findings.</p>
         </div>
         {loading ? <div className="flex justify-center py-20"><Loader2 className="animate-spin text-sage-500" size={40} /></div> : (
             <div className="space-y-24">
@@ -1467,9 +1490,9 @@ const Output: React.FC = () => {
                                                 {item.image ? <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 select-none pointer-events-none" /> : <div className="w-full h-full flex items-center justify-center text-earth-400"><FileText size={40} /></div>}
                                             </div>
                                             <div className="p-6">
-                                                <div className="text-xs font-bold uppercase tracking-widest text-sage-600 dark:text-sage-400 mb-2">{item.type}</div>
+                                                <div className="text-xs font-bold uppercase tracking-widest text-sage-700 dark:text-sage-300 mb-2">{item.type}</div>
                                                 <h4 className="text-xl font-sans font-bold text-earth-900 dark:text-earth-50 mb-2">{item.title}</h4>
-                                                <div className="flex items-center gap-2 text-earth-500 text-sm font-medium mt-4 group-hover:text-sage-600 transition-colors">Access Resource <ArrowRight size={16} /></div>
+                                                <div className="flex items-center gap-2 text-earth-700 dark:text-earth-300 text-sm font-medium mt-4 group-hover:text-sage-700 transition-colors">Access Resource <ArrowRight size={16} /></div>
                                             </div>
                                         </a>
                                     </div>
@@ -1482,7 +1505,7 @@ const Output: React.FC = () => {
                     <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-8 px-2">Academic Output</h2>
                     <div className="flex flex-wrap gap-2 mb-8 px-2">
                         {['All', 'Journal Article', 'Book Chapter', 'Conference Paper', 'Conference Presentation'].map(f => (
-                            <button key={f} onClick={() => setAcademicFilter(f)} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${academicFilter === f ? 'bg-sage-700 text-white shadow-md' : 'bg-earth-100 dark:bg-earth-800 text-earth-600 dark:text-earth-300 hover:bg-earth-200 dark:hover:bg-earth-700'}`}>{f}</button>
+                            <button key={f} onClick={() => setAcademicFilter(f)} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${academicFilter === f ? 'bg-sage-700 text-white shadow-md' : 'bg-earth-100 dark:bg-earth-800 text-earth-700 dark:text-earth-300 hover:bg-earth-200 dark:hover:bg-earth-700'}`}>{f}</button>
                         ))}
                     </div>
                     <div className="bg-white dark:bg-earth-800/50 rounded-4xl border border-earth-100 dark:border-earth-700 overflow-hidden">
@@ -1494,14 +1517,14 @@ const Output: React.FC = () => {
                                             <div className="mt-1 p-3 bg-earth-100 dark:bg-earth-700 rounded-xl text-sage-600 dark:text-sage-300 group-hover:bg-sage-200 dark:hover:bg-sage-800 transition-colors">{getIcon(item.type)}</div>
                                             <div>
                                                 <h4 className="text-lg font-sans font-bold text-earth-900 dark:text-earth-50 mb-1">{item.title}</h4>
-                                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-earth-600 dark:text-earth-400"><span>{item.year}</span><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span>{item.type}</span>{item.publication && <><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span className="italic">Published in {item.publication}</span></>}</div>
+                                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-earth-700 dark:text-earth-300"><span>{item.year}</span><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span>{item.type}</span>{item.publication && <><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span className="italic">Published in {item.publication}</span></>}</div>
                                             </div>
                                         </div>
                                         <a href={item.link} target="_blank" rel="noopener noreferrer" className="self-start md:self-center px-5 py-2.5 border border-earth-200 dark:border-earth-600 rounded-full text-sm font-medium text-earth-700 dark:text-earth-300 hover:bg-sage-700 hover:text-white hover:border-sage-700 transition-all flex items-center gap-2">View <ExternalLink size={14} /></a>
                                     </div>
                                 ))}
                             </div>
-                        ) : <div className="p-12 text-center text-earth-500 dark:text-earth-400">No academic outputs found for this category.</div>}
+                        ) : <div className="p-12 text-center text-earth-700 dark:text-earth-300">No academic outputs found for this category.</div>}
                     </div>
                 </section>
             </div>
@@ -1532,7 +1555,7 @@ const GetInvolved: React.FC = () => {
             }}
         />
         <h1 className="text-4xl md:text-5xl font-serif mb-6">Join the Research</h1>
-        <p className="text-xl text-earth-600 dark:text-earth-400 mb-12 max-w-3xl mx-auto">Every story matters. Join our workshops to co-create support for your journey. You do not need to be good at art to take part. You can write, draw, reflect, use simple digital tools, or respond in a way that feels comfortable for you.</p>
+        <p className="text-xl text-earth-700 dark:text-earth-300 mb-12 max-w-3xl mx-auto">Every story matters. Join our workshops to co-create support for your journey. You do not need to be good at art to take part. You can write, draw, reflect, use simple digital tools, or respond in a way that feels comfortable for you.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="bg-white dark:bg-earth-800 p-8 rounded-4xl shadow-sm flex flex-col justify-between">
               <div>
@@ -1565,7 +1588,7 @@ const GetInvolved: React.FC = () => {
           </div>
           <div className="bg-earth-200 dark:bg-earth-800 p-8 rounded-4xl flex flex-col justify-between">
               <div>
-                  <div className="mb-4 text-earth-600 dark:text-earth-400">
+                  <div className="mb-4 text-earth-700 dark:text-earth-300">
                       <HeartHandshake size={40} strokeWidth={1.5} />
                   </div>
                   <h2 className="text-2xl font-serif mb-4">Collaborate as a Community Advisor</h2>
@@ -1639,18 +1662,18 @@ const Contact: React.FC = () => {
         }}
       />
       <h1 className="text-4xl text-center font-serif mb-6 text-earth-900 dark:text-earth-50">Contact Us</h1>
-      <p className="text-center text-earth-600 dark:text-earth-400 mb-12 leading-relaxed">Use this form or email to contact Building Identity Through Stories about research participation, workshop interest, collaboration, accessibility needs, or general enquiries.</p>
+      <p className="text-center text-earth-700 dark:text-earth-300 mb-12 leading-relaxed">Use this form or email to contact Building Identity Through Stories about research participation, workshop interest, collaboration, accessibility needs, or general enquiries.</p>
       <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-earth-800 p-8 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700">
         
         <div>
            <label htmlFor="name" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Name</label>
-           <input name="Name" id="name" autoComplete="name" placeholder="Your name" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
+           <input name="Name" id="name" autoComplete="name" placeholder="Your name" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 transition-all placeholder-earth-700 dark:placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
         <div>
            <label htmlFor="role" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Role</label>
            <div className="relative">
-             <select name="Role" id="role" required defaultValue="" className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all text-earth-900 dark:text-earth-100 appearance-none cursor-pointer">
+             <select name="Role" id="role" required defaultValue="" className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 transition-all text-earth-900 dark:text-earth-100 appearance-none cursor-pointer">
                 <option value="" disabled>Select your role</option>
                 <option value="Student / Potential Participant">Student / Potential Participant</option>
                 <option value="Community Advisor">Community Advisor</option>
@@ -1668,12 +1691,12 @@ const Contact: React.FC = () => {
 
         <div>
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Email address</label>
-            <input name="Email" id="email" type="email" autoComplete="email" placeholder="you@example.com" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
+            <input name="Email" id="email" type="email" autoComplete="email" placeholder="you@example.com" required className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 transition-all placeholder-earth-700 dark:placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
         <div>
             <label htmlFor="message" className="block mb-2 text-sm font-medium text-earth-800 dark:text-earth-200">Message</label>
-            <textarea name="Message" id="message" placeholder="How can we help?" required rows={4} className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-500 transition-all placeholder-earth-400 text-earth-900 dark:text-earth-100" />
+            <textarea name="Message" id="message" placeholder="How can we help?" required rows={4} className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 transition-all placeholder-earth-700 dark:placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
         <button 
@@ -1728,7 +1751,7 @@ const PrivacyPolicy: React.FC = () => {
       />
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-4">Privacy Policy</h1>
-        <p className="text-earth-600 dark:text-earth-400">Revision Date: 11 March 2026</p>
+        <p className="text-earth-700 dark:text-earth-300">Revision Date: 11 March 2026</p>
       </div>
 
       <div className="bg-white dark:bg-earth-800 p-8 md:p-12 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700 space-y-10">
@@ -1841,7 +1864,7 @@ const PrivacyPolicy: React.FC = () => {
         <section className="space-y-4">
             <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">6. Contact</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                If you have any questions about this Privacy Policy or how personal data may be handled in relation to this research project, you may contact the researcher using the <Link to={PageRoute.CONTACT} className="text-sage-600 dark:text-sage-400 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact form</Link> provided on this website.
+                If you have any questions about this Privacy Policy or how personal data may be handled in relation to this research project, you may contact the researcher using the <Link to={PageRoute.CONTACT} className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact form</Link> provided on this website.
             </p>
         </section>
 
@@ -1900,7 +1923,7 @@ const TermsOfUse: React.FC = () => {
         <section className="space-y-4">
             <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Intellectual Property & Licence</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Unless otherwise stated, original text, images, and materials on this website are © Charlie Tak Hei Kwong 鄺德希 / Building Identity Through Stories Research Project and are licensed under the <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en" target="_blank" rel="noopener noreferrer" className="text-sage-600 dark:text-sage-400 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">Creative Commons Attribution-NonCommercial 4.0 International Licence (CC BY-NC 4.0)</a>.
+                Unless otherwise stated, original text, images, and materials on this website are © Charlie Tak Hei Kwong 鄺德希 / Building Identity Through Stories Research Project and are licensed under the <a href="https://creativecommons.org/licenses/by-nc/4.0/deed.en" target="_blank" rel="noopener noreferrer" className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">Creative Commons Attribution-NonCommercial 4.0 International Licence (CC BY-NC 4.0)</a>.
             </p>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 Some visual materials on this website are constructed representations created to communicate the themes, atmosphere, and pedagogical context of the research project. These images are illustrative rather than documentary and do not depict actual participants or research sessions.
@@ -2040,7 +2063,7 @@ const Accessibility: React.FC = () => {
         <section className="space-y-4">
             <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">Feedback and Support</h2>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                If you experience any accessibility difficulties when using this website, you are welcome to contact the researcher through the <Link to={PageRoute.CONTACT} className="text-sage-600 dark:text-sage-400 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact page</Link> so that alternative formats or additional support can be considered.
+                If you experience any accessibility difficulties when using this website, you are welcome to contact the researcher through the <Link to={PageRoute.CONTACT} className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact page</Link> so that alternative formats or additional support can be considered.
             </p>
             <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
                 Reasonable efforts will be made to respond to accessibility requests within 14 days.
@@ -2108,22 +2131,6 @@ const ResearchEthics: React.FC = () => {
 };
 
 const NotFound: React.FC = () => {
-  const [secondsRemaining, setSecondsRemaining] = useState(7);
-
-  useEffect(() => {
-    const countdown = window.setInterval(() => {
-      setSecondsRemaining(current => Math.max(0, current - 1));
-    }, 1000);
-    const redirect = window.setTimeout(() => {
-      window.location.replace('https://bitsresearch.github.io/get-involved/');
-    }, 7000);
-
-    return () => {
-      window.clearInterval(countdown);
-      window.clearTimeout(redirect);
-    };
-  }, []);
-
   return (
     <div className="py-20 md:py-28 max-w-5xl mx-auto px-4 sm:px-6 text-center">
       <SEO
@@ -2145,16 +2152,20 @@ const NotFound: React.FC = () => {
       <div className="bg-white dark:bg-earth-800 border border-earth-200 dark:border-earth-700 rounded-4xl shadow-sm px-6 py-14 sm:px-12 md:py-20">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-sage-700 dark:text-sage-300 mb-5">404 Error</p>
         <h1 className="text-5xl md:text-7xl font-serif text-earth-900 dark:text-earth-50 mb-6">Page Not Found</h1>
-        <p className="text-lg md:text-xl text-earth-600 dark:text-earth-400 max-w-2xl mx-auto mb-9 leading-relaxed">
-          The page you are looking for could not be found. You will be redirected to Get Involved automatically.
+        <p className="text-lg md:text-xl text-earth-700 dark:text-earth-300 max-w-2xl mx-auto mb-9 leading-relaxed">
+          The page you are looking for could not be found. Choose where you would like to go next.
         </p>
-        <div className="w-24 h-24 mx-auto mb-9 rounded-full bg-sage-100 dark:bg-sage-900/50 border border-sage-200 dark:border-sage-800 flex flex-col items-center justify-center" aria-live="polite" aria-atomic="true">
-          <strong className="font-serif text-4xl leading-none text-sage-700 dark:text-sage-300">{secondsRemaining}</strong>
-          <span className="text-[10px] uppercase tracking-widest text-earth-500 dark:text-earth-400 mt-1">seconds</span>
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+          <Link to={PageRoute.HOME} className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-sm">
+            Return Home <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+          <Link to={PageRoute.INVOLVED} className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-earth-200 dark:bg-earth-200 text-earth-900 rounded-full font-bold hover:bg-white transition-colors shadow-sm">
+            Get Involved <ArrowRight size={16} aria-hidden="true" />
+          </Link>
+          <Link to={PageRoute.CONTACT} className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-earth-700 dark:border-earth-200 text-earth-800 dark:text-earth-100 rounded-full font-bold hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors">
+            Contact Us
+          </Link>
         </div>
-        <Link to={PageRoute.INVOLVED} className="inline-flex items-center gap-2 px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-sm">
-          Go to Get Involved now <ArrowRight size={16} />
-        </Link>
       </div>
     </div>
   );
