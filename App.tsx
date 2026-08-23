@@ -603,7 +603,7 @@ const WorkshopSection: React.FC = () => {
   };
 
   if (loading) return (
-    <div className="py-20 flex flex-col items-center justify-center gap-4">
+    <div className="py-16 md:py-20 flex flex-col items-center justify-center gap-4">
         <Loader2 className="animate-spin text-sage-600" size={32} />
         <p className="text-earth-700 text-sm font-medium">Checking for upcoming workshops...</p>
     </div>
@@ -618,7 +618,7 @@ const WorkshopSection: React.FC = () => {
         <div className="mb-7 md:mb-10 px-1 sm:px-2">
             <div className="flex items-center justify-center gap-3 sm:gap-4 mb-7 md:mb-8">
                 <span className="h-px w-8 sm:w-12 bg-sage-600" aria-hidden="true"></span>
-                <h2 className="text-3xl font-serif text-center text-earth-900 dark:text-earth-50">Upcoming Workshops</h2>
+                <h2 className="text-3xl md:text-4xl font-serif text-center text-earth-900 dark:text-earth-50 leading-tight">Upcoming Workshops</h2>
                 <span className="h-px w-8 sm:w-12 bg-sage-600" aria-hidden="true"></span>
             </div>
 
@@ -732,14 +732,14 @@ const WorkshopSection: React.FC = () => {
                             {(() => {
                                 const venueTheme = getVenueTheme(ws.venue);
                                 return (
-                            <div className={`${venueTheme.card} rounded-3xl p-6 md:p-8 shadow-sm border-2 hover:shadow-lg transition-shadow duration-300 motion-reduce:transition-none flex flex-col h-full group`}>
+                            <div className={`${venueTheme.card} rounded-[1.25rem] md:rounded-3xl p-5 md:p-7 shadow-sm border-2 hover:shadow-md transition-shadow duration-300 motion-reduce:transition-none flex flex-col h-full group`}>
                                 <div className="flex justify-between items-start mb-4">
                                     <div className={`px-4 py-2 ${venueTheme.badge} text-xs font-bold uppercase tracking-widest rounded-full`}>
                                         {ws.parsedDate.toLocaleDateString('en-GB', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                                     </div>
                                 </div>
 
-                                <h3 className="text-xl font-serif font-bold text-earth-900 dark:text-earth-50 mb-4 leading-tight line-clamp-2">
+                                <h3 className="text-xl font-serif font-bold text-earth-900 dark:text-earth-50 mb-4 leading-snug line-clamp-2">
                                     {ws.title}
                                 </h3>
 
@@ -835,7 +835,7 @@ const ResearchUpdate: React.FC = () => {
   }, [videos, loading]);
 
   return (
-    <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO
         title="Research Updates | Building Identity through Stories"
         description="Watch research update videos from the BITS doctoral research project on transmedia storytelling, identity exploration, student transition, and inclusive education."
@@ -1025,7 +1025,7 @@ const Home: React.FC = () => {
         }}
       />
       {/* Cover Banner */}
-      <section className="relative min-h-[85vh] py-24 w-full bg-earth-200 dark:bg-earth-800 overflow-hidden flex items-center justify-center rounded-b-4xl mx-auto">
+      <section className="relative min-h-[72vh] md:min-h-[76vh] py-16 md:py-20 w-full bg-earth-200 dark:bg-earth-800 overflow-hidden flex items-center justify-center rounded-b-4xl mx-auto">
         <div className="absolute inset-0">
             {heroImages.map((src, index) => (
               <img 
@@ -1041,11 +1041,11 @@ const Home: React.FC = () => {
             <div className="absolute inset-0 bg-white/50 dark:bg-black/50 z-10"></div>
         </div>
         <div className="relative z-20 max-w-4xl mx-auto px-4 text-center">
-            <h1 className="text-5xl md:text-8xl font-serif font-medium mb-8 leading-tight text-earth-900 dark:text-earth-50">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-medium mb-6 md:mb-7 leading-[1.05] text-earth-900 dark:text-earth-50">
                 Building Identity <br /> Through Stories
             </h1>
             
-            <div className="bg-white/80 dark:bg-earth-800/80 backdrop-blur-md p-6 md:p-8 rounded-4xl border border-white/20 dark:border-earth-700 shadow-xl max-w-3xl mx-auto mb-12 transform hover:scale-[1.01] transition-transform duration-500">
+            <div className="bg-white/85 dark:bg-earth-800/85 backdrop-blur-md p-5 md:p-7 rounded-3xl border border-white/40 dark:border-earth-700 shadow-lg max-w-3xl mx-auto mb-8 md:mb-10">
                 <p className="text-lg md:text-xl text-earth-900 dark:text-earth-50 leading-relaxed font-light">
                     We co-develop creative storytelling activities to explore how transmedia storytelling may support the identity exploration of students with diverse learning journeys during the transition into higher education.
                 </p>
@@ -1080,7 +1080,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Video Section */}
-      <section className="py-24 my-8 mx-4 md:mx-8 rounded-4xl bg-sage-700 text-earth-50">
+      <section className="py-16 md:py-20 my-8 mx-4 md:mx-8 rounded-4xl bg-sage-700 text-earth-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 md:mb-16 border-b border-sage-400 pb-8">
                 <div className="w-full md:w-auto">
@@ -1224,7 +1224,7 @@ const About: React.FC = () => {
   }, [videos, loading]);
 
   return (
-    <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="About | Building Identity through Stories"
         description="Learn about Charlie Tak Hei Kwong’s doctoral research on transmedia storytelling as an educational intervention to support identity exploration for students with diverse learning journeys entering higher education."
@@ -1356,7 +1356,7 @@ const About: React.FC = () => {
 // 3. People Page
 const People: React.FC = () => {
   return (
-    <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="People | Building Identity through Stories"
         description="Meet Charlie Tak Hei Kwong 鄺德希, the doctoral researcher of Building Identity Through Stories, a fully funded project on transmedia storytelling, inclusive education, and transition into higher education."
@@ -1440,7 +1440,7 @@ const WhatWeCare: React.FC = () => {
   ];
 
   return (
-    <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="What We Care About | Building Identity through Stories"
         description="Explore the values behind Building Identity Through Stories: identity exploration, student agency, community-based practice, ethical safety, and inclusive transition into higher education."
@@ -1569,7 +1569,7 @@ const Output: React.FC = () => {
   };
 
   return (
-    <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SEO 
             title="Output and Resources | Building Identity through Stories"
             description="Explore academic outputs, community resources, research findings, journal articles, book chapters, conference papers, and presentations from Building Identity Through Stories."
@@ -1679,7 +1679,7 @@ const Output: React.FC = () => {
 // 6. Get Involved Page
 const GetInvolved: React.FC = () => {
   return (
-    <div className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <SEO 
             title="Get Involved | Building Identity through Stories"
             description="Join Building Identity Through Stories workshops or collaborate as a Community Advisor to support research on identity, belonging, and university transition."
@@ -1786,7 +1786,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="py-24 max-w-3xl mx-auto px-4">
+    <div className="py-16 md:py-20 max-w-3xl mx-auto px-4">
       <SEO 
         title="Contact | Building Identity through Stories"
         description="Contact Building Identity Through Stories for research enquiries, workshop participation, collaboration, accessibility support, or questions about the doctoral research project."
@@ -1875,7 +1875,7 @@ const Contact: React.FC = () => {
 // 8. Privacy & Terms (Placeholders)
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="Privacy Policy | Building Identity through Stories"
         description="Read the Privacy Policy for Building Identity Through Stories, including information about research data, contact forms, third-party services, hosting, and data protection."
@@ -2038,7 +2038,7 @@ const PrivacyPolicy: React.FC = () => {
 };
 const TermsOfUse: React.FC = () => {
   return (
-    <div className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="Terms of Use | Building Identity through Stories"
         description="Read the Terms of Use for Building Identity Through Stories, including research use, intellectual property, CC BY-NC 4.0 licence, third-party content, and disclaimers."
@@ -2141,7 +2141,7 @@ const TermsOfUse: React.FC = () => {
 
 const Accessibility: React.FC = () => {
   return (
-    <div className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="Accessibility | Building Identity through Stories"
         description="Read the accessibility statement for Building Identity Through Stories, including WCAG 2.2 AA design, keyboard access, readable typography, display preferences, text-to-speech, and support options."
@@ -2231,7 +2231,7 @@ const Accessibility: React.FC = () => {
 
 const ResearchEthics: React.FC = () => {
   return (
-    <div className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
         title="Research Ethics | Building Identity through Stories"
         description="Read about the ethical approval, voluntary participation, consent, privacy, confidentiality, and participant safety procedures for Building Identity Through Stories."
@@ -2286,7 +2286,7 @@ const ResearchEthics: React.FC = () => {
 
 const NotFound: React.FC = () => {
   return (
-    <div className="py-20 md:py-28 max-w-5xl mx-auto px-4 sm:px-6 text-center">
+    <div className="py-16 md:py-20 md:py-28 max-w-5xl mx-auto px-4 sm:px-6 text-center">
       <SEO
         title="Page Not Found | Building Identity through Stories"
         description="The page you are looking for could not be found. Return to the Building Identity Through Stories research website."
