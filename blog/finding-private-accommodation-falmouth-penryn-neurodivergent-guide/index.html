@@ -49,7 +49,13 @@
     </script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Chewy&display=swap');
-      body { font-family: Verdana, Geneva, Tahoma, sans-serif; }
+      body { font-family: Verdana, Geneva, Tahoma, sans-serif; line-height: 1.6; }
+      p, li { text-wrap: pretty; }
+      h1, h2, h3 { text-wrap: balance; }
+      /* Consistent interaction sizing: comfortably above WCAG 2.2's 24px minimum target. */
+      button, input:not([type="checkbox"]):not([type="radio"]), select, textarea, [role="button"] { min-height: 44px; }
+      /* Keep long-form reading comfortable without forcing a specialist accessibility mode. */
+      .reading-width { max-width: 72ch; }
       html.font-atkinson body, html.font-atkinson body * { font-family: 'Atkinson Hyperlegible', Verdana, Geneva, Tahoma, sans-serif !important; }
       body.spacing-enhanced p, body.spacing-enhanced span, body.spacing-enhanced h1, body.spacing-enhanced h2, body.spacing-enhanced h3, body.spacing-enhanced h4, body.spacing-enhanced h5, body.spacing-enhanced h6, body.spacing-enhanced li, body.spacing-enhanced a { line-height: 2 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
       body.spacing-enhanced p { margin-bottom: 2em !important; }
@@ -57,7 +63,6 @@
       h1, h2, h3, h4, h5, h6 { font-family: 'Chewy', cursive; }
       html { scroll-behavior: smooth; scroll-padding-top: 8rem; overflow-x: hidden; }
       body { overflow-wrap: anywhere; }
-      button, input, select, textarea, [role="button"] { min-height: 24px; }
       img, video, iframe { max-width: 100%; }
       main:focus { outline: none; }
       [id] { scroll-margin-top: 8rem; }
@@ -89,6 +94,8 @@
   </head>
   <body class="bg-earth-50 text-earth-900 dark:bg-earth-900 dark:text-earth-50 transition-colors duration-300">
     
+      
+      
       
       
       

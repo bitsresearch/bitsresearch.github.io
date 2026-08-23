@@ -9,7 +9,7 @@ import {
   ArrowRight, Mail, MapPin, Phone, Play, Pause, 
   Facebook, Twitter, Linkedin, CheckCircle2, Check,
   BookOpen, FileText, Presentation, Mic, Globe, Instagram, Calendar, Clock, MapPin as MapPinIcon, AlertCircle, CalendarPlus,
-  ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake
+  ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake, Gift
 } from 'lucide-react';
 
 // --- Helper: SEO Component ---
@@ -265,6 +265,371 @@ interface Workshop {
   link: string;
   parsedDate: Date;
 }
+
+
+type FAQItem = {
+  question: string;
+  answer: React.ReactNode;
+};
+
+type FAQSectionData = {
+  title: string;
+  items: FAQItem[];
+};
+
+const homepageWorkshopFaqs: FAQItem[] = [
+  {
+    question: 'Do I need SEND or a diagnosis to join?',
+    answer: <p>No. You do not need a diagnosis or need to identify as SEND. Students without SEND can register too.</p>,
+  },
+  {
+    question: 'Do I need to be good at art?',
+    answer: <p>Not at all. You do not need any art or creative experience.</p>,
+  },
+  {
+    question: 'What actually happens in a workshop?',
+    answer: <p>You will try a short creative activity using things like words, images, colours, symbols or simple digital tools.</p>,
+  },
+  {
+    question: 'Will I have to speak in front of everyone?',
+    answer: <p>No. You choose how much you want to say or share.</p>,
+  },
+  {
+    question: 'Can I take a break or leave early?',
+    answer: <p>Yes. You can pause, take a break or leave if you need to. You do not need to explain why.</p>,
+  },
+];
+
+const fullFaqSections: FAQSectionData[] = [
+  {
+    title: 'Before You Join',
+    items: [
+      {
+        question: 'Who can take part?',
+        answer: (
+          <>
+            <p>BITS workshops are open to students aged <strong>18 or over who are in their first or foundation year of university</strong>.</p>
+            <p>The research particularly focuses on students with different learning experiences. You do not need to have SEND or a diagnosis to register. If places are limited, priority will be given to students whose learning experiences are most relevant to the research.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Do I need SEND or a diagnosis to join?',
+        answer: (
+          <>
+            <p>No. You do not need a formal diagnosis, and you do not need to identify as SEND or disabled.</p>
+            <p>Students without SEND can register too. You will not be asked to prove that you have a diagnosis.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Do I need to be good at art?',
+        answer: (
+          <>
+            <p>Not at all. You do not need any art or creative experience.</p>
+            <p>The activities are about exploring your ideas and experiences, not making something that looks “good”.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Is taking part part of my course?',
+        answer: (
+          <>
+            <p>No. Taking part in BITS research is voluntary and separate from your course.</p>
+            <p>Choosing not to take part will not affect your studies or university support.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Is there a thank-you for taking part?',
+        answer: (
+          <>
+            <p>Yes. You may be eligible for an optional lucky draw for a local grocery gift card worth up to <strong>£10</strong>.</p>
+            <p>Some workshop activities may also include a small journal to use during the session.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Who will I meet at the workshop?',
+        answer: (
+          <>
+            <p><strong>Charlie Kwong</strong>, the researcher behind BITS, will run the workshop.</p>
+            <p>Depending on the session, there may also be someone helping with the workshop, such as a facilitator or Community Advisor. Where possible, you will be told who to expect before you arrive.</p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    title: 'What to Expect',
+    items: [
+      {
+        question: 'What actually happens in a workshop?',
+        answer: (
+          <>
+            <p>You will be invited to try a short creative activity around things like identity, experiences and starting university.</p>
+            <p>This might involve writing, images, colours, symbols or simple digital storytelling. You will be guided through the activities step by step.</p>
+          </>
+        ),
+      },
+      {
+        question: 'How many people will be there?',
+        answer: (
+          <>
+            <p>Usually around <strong>10–15 students</strong> may take part in each workshop round.</p>
+            <p>The exact number may vary depending on the session.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Will I have to speak in front of everyone?',
+        answer: (
+          <>
+            <p>No. You will not be expected to speak in front of the group if you do not want to.</p>
+            <p>There may be opportunities to share, but you choose how much you want to say or show.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Do I have to talk about personal or difficult experiences?',
+        answer: (
+          <>
+            <p>No. You choose what you want to explore and what you want to keep private.</p>
+            <p>You do not need to disclose a diagnosis, trauma or personal experience that you do not want to discuss.</p>
+          </>
+        ),
+      },
+      {
+        question: "What if I don't know what to make or say?",
+        answer: (
+          <>
+            <p>That's fine. You do not need to arrive with a story or idea ready.</p>
+            <p>There will be prompts and choices to help you get started, and there is no single “right” response.</p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    title: 'Access & Comfort',
+    items: [
+      {
+        question: 'Can I take a break or leave early?',
+        answer: (
+          <>
+            <p>Yes. You can pause, take a break or leave if you need to.</p>
+            <p>You can also skip an activity or decide not to continue. You do not need to explain why.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Can I communicate in a way that works for me?',
+        answer: (
+          <>
+            <p>You do not always have to respond by speaking.</p>
+            <p>Depending on the activity, you may be able to write, use images or symbols, create something, or use a digital approach instead.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Can I ask for accessibility support?',
+        answer: (
+          <>
+            <p>Yes. If there is something that could make the workshop easier or more comfortable for you, please let Charlie know.</p>
+            <p>You do not need to disclose a diagnosis just to explain what works better for you.</p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    title: 'Research & Privacy',
+    items: [
+      {
+        question: 'Is this a research study?',
+        answer: (
+          <>
+            <p>Yes. BITS is a doctoral research project led by <strong>Charlie Kwong</strong> at Falmouth University.</p>
+            <p>The workshops are creative activities, but they also form part of research exploring identity and the transition into higher education.</p>
+          </>
+        ),
+      },
+      {
+        question: 'What am I agreeing to?',
+        answer: (
+          <>
+            <p>Before taking part, you will receive information explaining the research and what participation involves.</p>
+            <p>You will have time to read it, ask questions and decide whether you want to take part. Consent is an ongoing choice throughout the research.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Can I change my mind?',
+        answer: (
+          <>
+            <p>Yes. Taking part is voluntary, and you can choose to withdraw.</p>
+            <p>You do not need to give a reason. The information you receive before taking part will explain what happens to any research data already collected if you decide to withdraw.</p>
+          </>
+        ),
+      },
+      {
+        question: 'What happens to what I create or share?',
+        answer: (
+          <>
+            <p>Creative work will only be collected and analysed as research where you have given consent.</p>
+            <p>How your work may be used will be explained before you agree to take part.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Will I be recorded?',
+        answer: (
+          <>
+            <p>There will be <strong>no video recording of you during the workshops</strong>.</p>
+            <p>Audio may be recorded for parts of the research, but only with your consent.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Will my name be used?',
+        answer: (
+          <>
+            <p>Your research data will normally be anonymised or pseudonymised rather than published using your full name.</p>
+            <p>If there is an option to have creative work attributed to you, this will require your consent.</p>
+          </>
+        ),
+      },
+      {
+        question: 'Who can I contact if I have a question?',
+        answer: (
+          <>
+            <p>You can contact <strong>Charlie Kwong</strong> through the BITS contact page.</p>
+            <p>You are welcome to ask a question before deciding whether you want to take part.</p>
+          </>
+        ),
+      },
+    ],
+  },
+];
+
+const FAQAccordion: React.FC<{
+  items: FAQItem[];
+  idPrefix: string;
+  compact?: boolean;
+}> = ({ items, idPrefix, compact = false }) => {
+  const [openItems, setOpenItems] = useState<number[]>([]);
+
+  const toggleItem = (index: number) => {
+    setOpenItems((current) =>
+      current.includes(index)
+        ? current.filter((item) => item !== index)
+        : [...current, index]
+    );
+  };
+
+  return (
+    <div className={`space-y-2 ${compact ? '' : 'sm:space-y-3'}`}>
+      {items.map((item, index) => {
+        const isOpen = openItems.includes(index);
+        const buttonId = `${idPrefix}-question-${index}`;
+        const panelId = `${idPrefix}-answer-${index}`;
+
+        return (
+          <div
+            key={item.question}
+            className="overflow-hidden rounded-2xl border border-earth-300 bg-white dark:border-earth-600 dark:bg-earth-800"
+          >
+            <h4 className="m-0 font-sans">
+              <button
+                id={buttonId}
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggleItem(index)}
+                className="flex min-h-[52px] w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold text-earth-900 transition-colors hover:bg-earth-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sage-700 dark:text-earth-50 dark:hover:bg-earth-700 dark:focus:ring-sage-300 sm:px-5 sm:text-base"
+              >
+                <span>{item.question}</span>
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-7 w-7 flex-none items-center justify-center rounded-full bg-sage-100 text-lg leading-none text-sage-800 dark:bg-sage-800 dark:text-sage-100"
+                >
+                  {isOpen ? '−' : '+'}
+                </span>
+              </button>
+            </h4>
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={buttonId}
+              hidden={!isOpen}
+              className="border-t border-earth-200 px-4 py-4 text-left text-sm leading-relaxed text-earth-700 dark:border-earth-700 dark:text-earth-300 sm:px-5 sm:text-base [&_p+p]:mt-3"
+            >
+              {item.answer}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+const FullFAQ: React.FC = () => {
+  const [expandAll, setExpandAll] = useState(false);
+
+  return (
+    <section id="frequently-asked-questions" className="mt-16 scroll-mt-32 text-left" aria-labelledby="faq-heading">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-8 text-center">
+          <h2 id="faq-heading" className="text-3xl font-serif text-earth-900 dark:text-earth-50 md:text-4xl">
+            Frequently Asked Questions
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-earth-700 dark:text-earth-300">
+            Thinking about joining a BITS workshop? Here are some questions you might have.
+          </p>
+        </div>
+
+        <div className="mb-8 flex flex-col gap-3 rounded-2xl border border-sage-200 bg-sage-50 p-4 dark:border-sage-700 dark:bg-sage-900/40 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm font-medium text-earth-800 dark:text-earth-200">
+            Prefer to read everything at once?
+          </p>
+          <button
+            type="button"
+            aria-pressed={expandAll}
+            onClick={() => setExpandAll((value) => !value)}
+            className="min-h-11 rounded-full bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+          >
+            {expandAll ? 'Collapse all' : 'Expand all'}
+          </button>
+        </div>
+
+        <div className="space-y-10">
+          {fullFaqSections.map((section, sectionIndex) => (
+            <section key={section.title} aria-labelledby={`faq-section-${sectionIndex}`}>
+              <h3
+                id={`faq-section-${sectionIndex}`}
+                className="mb-4 text-2xl font-serif text-earth-900 dark:text-earth-50"
+              >
+                {section.title}
+              </h3>
+              {expandAll ? (
+                <div className="space-y-2 sm:space-y-3">
+                  {section.items.map((item, itemIndex) => (
+                    <div key={item.question} className="rounded-2xl border border-earth-300 bg-white p-4 dark:border-earth-600 dark:bg-earth-800 sm:p-5">
+                      <h4 className="font-sans text-sm font-semibold text-earth-900 dark:text-earth-50 sm:text-base">{item.question}</h4>
+                      <div className="mt-3 text-sm leading-relaxed text-earth-700 dark:text-earth-300 sm:text-base [&_p+p]:mt-3">{item.answer}</div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <FAQAccordion items={section.items} idPrefix={`full-faq-${sectionIndex}`} />
+              )}
+            </section>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const WorkshopSection: React.FC = () => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
@@ -760,6 +1125,11 @@ const WorkshopSection: React.FC = () => {
                                     )}
                                 </div>
 
+                                <div className="mb-3 flex items-start gap-2 rounded-xl bg-white/55 px-3 py-2.5 text-xs font-medium text-earth-700 dark:bg-black/10 dark:text-earth-200">
+                                    <Gift size={15} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
+                                    <span>Optional £10 grocery gift card draw</span>
+                                </div>
+
                                 <div className="space-y-2 mt-auto">
                                     {ws.link.trim() ? (
                                         <a 
@@ -802,7 +1172,7 @@ const WorkshopSection: React.FC = () => {
             </div>
         )}
 
-        <div className="mt-7 md:mt-9 text-sm text-earth-700 dark:text-earth-300 text-center leading-relaxed">
+        <div className="mt-7 md:mt-9 text-sm text-earth-700 dark:text-earth-300 text-center leading-relaxed [&_p]:text-center">
             <p className="font-medium">Not sure if this time works for you?</p>
             <p className="mt-1">
                 <a
@@ -816,6 +1186,24 @@ const WorkshopSection: React.FC = () => {
                 </a>
             </p>
         </div>
+
+        <section className="mx-auto mt-12 max-w-3xl text-left" aria-labelledby="workshop-faq-heading">
+          <div className="mb-5 text-center">
+            <h3 id="workshop-faq-heading" className="text-2xl font-serif text-earth-900 dark:text-earth-50 md:text-3xl">
+              Questions you might have
+            </h3>
+          </div>
+          <FAQAccordion items={homepageWorkshopFaqs} idPrefix="workshop-faq" compact />
+          <div className="mt-6 text-center">
+            <p className="font-semibold text-earth-900 dark:text-earth-50">Still have questions?</p>
+            <Link
+              to={`${PageRoute.INVOLVED}#frequently-asked-questions`}
+              className="mt-1 inline-flex min-h-11 items-center justify-center gap-1 rounded-full px-4 py-2 font-semibold text-sage-800 underline decoration-sage-500 underline-offset-4 hover:text-sage-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus:ring-sage-300"
+            >
+              Read common questions about taking part <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
     </section>
   );
 };
@@ -1184,7 +1572,7 @@ const Home: React.FC = () => {
       {/* Institutional Affiliation Section */}
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto text-center border-t border-earth-200 dark:border-earth-800 pt-16">
-            <p className="text-earth-700 dark:text-earth-300 text-lg md:text-xl mb-12 font-light leading-relaxed">
+            <p className="text-earth-700 dark:text-earth-300 text-lg md:text-xl mb-12 font-light leading-relaxed text-center">
                 This doctoral research is registered at the <span className="font-medium text-earth-800 dark:text-earth-200">University of the Arts London</span> and <span className="font-medium text-earth-800 dark:text-earth-200">Falmouth University</span> in the United Kingdom. This study received ethical approval from the Research Integrity & Ethics Committee (Ref: RIEC 25-222) and will be conducted from 1 January 2026 to 31 December 2028.
             </p>
             <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 transition-all duration-500">
@@ -1678,6 +2066,25 @@ const Output: React.FC = () => {
 
 // 6. Get Involved Page
 const GetInvolved: React.FC = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === '#frequently-asked-questions') {
+      window.setTimeout(() => {
+        const target = document.getElementById('frequently-asked-questions');
+        if (!target) return;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        const heading = document.getElementById('faq-heading');
+        if (heading) {
+          heading.setAttribute('tabindex', '-1');
+          heading.focus({ preventScroll: true });
+          heading.addEventListener('blur', () => heading.removeAttribute('tabindex'), { once: true });
+        }
+      }, 80);
+    }
+  }, [location.hash]);
+
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <SEO 
@@ -1759,6 +2166,8 @@ const GetInvolved: React.FC = () => {
               </div>
           </div>
         </div>
+
+        <FullFAQ />
     </div>
   );
 };
