@@ -534,9 +534,10 @@ const FAQAccordion: React.FC<{
   items: FAQItem[];
   idPrefix: string;
   compact?: boolean;
+  headingLevel?: 3 | 4;
   openItemKeys?: Set<string>;
   onToggleItem?: (itemKey: string) => void;
-}> = ({ items, idPrefix, compact = false, openItemKeys, onToggleItem }) => {
+}> = ({ items, idPrefix, compact = false, headingLevel = 4, openItemKeys, onToggleItem }) => {
   const [internalOpenItems, setInternalOpenItems] = useState<Set<string>>(() => new Set());
 
   const toggleItem = (itemKey: string) => {
@@ -563,6 +564,8 @@ const FAQAccordion: React.FC<{
         const buttonId = `${idPrefix}-question-${index}`;
         const panelId = `${idPrefix}-answer-${index}`;
 
+        const QuestionHeading = headingLevel === 3 ? 'h3' : 'h4';
+
         return (
           <div
             key={item.question}
@@ -572,7 +575,7 @@ const FAQAccordion: React.FC<{
                 : 'border-earth-300 bg-white dark:border-earth-600 dark:bg-earth-800'
             }`}
           >
-            <h4 className="m-0 font-sans">
+            <QuestionHeading className="m-0 font-sans">
               <button
                 id={buttonId}
                 type="button"
@@ -593,7 +596,7 @@ const FAQAccordion: React.FC<{
                   {isOpen ? '−' : '+'}
                 </span>
               </button>
-            </h4>
+            </QuestionHeading>
             <div
               id={panelId}
               role="region"
@@ -1285,7 +1288,7 @@ const HomepageFAQSection: React.FC = () => {
             </p>
           </div>
 
-          <FAQAccordion items={homepageWorkshopFaqs} idPrefix="workshop-faq" compact />
+          <FAQAccordion items={homepageWorkshopFaqs} idPrefix="workshop-faq" compact headingLevel={3} />
 
           <div className="mt-8 text-center">
             <p className="font-semibold text-earth-900 dark:text-earth-50">Want to know more before deciding?</p>
@@ -2188,7 +2191,7 @@ const Output: React.FC = () => {
                                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-earth-700 dark:text-earth-300"><span>{item.year}</span><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span>{item.type}</span>{item.publication && <><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span className="italic">Published in {item.publication}</span></>}</div>
                                             </div>
                                         </div>
-                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="self-start md:self-center px-5 py-2.5 border border-earth-200 dark:border-earth-600 rounded-full text-sm font-medium text-earth-700 dark:text-earth-300 hover:bg-sage-700 hover:text-white hover:border-sage-700 transition-all flex items-center gap-2">View <ExternalLink size={14} /></a>
+                                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="self-start md:self-center min-w-[5.5rem] shrink-0 whitespace-nowrap px-5 py-2.5 border border-earth-200 dark:border-earth-600 rounded-full text-sm font-medium text-earth-700 dark:text-earth-300 hover:bg-sage-700 hover:text-white hover:border-sage-700 transition-all flex items-center justify-center gap-2">View <ExternalLink size={14} aria-hidden="true" /></a>
                                     </div>
                                 ))}
                             </div>

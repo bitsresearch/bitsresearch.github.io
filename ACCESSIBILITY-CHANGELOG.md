@@ -2,6 +2,10 @@
 
 Date: 24 August 2026
 
+Update: the academic-output `View` link now has a fixed minimum width, cannot shrink, and uses `white-space: nowrap`, preventing the word from splitting over two lines at high zoom.
+
+Update: homepage FAQ questions now use `h3` under the section’s `h2`; detailed FAQ page questions remain `h4` under their category `h3` headings.
+
 This is a reviewed copy of the website. The original uploaded ZIP was not changed. These changes reduce confirmed accessibility barriers, but they do not by themselves prove full WCAG 2.2 Level AA conformance.
 
 ## Confirmed issues fixed
