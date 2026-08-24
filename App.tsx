@@ -2371,168 +2371,300 @@ const Contact: React.FC = () => {
 
 // 8. Privacy & Terms (Placeholders)
 const PrivacyPolicy: React.FC = () => {
+  const sectionHeading = "text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4";
+  const paragraph = "text-earth-700 dark:text-earth-300 leading-relaxed";
+  const list = "list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed";
+
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <SEO 
-        title="Privacy Policy | Building Identity through Stories"
-        description="Read the Privacy Policy for Building Identity Through Stories, including information about research data, contact forms, third-party services, hosting, and data protection."
+      <SEO
+        title="Privacy Notice | Building Identity through Stories"
+        description="Read the BITS Privacy Notice covering information you may provide, external forms, accessibility preferences, GitHub Pages hosting, research data, withdrawal, data-protection rights, security, and contact information."
         canonicalPath="/privacy-policy/"
-        ogTitle="Privacy Policy | Building Identity through Stories"
-        ogDescription="Information about how the BITS research website handles personal data, research enquiries, external forms, third-party services, and hosting."
+        ogTitle="Privacy Notice | Building Identity through Stories"
+        ogDescription="How the BITS website and research project handle website information, accessibility preferences, external services, hosting, research data, and data-protection rights."
       />
       <JSONLD
         data={{
           "@context": "https://schema.org",
           "@graph": [
-            { "@type": "WebPage", "name": "Privacy Policy", "url": `${SITE_ORIGIN}/privacy-policy/` },
+            { "@type": "WebPage", "name": "Privacy Notice", "url": `${SITE_ORIGIN}/privacy-policy/` },
             researchProjectSchema
           ]
         }}
       />
+
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-4">Privacy Policy</h1>
-        <p className="text-earth-700 dark:text-earth-300">Revision Date: 23 August 2026</p>
+        <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-4">Privacy Notice</h1>
+        <p className="text-earth-700 dark:text-earth-300">Last updated: 24 August 2026</p>
       </div>
 
-      <div className="bg-white dark:bg-earth-800 p-8 md:p-12 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700 space-y-10">
-        
+      <div className="bg-white dark:bg-earth-800 p-6 sm:p-8 md:p-12 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700 space-y-10">
+
         <section className="space-y-4">
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This website is maintained by Charlie Tak Hei Kwong, a doctoral researcher registered with the University of the Arts London (UAL) and Falmouth University. The website is used for academic communication and research dissemination purposes only.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This site is a static website hosted on GitHub and deployed via Netlify.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                The website itself does not use analytics, tracking scripts, or advertising technologies.
-            </p>
+          <p className={paragraph}>
+            This website is maintained by <strong>Charlie Tak Hei Kwong</strong>, a doctoral researcher at Falmouth University undertaking a research degree registered with the University of the Arts London (UAL).
+          </p>
+          <p className={paragraph}>
+            The website is used for academic communication, participant information and research dissemination relating to the BITS research project.
+          </p>
+          <p className={paragraph}>
+            This is a static website hosted using <strong>GitHub Pages</strong>.
+          </p>
+          <p className={paragraph}>
+            The researcher does not use website analytics, advertising technologies, behavioural tracking or profiling tools on this website.
+          </p>
+          <p className={paragraph}>
+            However, GitHub, as the website hosting provider, processes limited technical information when visitors access a GitHub Pages website, as explained below.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">1. Information You May Provide</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Visitors may voluntarily provide personal information (for example, name, email address, or information about learning experiences) through external contact or participation forms, such as Microsoft Forms or Google Forms.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Any information provided will be used only for the specific purpose stated at the point of collection, such as:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
-                <li>communication regarding the research project</li>
-                <li>participation in workshops or studies</li>
-                <li>providing feedback about the project</li>
-            </ul>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Personal information collected for research purposes will not be shared with third parties, except:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
-                <li>the supervisory team and research degree committees at Falmouth University and the University of the Arts London,</li>
-                <li>where required by law, or</li>
-                <li>where participants have provided explicit consent.</li>
-            </ul>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Where external services such as Microsoft Forms or Google Forms are used, personal data may be processed and stored by those providers in accordance with their respective privacy policies and data protection practices.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Users should consult the relevant platform policies for further information.
-            </p>
+          <h2 className={sectionHeading}>1. Information You May Provide</h2>
+          <p className={paragraph}>
+            You may choose to provide personal information through contact, registration, participation or feedback forms linked from this website.
+          </p>
+          <p className={paragraph}>Depending on the purpose of the form, this may include information such as:</p>
+          <ul className={list}>
+            <li>your name or preferred name</li>
+            <li>email address</li>
+            <li>information relevant to workshop participation</li>
+            <li>learning or accessibility preferences</li>
+            <li>feedback about the research or project activities</li>
+          </ul>
+          <p className={paragraph}>The information requested will be explained at the point of collection.</p>
+          <p className={paragraph}>Information you provide will only be used for the stated purpose, which may include:</p>
+          <ul className={list}>
+            <li>responding to enquiries</li>
+            <li>communicating about the research project</li>
+            <li>arranging participation in workshops or research activities</li>
+            <li>managing research participation</li>
+            <li>collecting feedback about the project</li>
+          </ul>
+          <p className={paragraph}>
+            Where information is collected for research purposes, access will be limited to the researcher and, where necessary, the supervisory team and authorised institutional staff or research committees in accordance with the approved research arrangements.
+          </p>
+          <p className={paragraph}>
+            Personal information will not be used for advertising, commercial profiling or unrelated marketing.
+          </p>
+          <p className={paragraph}>
+            Information may also be disclosed where required by law or where you have specifically agreed to its disclosure.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">2. Accessibility Preferences and Local Storage</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                The website uses browser local storage to remember accessibility display preferences selected by the visitor, including colour theme, font choice, text spacing, and enlarged text. This information remains on the visitor’s device and is not sent to the researcher or used for analytics, advertising, or profiling.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Text-to-Speech playback is not stored and will not start automatically on another page or future visit. Visitors can change their saved display preferences at any time using the accessibility controls.
-            </p>
+          <h2 className={sectionHeading}>2. External Forms and Services</h2>
+          <p className={paragraph}>
+            Some forms used by the project may be provided through external services such as <strong>Microsoft Forms</strong> or <strong>Google Forms</strong>.
+          </p>
+          <p className={paragraph}>
+            When you use one of these services, information may also be processed by the relevant service provider according to its own privacy and data-protection practices.
+          </p>
+          <p className={paragraph}>
+            The purpose of the form and how the information will be used will be explained before information is collected.
+          </p>
+          <p className={paragraph}>
+            Where a form is used for research participation, the relevant Participant Information Sheet and consent information will provide additional information about research data, confidentiality, withdrawal and retention.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">3. Third-Party Content and Services</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This website may contain links to, or embedded content from, third-party platforms such as:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
-                <li>YouTube (for research information videos)</li>
-                <li>Google Fonts (for website typography)</li>
-                <li>university webpages</li>
-                <li>external participation or contact forms</li>
-            </ul>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                These third-party services may use their own cookies, tracking technologies, or data processing systems which are outside the control of this website.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Visitors should review the privacy policies of those services when accessing their content.
-            </p>
+          <h2 className={sectionHeading}>3. Accessibility Preferences and Local Storage</h2>
+          <p className={paragraph}>
+            The website may use <strong>browser local storage</strong> to remember accessibility and display preferences you select.
+          </p>
+          <p className={paragraph}>These may include:</p>
+          <ul className={list}>
+            <li>colour theme</li>
+            <li>font preference</li>
+            <li>text size</li>
+            <li>text spacing</li>
+            <li>other accessibility display settings</li>
+          </ul>
+          <p className={paragraph}>
+            These preferences remain on your own device and are not sent to the researcher for research, analytics, advertising or profiling purposes.
+          </p>
+          <p className={paragraph}>
+            You can change or reset these preferences at any time using the accessibility controls or by clearing the website data stored in your browser.
+          </p>
+          <p className={paragraph}>
+            Text-to-Speech playback is not used to track visitors and does not automatically continue when you move to another page or return during a later visit.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">4. Hosting and Infrastructure</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                The website is hosted through Netlify, which may generate limited server logs for security and operational purposes.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                These logs are managed by the hosting provider and are not used by the researcher for tracking or profiling visitors.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                No analytics tools, advertising systems, or behavioural tracking technologies are implemented on this website.
-            </p>
+          <h2 className={sectionHeading}>4. Third-Party Content</h2>
+          <p className={paragraph}>The website may link to or display content provided by third-party services, including, where used:</p>
+          <ul className={list}>
+            <li>YouTube</li>
+            <li>Google Fonts</li>
+            <li>university websites</li>
+            <li>Microsoft Forms</li>
+            <li>Google Forms</li>
+            <li>other research, participation or academic resources</li>
+          </ul>
+          <p className={paragraph}>
+            When you access third-party content or services, the provider may process technical information or use its own cookies or similar technologies.
+          </p>
+          <p className={paragraph}>
+            These services operate independently of this website and are governed by their own privacy and data-protection practices.
+          </p>
+          <p className={paragraph}>
+            The researcher does not control how third-party services process information once you access those services.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">5. Data Protection and Legal Compliance</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Research data collected through this project will be handled in accordance with relevant data protection laws, including:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
-                <li>UK General Data Protection Regulation (UK GDPR)</li>
-                <li>Data Protection Act 2018 (UK)</li>
-                <li>Personal Information Protection and Electronic Documents Act (PIPEDA) – Canada</li>
-                <li>Personal Data (Privacy) Ordinance (Cap. 486) – Hong Kong</li>
-            </ul>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Personal data will be stored securely and retained only for as long as necessary for the purposes of the research project or as required by research ethics, institutional policies, or applicable law.
-            </p>
+          <h2 className={sectionHeading}>5. GitHub Pages Hosting</h2>
+          <p className={paragraph}>This website is hosted using <strong>GitHub Pages</strong>, a service provided by GitHub.</p>
+          <p className={paragraph}>
+            When a GitHub Pages website is visited, GitHub logs and stores the visitor's IP address for security purposes.
+          </p>
+          <p className={paragraph}>
+            This processing is carried out by GitHub as the hosting provider rather than by the researcher.
+          </p>
+          <p className={paragraph}>
+            The researcher does not use this information to identify visitors and does not use GitHub Pages visitor information for:
+          </p>
+          <ul className={list}>
+            <li>research</li>
+            <li>website analytics</li>
+            <li>advertising</li>
+            <li>profiling</li>
+            <li>behavioural monitoring</li>
+          </ul>
+          <p className={paragraph}>
+            No third-party analytics service, advertising network or behavioural tracking system has been intentionally added to this website.
+          </p>
+          <p className={paragraph}>
+            More information about GitHub's handling of information is available through GitHub's own Privacy Statement.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">6. Your Rights</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Depending on your jurisdiction, you may have the right to:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-earth-700 dark:text-earth-300 leading-relaxed">
-                <li>request access to personal data held about you</li>
-                <li>request correction of inaccurate information</li>
-                <li>request deletion of your personal data where appropriate</li>
-                <li>withdraw consent for participation in the research project</li>
-                <li>lodge a complaint with your relevant data protection authority</li>
-            </ul>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                Please note that some research data may be retained where required by research integrity, ethics approval, or institutional record-keeping requirements.
-            </p>
+          <h2 className={sectionHeading}>6. Research Participation and Research Data</h2>
+          <p className={paragraph}>
+            Simply visiting this website does <strong>not</strong> make you a research participant.
+          </p>
+          <p className={paragraph}>
+            Research participation only begins through the separate participation and informed-consent process described for the relevant research activity.
+          </p>
+          <p className={paragraph}>
+            Personal information collected as part of the research project is managed separately from ordinary use of this website.
+          </p>
+          <p className={paragraph}>Research data will be handled in accordance with:</p>
+          <ul className={list}>
+            <li>the project's approved research ethics arrangements</li>
+            <li>applicable data-protection legislation</li>
+            <li>relevant Falmouth University and UAL requirements</li>
+            <li>the information provided to participants before taking part</li>
+          </ul>
+          <p className={paragraph}>
+            For research conducted in the United Kingdom, applicable requirements include the <strong>UK General Data Protection Regulation (UK GDPR)</strong> and the <strong>Data Protection Act 2018</strong>, as amended.
+          </p>
+          <p className={paragraph}>
+            Research conducted in Canada or Hong Kong will additionally follow applicable local legal, ethical and host-institutional requirements.
+          </p>
+          <p className={paragraph}>
+            Research information will be stored securely and retained in accordance with the approved research protocol, institutional requirements and applicable law.
+          </p>
+          <p className={paragraph}>
+            More specific information about the collection, use, storage, confidentiality and retention of research data will be provided in the relevant <strong>Participant Information Sheet</strong> before participation.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">7. Contact</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                If you have any questions about this Privacy Policy or how personal data may be handled in relation to this research project, you may contact the researcher using the <Link to={PageRoute.CONTACT} className="text-sage-700 dark:text-sage-300 font-medium underline hover:text-earth-900 dark:hover:text-earth-100 transition-colors">contact form</Link> provided on this website.
-            </p>
+          <h2 className={sectionHeading}>7. Research Participation and Withdrawal</h2>
+          <p className={paragraph}>Taking part in the research is voluntary.</p>
+          <p className={paragraph}>
+            Research participants may pause or withdraw from participation in accordance with the arrangements explained in the relevant Participant Information Sheet and consent materials.
+          </p>
+          <p className={paragraph}>Participants will be informed before taking part about:</p>
+          <ul className={list}>
+            <li>how to withdraw</li>
+            <li>the period during which withdrawal is possible</li>
+            <li>what will happen to information already collected</li>
+            <li>any circumstances in which information can no longer reasonably be removed from the research</li>
+          </ul>
+          <p className={paragraph}>
+            Withdrawing from a research activity is separate from exercising rights under data-protection law.
+          </p>
+          <p className={paragraph}>
+            You do not need to provide a reason for withdrawing from research participation unless you choose to do so.
+          </p>
         </section>
 
         <section className="space-y-4">
-            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">8. Updates</h2>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                This Privacy Policy may be updated from time to time to reflect changes in legal requirements, institutional policies, or the development of the research project.
-            </p>
-            <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
-                The most recent revision date will be displayed on this page.
-            </p>
+          <h2 className={sectionHeading}>8. Your Data-Protection Rights</h2>
+          <p className={paragraph}>
+            Depending on the circumstances and the law that applies, you may have rights concerning personal information held about you.
+          </p>
+          <p className={paragraph}>These may include rights to:</p>
+          <ul className={list}>
+            <li>request access to your personal information</li>
+            <li>request correction of inaccurate information</li>
+            <li>request erasure in certain circumstances</li>
+            <li>request restriction of processing in certain circumstances</li>
+            <li>object to certain forms of processing</li>
+            <li>raise a concern or complaint with the relevant data-protection authority</li>
+          </ul>
+          <p className={paragraph}>
+            Some rights may operate differently where personal data is processed for research purposes or where an applicable research exemption applies.
+          </p>
+          <p className={paragraph}>
+            Exercising a data-protection right will not affect your academic standing, access to university services or decision about whether to participate in the research.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className={sectionHeading}>9. Security</h2>
+          <p className={paragraph}>
+            Reasonable technical and organisational measures are used to protect personal information collected directly for the research project.
+          </p>
+          <p className={paragraph}>
+            Research information is stored using approved secure systems and access is restricted according to the project's research and data-management arrangements.
+          </p>
+          <p className={paragraph}>
+            Please be aware that no method of transmitting information over the internet can be guaranteed to be completely secure.
+          </p>
+          <p className={paragraph}>
+            You should not send highly sensitive or confidential information through a general website contact form unless specifically requested to do so through an approved research process.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className={sectionHeading}>10. Contact</h2>
+          <p className={paragraph}>
+            If you have questions about this Privacy Notice, the website, or how information may be handled in relation to the BITS research project, you can contact the researcher using the <Link to={PageRoute.CONTACT} className="font-semibold text-sage-800 underline decoration-sage-500 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300">Contact</Link> page on this website.
+          </p>
+          <p className={paragraph}>
+            For questions specifically concerning participation in a research activity, please use the contact information provided in the relevant Participant Information Sheet.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className={sectionHeading}>11. Changes to This Privacy Notice</h2>
+          <p className={paragraph}>This Privacy Notice may be updated where necessary to reflect:</p>
+          <ul className={list}>
+            <li>changes to the website or its technical services</li>
+            <li>changes to the research project</li>
+            <li>amendments approved through the research ethics process</li>
+            <li>changes to institutional requirements</li>
+            <li>changes to applicable legal or data-protection requirements</li>
+          </ul>
+          <p className={paragraph}>
+            The latest revision date will always be displayed at the top of this page.
+          </p>
+          <p className={paragraph}>
+            Changes to this Privacy Notice do not override the information or consent arrangements already provided to research participants. Where a material change affects an approved research activity or the handling of participant information, the appropriate institutional and ethical review processes will be followed before that change is implemented.
+          </p>
         </section>
 
       </div>
     </div>
   );
 };
+
 const TermsOfUse: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
