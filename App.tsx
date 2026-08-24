@@ -9,7 +9,7 @@ import {
   ArrowRight, Mail, MapPin, Phone, Play, Pause, 
   Facebook, Twitter, Linkedin, CheckCircle2, Check,
   BookOpen, FileText, Presentation, Mic, Globe, Instagram, Calendar, Clock, MapPin as MapPinIcon, AlertCircle, CalendarPlus,
-  ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake, Gift
+  ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake, Gift, Video
 } from 'lucide-react';
 
 // --- Helper: SEO Component ---
@@ -174,6 +174,7 @@ const getEmbedUrl = (url: string) => {
 const useVideoSheet = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -206,8 +207,10 @@ const useVideoSheet = () => {
         }).filter((item): item is VideoData => item !== null);
 
         setVideos(parsedData);
+        setError(false);
       } catch (err) {
         console.error("Failed to load videos", err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -215,7 +218,7 @@ const useVideoSheet = () => {
     fetchVideos();
   }, []);
 
-  return { videos, loading };
+  return { videos, loading, error };
 };
 
 // Numeric Order values belong to the Research Update section.
@@ -252,6 +255,16 @@ const ensureAbsoluteUrl = (url: string) => {
     return url;
   }
   return `https://${url}`;
+};
+
+const getSafeExternalUrl = (url: string) => {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:' ? parsed.toString() : null;
+  } catch {
+    return null;
+  }
 };
 
 // --- Helper: Workshop Interface & Component ---
@@ -646,7 +659,7 @@ const FullFAQ: React.FC = () => {
         </nav>
 
         <div className="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-earth-200 pb-5 text-sm dark:border-earth-700">
-          <span className="text-earth-600 dark:text-earth-400">21 questions</span>
+          <span className="text-earth-700 dark:text-earth-300">21 questions</span>
           <button
             type="button"
             aria-pressed={allExpanded}
@@ -828,7 +841,7 @@ const WorkshopSection: React.FC = () => {
           const time = cols[2] || "";
           const venue = cols[3] || "";
           const remarks = cols[4] || "";
-          const link = cols[5] || "";
+          const link = getSafeExternalUrl(ensureAbsoluteUrl(cols[5] || "")) ?? "";
           
           // Date Parsing Logic (Prioritizing DD/MM/YYYY for UK context)
           let dateObj: Date | null = null;
@@ -1132,14 +1145,16 @@ const WorkshopSection: React.FC = () => {
                 tabIndex={0}
                 role="region"
                 aria-roledescription="carousel"
-                aria-live="polite"
+                aria-label="Upcoming workshops"
                 ref={carouselRef}
             >
                 <div 
                     className={`flex transition-transform duration-500 ease-out will-change-transform motion-reduce:transition-none ${filteredWorkshops.length <= itemsPerPage ? 'justify-center' : 'justify-start'}`} 
                     style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}
                 >
-                    {filteredWorkshops.map((ws, idx) => (
+                    {filteredWorkshops.map((ws, idx) => {
+                        const isVisible = idx >= currentIndex && idx < currentIndex + itemsPerPage;
+                        return (
                         <div 
                             key={idx} 
                             style={{ width: `${100 / itemsPerPage}%` }} 
@@ -1147,6 +1162,8 @@ const WorkshopSection: React.FC = () => {
                             role="group"
                             aria-roledescription="slide"
                             aria-label={`${idx + 1} of ${filteredWorkshops.length}`}
+                            aria-hidden={!isVisible}
+                            inert={!isVisible}
                         >
                             {(() => {
                                 const venueTheme = getVenueTheme(ws.venue);
@@ -1221,7 +1238,7 @@ const WorkshopSection: React.FC = () => {
                                 );
                             })()}
                         </div>
-                    ))}
+                    );})}
                 </div>
             </div>
         )}
@@ -1298,7 +1315,7 @@ const HomepageFAQSection: React.FC = () => {
 
 // 1. Home Page
 const ResearchUpdate: React.FC = () => {
-  const { videos, loading } = useVideoSheet();
+  const { videos, loading, error } = useVideoSheet();
   const [researchVideos, setResearchVideos] = useState<VideoData[]>([]);
 
   useEffect(() => {
@@ -1324,13 +1341,17 @@ const ResearchUpdate: React.FC = () => {
       </div>
       {loading ? (
         <div className="flex justify-center py-20"><Loader2 className="animate-spin text-sage-500" size={40} /></div>
+      ) : error ? (
+        <div role="alert" className="rounded-3xl border border-earth-300 bg-white p-8 text-center text-earth-800 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100">
+          Research videos could not be loaded. Please try again later or visit the BITS YouTube channel.
+        </div>
       ) : researchVideos.length === 0 ? (
         <div className="text-center py-12 text-earth-700 dark:text-earth-300">No updates available at the moment.</div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           {researchVideos.map((video, idx) => (
             <div key={`${video.order}-${idx}`} className="group relative aspect-video w-full bg-sage-600 rounded-3xl overflow-hidden shadow-xl transform transition-transform hover:-translate-y-2">
-              <iframe className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${idx + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              <iframe loading="lazy" className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${idx + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             </div>
           ))}
         </div>
@@ -1373,7 +1394,7 @@ const Home: React.FC = () => {
     "/images/workshop-gallery-05.jpg"
   ];
 
-  const { videos, loading: videosLoading } = useVideoSheet();
+  const { videos, loading: videosLoading, error: videosError } = useVideoSheet();
   const [researchVideos, setResearchVideos] = useState<VideoData[]>([]);
 
   // Carousel State for Research Videos
@@ -1534,8 +1555,7 @@ const Home: React.FC = () => {
               <a
                   href="#upcoming-workshops"
                   className="inline-flex min-h-11 items-center justify-center gap-2 px-8 py-4 bg-white/90 dark:bg-earth-900/90 text-earth-900 dark:text-earth-50 border-2 border-earth-800 dark:border-earth-200 rounded-full text-sm uppercase tracking-widest hover:bg-earth-100 dark:hover:bg-earth-800 transition-colors duration-300 shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-earth-900 dark:focus-visible:outline-earth-50"
-                  aria-label="See upcoming workshop sessions"
-              >
+                >
                   Upcoming Sessions
                   <span aria-hidden="true">↓</span>
               </a>
@@ -1595,6 +1615,10 @@ const Home: React.FC = () => {
                 <div className="flex justify-center py-12">
                     <Loader2 className="animate-spin text-earth-50" size={32} />
                 </div>
+            ) : videosError ? (
+                <div role="alert" className="rounded-3xl border border-sage-300 bg-sage-800 p-8 text-center text-earth-50">
+                  Research videos could not be loaded. Please try again later or visit the BITS YouTube channel.
+                </div>
             ) : researchVideos.length === 0 ? (
                 <div className="text-center py-12 text-earth-100">No updates available at the moment.</div>
             ) : (
@@ -1610,7 +1634,6 @@ const Home: React.FC = () => {
                     tabIndex={0}
                     role="region"
                     aria-roledescription="carousel"
-                    aria-live="polite"
                     ref={carouselRef}
                     aria-label="Research Update Videos"
                 >
@@ -1633,12 +1656,14 @@ const Home: React.FC = () => {
                                     role="group"
                                     aria-roledescription="slide"
                                     aria-label={`Page ${pageIndex + 1} of ${totalVideoPages}`}
+                                    aria-hidden={pageIndex !== currentIndex}
+                                    inert={pageIndex !== currentIndex}
                                 >
                                     {pageVideos.map((video, videoIndex) => {
                                         const absoluteIndex = pageIndex * itemsPerPage + videoIndex;
                                         return (
                                             <div key={`${video.order}-${absoluteIndex}`} className="group relative aspect-video w-full bg-sage-600 rounded-3xl overflow-hidden shadow-xl transform transition-transform hover:-translate-y-2">
-                                                <iframe className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${absoluteIndex + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                                <iframe loading="lazy" className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" src={video.embedUrl!} title={`Research Update ${absoluteIndex + 1}`} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                                             </div>
                                         );
                                     })}
@@ -1689,7 +1714,7 @@ const Home: React.FC = () => {
 
 // 2. About Page
 const About: React.FC = () => {
-  const { videos, loading } = useVideoSheet();
+  const { videos, loading, error } = useVideoSheet();
   const [aboutVideo, setAboutVideo] = useState<VideoData | null>(null);
 
   useEffect(() => {
@@ -1725,21 +1750,28 @@ const About: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
-        <div className="w-full sticky top-24">
-            <div className="group relative aspect-video w-full bg-sage-600 rounded-3xl overflow-hidden shadow-xl transform transition-transform hover:-translate-y-2">
+        <div className="w-full md:sticky md:top-28">
+            <div className="group relative aspect-video w-full max-w-full bg-sage-700 rounded-3xl overflow-hidden shadow-xl transition-shadow hover:shadow-2xl">
                 {loading ? (
                     <div className="w-full h-full flex items-center justify-center bg-sage-200 dark:bg-sage-800">
                         <Loader2 className="animate-spin text-sage-500" size={32} />
                     </div>
-                ) : (
+                ) : aboutVideo?.embedUrl ? (
                     <iframe 
                         className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity" 
-                        src={aboutVideo?.embedUrl || "https://www.youtube.com/embed/dQw4w9WgXcQ"} 
-                        title="About Us Video" 
+                        src={aboutVideo.embedUrl}
+                        title="About the BITS research video"
+                        loading="lazy"
                         frameBorder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowFullScreen
                     ></iframe>
+                ) : (
+                    <div role={error ? 'alert' : 'status'} className="flex h-full flex-col items-center justify-center gap-3 bg-sage-100 p-6 text-center text-earth-800 dark:bg-earth-800 dark:text-earth-100">
+                      <Video size={36} aria-hidden="true" />
+                      <p className="font-semibold">The About video is currently unavailable.</p>
+                      <p className="max-w-md text-sm">You can continue reading the full project information beside or below this message.</p>
+                    </div>
                 )}
             </div>
         </div>
@@ -1752,7 +1784,7 @@ const About: React.FC = () => {
             The research examines transmedia storytelling as an educational intervention to help students build their sense of self during their transition to university by sharing personal stories across creative formats, like journal writing or simple digital creations on their own devices.
           </p>
           <div className="pt-4 border-t border-earth-200 dark:border-earth-700">
-             <h3 className="font-serif text-2xl mb-4 text-earth-900 dark:text-earth-100">Keywords</h3>
+             <h2 className="font-serif text-2xl mb-4 text-earth-900 dark:text-earth-100">Keywords</h2>
              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {['Transmedia Storytelling', 'Identity', 'Student Transition', 'Educational Intervention', 'Arts-based Educational Research'].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm font-medium text-earth-700 dark:text-earth-300">
@@ -1768,7 +1800,7 @@ const About: React.FC = () => {
       <div className="mt-16 bg-earth-100 dark:bg-earth-800 rounded-4xl p-10 md:p-16 border border-earth-200 dark:border-earth-700">
           <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
-                  <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Research Objectives</h3>
+                  <h2 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Research Objectives</h2>
                   <p className="text-earth-700 dark:text-earth-300">Our core goals driving this study forward.</p>
               </div>
               <div className="grid grid-cols-1 gap-6">
@@ -1788,7 +1820,7 @@ const About: React.FC = () => {
 
       <div className="mt-16 bg-earth-100 dark:bg-earth-800 rounded-4xl p-10 md:p-16 border border-earth-200 dark:border-earth-700">
           <div className="max-w-4xl mx-auto text-center">
-              <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-10">How This Project Brings Different Ideas Together</h3>
+              <h2 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-10">How This Project Brings Different Ideas Together</h2>
               <div className="mb-10 flex justify-center">
                   <img 
                       src="/images/transmedia-storytelling-workshop.png" 
@@ -1808,7 +1840,7 @@ const About: React.FC = () => {
       <div className="mt-12 bg-sage-700 text-earth-50 rounded-3xl p-8 flex items-start gap-4 shadow-sm mx-auto max-w-4xl">
            <CheckCircle2 size={32} className="flex-shrink-0 mt-1" />
            <div>
-               <h4 className="font-serif text-xl font-bold mb-2">Ethical Approval</h4>
+               <h2 className="font-serif text-xl font-bold mb-2">Ethical Approval</h2>
                <p className="opacity-90 leading-relaxed">
                    This research project has been reviewed and approved by the institutional ethics committee. All procedures meet the required ethical standards.
                </p>
@@ -1890,12 +1922,12 @@ const People: React.FC = () => {
       <div className="mt-20 relative overflow-hidden bg-earth-100/50 dark:bg-earth-800/30 rounded-4xl border border-earth-200 dark:border-earth-700 p-8 md:p-16 text-center">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-sage-300 via-earth-300 to-sage-300"></div>
           <div className="inline-flex items-center justify-center w-16 h-16 bg-white dark:bg-earth-700 rounded-full mb-6 shadow-sm text-sage-600 dark:text-sage-300"><GraduationCap size={32} /></div>
-          <h3 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Doctoral Research Supervision</h3>
+          <h2 className="font-serif text-3xl md:text-4xl text-earth-900 dark:text-earth-50 mb-4">Doctoral Research Supervision</h2>
           <p className="text-earth-700 dark:text-earth-300 mb-12 max-w-2xl mx-auto leading-relaxed">This research is developed under the guidance of an interdisciplinary supervisory team:</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {[{name: "Dr Jennifer Young", role: <>Director of Studies<br/>Dean, Faculty of Design & Culture</>}, {name: "Prof. Neil Fox", role: "Professor of Film Practice and Pedagogy"}, {name: "Prof. Russell Crawford", role: "Deputy Vice-Chancellor (Interim)"}].map((sup, i) => (
                   <div key={i} className="bg-white dark:bg-earth-900/60 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all border border-transparent hover:border-sage-400 dark:hover:border-sage-500 group">
-                      <h4 className="font-serif font-bold text-xl text-earth-900 dark:text-earth-100 mb-2">{sup.name}</h4>
+                      <h3 className="font-serif font-bold text-xl text-earth-900 dark:text-earth-100 mb-2">{sup.name}</h3>
                       <div className="h-px w-8 bg-sage-300 mx-auto mb-3"></div>
                       <p className="text-sm text-earth-700 dark:text-earth-300 font-medium leading-snug">{sup.role}</p>
                   </div>
@@ -1943,21 +1975,19 @@ const WhatWeCare: React.FC = () => {
             <div className="w-12 h-12 bg-earth-100 dark:bg-earth-700 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-500 transition-colors">
                <span className="font-serif text-xl font-bold group-hover:text-white">{index + 1}</span>
             </div>
-            <h3 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">{item.title}</h3>
+            <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-4">{item.title}</h2>
             <p className="text-lg text-earth-700 dark:text-earth-300 leading-relaxed font-light">{item.description}</p>
           </div>
         ))}
       </div>
 
       <div className="mt-16 text-center">
-          <a 
-              href={PageRoute.INVOLVED} 
-              target="_blank"
-              rel="noopener noreferrer"
+          <Link
+              to={PageRoute.INVOLVED}
               className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
           >
               Get Involved!
-          </a>
+          </Link>
       </div>
     </div>
   );
@@ -1978,6 +2008,7 @@ const Output: React.FC = () => {
   const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTqnqjMFiQ3G6ehRg-Zh8GdjbbcpbeaEsp4CpgmHNcsdJR0-SgcrXkSDF8Hnypub4Jz4zII4zCL8-Ue/pub?output=csv';
   const [resources, setResources] = useState<ResourceItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [academicFilter, setAcademicFilter] = useState('All');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(1);
@@ -2000,19 +2031,25 @@ const Output: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoadError(false);
         const response = await fetch(GOOGLE_SHEET_CSV_URL);
+        if (!response.ok) throw new Error('Resource feed request failed');
         const text = await response.text();
         const rows = text.split(/\r?\n/).filter(r => r.trim() !== "").slice(1);
         const parsed: ResourceItem[] = rows.map((row): ResourceItem | null => {
           const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
           const cols = row.split(regex).map(col => col.replace(/^"|"$/g, '').trim());
           if (cols.length < 6) return null;
-          return { category: cols[0] as 'Community' | 'Academic', title: cols[1], type: cols[2], year: cols[3], publication: cols[4], link: cols[5], image: cols[6] };
+          const link = getSafeExternalUrl(cols[5]);
+          const image = cols[6] ? getSafeExternalUrl(cols[6]) : null;
+          if (!link) return null;
+          return { category: cols[0] as 'Community' | 'Academic', title: cols[1], type: cols[2], year: cols[3], publication: cols[4], link, image: image ?? undefined };
         }).filter((item): item is ResourceItem => item !== null);
         setResources(parsed);
         setLoading(false);
       } catch (err) {
         console.error("Failed to load resources", err);
+        setLoadError(true);
         setLoading(false);
       }
     };
@@ -2067,12 +2104,16 @@ const Output: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-6">Outputs and Resources</h1>
             <p className="text-xl text-earth-700 dark:text-earth-300 max-w-2xl mx-auto font-light">Explore our community resources and research findings.</p>
         </div>
-        {loading ? <div className="flex justify-center py-20"><Loader2 className="animate-spin text-sage-500" size={40} /></div> : (
+        {loading ? <div className="flex justify-center py-20"><Loader2 className="animate-spin text-sage-500" size={40} /></div> : loadError ? (
+            <div role="alert" className="rounded-3xl border border-earth-300 bg-white p-8 text-center text-earth-800 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100">
+              Outputs and resources could not be loaded. Please try again later.
+            </div>
+        ) : (
             <div className="space-y-24">
                 {communityItems.length > 0 && (
                     <section>
                          <div className="flex items-center justify-between mb-8 px-2">
-                             <h3 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Community Resources</h3>
+                             <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Community Resources</h2>
                              <div className="flex gap-2">
                                 <button onClick={prevSlide} disabled={currentIndex === 0} aria-label="Previous community resource" className="p-2 rounded-full border border-earth-300 hover:bg-earth-100 disabled:opacity-30 dark:border-earth-600 dark:text-earth-300 dark:hover:bg-earth-800"><ChevronLeft size={20} /></button>
                                 <button onClick={nextSlide} disabled={currentIndex >= communityItems.length - itemsPerPage} aria-label="Next community resource" className="p-2 rounded-full border border-earth-300 hover:bg-earth-100 disabled:opacity-30 dark:border-earth-600 dark:text-earth-300 dark:hover:bg-earth-800"><ChevronRight size={20} /></button>
@@ -2091,10 +2132,11 @@ const Output: React.FC = () => {
                             role="region"
                             aria-roledescription="carousel"
                             aria-label="Community resources"
-                            aria-live="polite"
                          >
                             <div className={`flex transition-transform duration-500 ease-out`} style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}>
-                                {communityItems.map((item, idx) => (
+                                {communityItems.map((item, idx) => {
+                                  const isVisible = idx >= currentIndex && idx < currentIndex + itemsPerPage;
+                                  return (
                                     <div
                                         key={idx}
                                         style={{ width: `${100 / itemsPerPage}%` }}
@@ -2102,6 +2144,8 @@ const Output: React.FC = () => {
                                         role="group"
                                         aria-roledescription="slide"
                                         aria-label={`${idx + 1} of ${communityItems.length}`}
+                                        aria-hidden={!isVisible}
+                                        inert={!isVisible}
                                     >
                                         <a href={item.link} target="_blank" rel="noopener noreferrer" className="block bg-white dark:bg-earth-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-earth-100 dark:border-earth-700 h-full group relative">
                                             <div className="aspect-[3/2] bg-earth-200 dark:bg-earth-700 relative overflow-hidden group">
@@ -2110,23 +2154,28 @@ const Output: React.FC = () => {
                                             </div>
                                             <div className="p-6">
                                                 <div className="text-xs font-bold uppercase tracking-widest text-sage-700 dark:text-sage-300 mb-2">{item.type}</div>
-                                                <h4 className="text-xl font-sans font-bold text-earth-900 dark:text-earth-50 mb-2">{item.title}</h4>
+                                                <h3 className="text-xl font-sans font-bold text-earth-900 dark:text-earth-50 mb-2">{item.title}</h3>
                                                 <div className="flex items-center gap-2 text-earth-700 dark:text-earth-300 text-sm font-medium mt-4 group-hover:text-sage-700 transition-colors">Access Resource <ArrowRight size={16} /></div>
                                             </div>
                                         </a>
                                     </div>
-                                ))}
+                                  );
+                                })}
                             </div>
                          </div>
                     </section>
                 )}
                 <section>
                     <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50 mb-8 px-2">Academic Output</h2>
-                    <div className="flex flex-wrap gap-2 mb-8 px-2">
+                    <div className="flex flex-wrap gap-2 mb-8 px-2" role="group" aria-label="Filter academic outputs by type">
                         {['All', 'Journal Article', 'Book Chapter', 'Conference Paper', 'Conference Presentation'].map(f => (
-                            <button key={f} onClick={() => setAcademicFilter(f)} className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${academicFilter === f ? 'bg-sage-700 text-white shadow-md' : 'bg-earth-100 dark:bg-earth-800 text-earth-700 dark:text-earth-300 hover:bg-earth-200 dark:hover:bg-earth-700'}`}>{f}</button>
+                            <button key={f} onClick={() => setAcademicFilter(f)} aria-pressed={academicFilter === f} className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${academicFilter === f ? 'bg-sage-700 text-white shadow-md' : 'bg-earth-100 dark:bg-earth-800 text-earth-700 dark:text-earth-300 hover:bg-earth-200 dark:hover:bg-earth-700'}`}>
+                              {academicFilter === f && <Check size={15} strokeWidth={2.5} aria-hidden="true" />}
+                              {f}
+                            </button>
                         ))}
                     </div>
+                    <p className="sr-only" role="status">Showing {filteredAcademic.length} academic {filteredAcademic.length === 1 ? 'output' : 'outputs'} for {academicFilter}.</p>
                     <div className="bg-white dark:bg-earth-800/50 rounded-4xl border border-earth-100 dark:border-earth-700 overflow-hidden">
                         {filteredAcademic.length > 0 ? (
                             <div className="divide-y divide-earth-100 dark:divide-earth-700">
@@ -2135,7 +2184,7 @@ const Output: React.FC = () => {
                                         <div className="flex items-start gap-4">
                                             <div className="mt-1 p-3 bg-earth-100 dark:bg-earth-700 rounded-xl text-sage-600 dark:text-sage-300 group-hover:bg-sage-200 dark:hover:bg-sage-800 transition-colors">{getIcon(item.type)}</div>
                                             <div>
-                                                <h4 className="text-lg font-sans font-bold text-earth-900 dark:text-earth-50 mb-1">{item.title}</h4>
+                                                <h3 className="text-lg font-sans font-bold text-earth-900 dark:text-earth-50 mb-1">{item.title}</h3>
                                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-earth-700 dark:text-earth-300"><span>{item.year}</span><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span>{item.type}</span>{item.publication && <><span className="w-1 h-1 bg-earth-400 rounded-full"></span><span className="italic">Published in {item.publication}</span></>}</div>
                                             </div>
                                         </div>
@@ -2220,7 +2269,7 @@ const GetInvolved: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-block px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Join the Session
+                      Join the Session — Microsoft Forms ↗
                   </a>
               </div>
           </div>
@@ -2249,7 +2298,7 @@ const GetInvolved: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-block px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Expression of Interest
+                      Expression of Interest — Microsoft Forms ↗
                   </a>
               </div>
           </div>
@@ -2339,6 +2388,10 @@ const Contact: React.FC = () => {
             <textarea name="Message" id="message" placeholder="How can we help?" required rows={4} className="w-full p-4 bg-earth-50 dark:bg-earth-900 rounded-xl border-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 transition-all placeholder-earth-700 dark:placeholder-earth-400 text-earth-900 dark:text-earth-100" />
         </div>
 
+        <p className="text-sm leading-relaxed text-earth-700 dark:text-earth-300">
+          We use your details only to respond to this enquiry. Read the <Link to={PageRoute.PRIVACY} className="underline underline-offset-2 hover:text-sage-700 dark:hover:text-sage-300">Privacy Notice</Link>.
+        </p>
+
         <button 
             type="submit" 
             disabled={status === 'submitting'}
@@ -2354,7 +2407,7 @@ const Contact: React.FC = () => {
         {status === 'success' && (
             <div role="status" aria-live="polite" className="p-4 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-xl flex items-center gap-3 animate-fade-in">
                 <CheckCircle2 size={20} />
-                <p>Thank you! Your message has been sent successfully.</p>
+                <p>Your message was submitted from this page. If you need confirmation, email c.kwong1220251@arts.ac.uk.</p>
             </div>
         )}
 
@@ -3104,7 +3157,7 @@ const ResearchEthics: React.FC = () => {
                     href="https://charliekwong.myblog.arts.ac.uk/doctoral-research/research-ethics/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-full text-white bg-sage-600 hover:bg-sage-800 transition-colors shadow-sm hover:shadow-md"
+                    className="inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-full text-white bg-sage-700 hover:bg-sage-800 transition-colors shadow-sm hover:shadow-md"
                 >
                     Read the Full Research Ethics
                 </a>

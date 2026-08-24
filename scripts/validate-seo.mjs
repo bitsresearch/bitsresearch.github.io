@@ -63,7 +63,7 @@ for (const marker of ['2PACX-1vSHQGTMTLaBAyxMZYxyjG1JrhOtHwvzZmDCgJ_3jaBJnCg81qm
 
 const notFoundHtml = read(path.join(dist, '404.html'));
 assert(notFoundHtml.includes('<h1>Page Not Found</h1>'), '404.html must contain a static Page Not Found fallback');
-assert(notFoundHtml.includes('http-equiv="refresh" content="7; url=https://bitsresearch.github.io/get-involved/"'), '404.html must redirect to Get Involved after 7 seconds');
+assert(!/http-equiv=["']refresh["']/i.test(notFoundHtml), '404.html must not redirect automatically');
 assert(!notFoundHtml.includes('src="./index.tsx"'), '404.html must use the production application bundle');
 assert(notFoundHtml.includes('name="robots" content="noindex, follow"'), '404.html must remain noindex, follow');
 

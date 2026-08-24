@@ -240,7 +240,7 @@ export const Layout: React.FC = () => {
     { name: 'About', path: PageRoute.ABOUT },
     { name: 'What We Care About', path: PageRoute.CARE },
     { name: 'People', path: PageRoute.PEOPLE },
-    { name: 'Output', path: PageRoute.OUTPUT },
+    { name: 'Outputs & Resources', path: PageRoute.OUTPUT },
     { name: 'Get Involved', path: PageRoute.INVOLVED },
     { name: 'Contact', path: PageRoute.CONTACT },
   ];
@@ -347,7 +347,7 @@ export const Layout: React.FC = () => {
                     </button>
 
                     {isAccessMenuOpen && (
-                        <div id="accessibility-menu" className="absolute right-0 mt-3 w-72 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-50 transform origin-top-right transition-all">
+                        <div id="accessibility-menu" className="absolute right-0 mt-3 w-72 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 z-50 transform origin-top-right transition-all">
                              <div className="flex items-center justify-between px-4 py-3 border-b border-earth-100 dark:border-earth-700 bg-earth-50/50 dark:bg-earth-900/30">
                                 <h3 className="font-serif text-lg text-earth-900 dark:text-earth-50">Accessibility</h3>
                                 <button 
@@ -497,7 +497,7 @@ export const Layout: React.FC = () => {
             role="navigation"
             aria-label="Mobile navigation"
             ref={mobileMenuRef}
-            className="md:hidden absolute top-24 left-4 right-4 bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 overflow-hidden z-40"
+            className="md:hidden absolute top-24 left-4 right-4 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 z-40"
           >
             <div className="p-4 space-y-2">
               {navLinks.map((link) => (
@@ -510,39 +510,43 @@ export const Layout: React.FC = () => {
                   {link.name}
                 </NavLink>
               ))}
-              <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-earth-100 dark:border-earth-700">
+              <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-earth-100 dark:border-earth-700">
                  <button 
                     onClick={() => setIsAtkinsonFont(!isAtkinsonFont)} 
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isAtkinsonFont ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
+                    className={`flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${isAtkinsonFont ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Use Atkinson Hyperlegible font"
                     aria-pressed={isAtkinsonFont}
                  >
                     <Type size={20} />
+                    <span>Atkinson Font</span>
                  </button>
                  <button 
                     onClick={() => setIsTextSpacing(!isTextSpacing)} 
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isTextSpacing ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
+                    className={`flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${isTextSpacing ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Text Spacing"
                     aria-pressed={isTextSpacing}
                  >
                     <MoveHorizontal size={20} />
+                    <span>Text Spacing</span>
                  </button>
                  <button 
                     onClick={() => setIsEnlarged(!isEnlarged)} 
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isEnlarged ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
+                    className={`flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${isEnlarged ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label="Enlarge Text"
                     aria-pressed={isEnlarged}
                  >
                     <ZoomIn size={20} />
+                    <span>Enlarge Text</span>
                  </button>
                  <button 
                     onClick={toggleTTS} 
-                    className={`flex flex-col items-center justify-center gap-1 py-3 rounded-xl text-sm font-medium transition-colors ${isTTSActive ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
+                    className={`flex items-center justify-center gap-2 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${isTTSActive ? 'bg-sage-100 dark:bg-sage-900 text-sage-700 dark:text-sage-200' : 'bg-earth-50 dark:bg-earth-900 text-earth-800 dark:text-earth-200'}`}
                     aria-label={isTTSActive ? "Stop Text to Speech" : "Start Text to Speech"}
                     aria-pressed={isTTSActive}
                     aria-describedby="tts-status"
                  >
                     {isTTSActive ? <Volume2 size={20} /> : <VolumeX size={20} />}
+                    <span>{isTTSActive ? 'Stop TTS' : 'Text to Speech'}</span>
                  </button>
               </div>
               
@@ -578,7 +582,7 @@ export const Layout: React.FC = () => {
       </main>
 
       {/* Back to Top */}
-      {showScrollTop && (
+      {showScrollTop && !isMenuOpen && !isAccessMenuOpen && (
         <button
           onClick={scrollToTop}
           className="fixed bottom-8 right-8 p-4 bg-sage-700 text-white rounded-full shadow-lg z-50 hover:bg-sage-800 transition-all duration-300 hover:-translate-y-1"
@@ -677,6 +681,9 @@ export const Layout: React.FC = () => {
                           title="Please enter a valid email address (e.g. user@example.com)"
                           className="w-full px-0 py-3 bg-transparent border-b border-earth-300 dark:border-earth-700 focus:outline-none focus:border-sage-700 dark:focus:border-sage-300 text-earth-900 dark:text-earth-100 placeholder-earth-700 dark:placeholder-earth-400 text-sm transition-all rounded-none"
                        />
+                       <p className="text-xs leading-relaxed text-earth-700 dark:text-earth-300">
+                         We use your email only for BITS updates. Read the <Link to={PageRoute.PRIVACY} className="underline underline-offset-2 hover:text-sage-700 dark:hover:text-sage-300">Privacy Notice</Link>.
+                       </p>
                        <button 
                           type="submit" 
                           disabled={emailStatus === 'submitting'}
@@ -686,8 +693,8 @@ export const Layout: React.FC = () => {
                        </button>
                    </form>
                    <div aria-live="polite">
-                       {emailStatus === 'success' && <p className="mt-3 text-xs text-sage-700 dark:text-sage-300 font-medium" role="status">Thank you! You are subscribed.</p>}
-                       {emailStatus === 'error' && <p className="mt-3 text-xs text-red-600 font-medium" role="alert">Error! Please try again.</p>}
+                       {emailStatus === 'success' && <p className="mt-3 text-xs text-sage-700 dark:text-sage-300 font-medium" role="status">Your subscription request was submitted. Please contact us if you need confirmation.</p>}
+                       {emailStatus === 'error' && <p className="mt-3 text-xs text-red-800 dark:text-red-200 font-medium" role="alert">Error! Please try again.</p>}
                    </div>
                </div>
             </div>
