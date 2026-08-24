@@ -45,12 +45,14 @@ const pageContent = {
       <h2>Upcoming Workshops</h2>
       <p>Workshop information is loaded from the published workshop schedule. If no workshops are scheduled, visitors are invited to contact the project.</p>
       <h3>Questions you might have</h3>
+      <p>It’s okay to check what to expect before deciding whether to join.</p>
       <details><summary>Do I need SEND or a diagnosis to join?</summary><p>No. You do not need a diagnosis or need to identify as SEND. Students without SEND can register too.</p></details>
       <details><summary>Do I need to be good at art?</summary><p>Not at all. You do not need any art or creative experience.</p></details>
       <details><summary>What actually happens in a workshop?</summary><p>You will try a short creative activity using things like words, images, colours, symbols or simple digital tools.</p></details>
       <details><summary>Will I have to speak in front of everyone?</summary><p>No. You choose how much you want to say or share.</p></details>
-      <details><summary>Can I take a break or leave early?</summary><p>Yes. You can pause, take a break or leave if you need to. You do not need to explain why.</p></details>
-      <p><a href="/get-involved/#frequently-asked-questions">Read common questions about taking part</a></p>
+      <details><summary>Can I take a break or leave early?</summary><p>Yes. You can take a break or leave whenever you need to. You do not need to give a reason.</p></details>
+      <p><strong>Want to know more before deciding?</strong></p>
+      <p><a href="/get-involved/#frequently-asked-questions">See all questions</a> · <a href="/contact/">Contact us</a></p>
     </section>
     <section>
       <h2>Institutional Affiliation</h2>
@@ -163,24 +165,31 @@ const pageContent = {
     <section id="frequently-asked-questions">
       <h2>Frequently Asked Questions</h2>
       <p>Thinking about joining a BITS workshop? Here are some questions you might have.</p>
-      <h3>Before You Join</h3>
+      <nav aria-label="Frequently asked question categories">
+        <a href="#faq-before-you-join">Before You Join</a> ·
+        <a href="#faq-what-to-expect">What to Expect</a> ·
+        <a href="#faq-access-and-comfort">Access &amp; Comfort</a> ·
+        <a href="#faq-research-and-privacy">Research &amp; Privacy</a>
+      </nav>
+      <p>21 questions</p>
+      <h3 id="faq-before-you-join">Before You Join</h3>
       <details><summary>Who can take part?</summary><p>BITS workshops are open to students aged 18 or over who are in their first or foundation year of university. The research particularly focuses on students with different learning experiences. You do not need to have SEND or a diagnosis to register. If places are limited, priority will be given to students whose learning experiences are most relevant to the research.</p></details>
       <details><summary>Do I need SEND or a diagnosis to join?</summary><p>No. You do not need a formal diagnosis, and you do not need to identify as SEND or disabled. Students without SEND can register too. You will not be asked to prove that you have a diagnosis.</p></details>
       <details><summary>Do I need to be good at art?</summary><p>Not at all. You do not need any art or creative experience. The activities are about exploring your ideas and experiences, not making something that looks good.</p></details>
       <details><summary>Is taking part part of my course?</summary><p>No. Taking part in BITS research is voluntary and separate from your course. Choosing not to take part will not affect your studies or university support.</p></details>
       <details><summary>Is there a thank-you for taking part?</summary><p>You may be eligible for an optional lucky draw for a local grocery gift card worth up to £10. Some workshop activities may also include a small journal to use during the session.</p></details>
       <details><summary>Who will I meet at the workshop?</summary><p>Charlie Kwong, the researcher behind BITS, will run the workshop. Depending on the session, there may also be a facilitator or Community Advisor helping with the workshop.</p></details>
-      <h3>What to Expect</h3>
+      <h3 id="faq-what-to-expect">What to Expect</h3>
       <details><summary>What actually happens in a workshop?</summary><p>You will be invited to try a short creative activity around things like identity, experiences and starting university. This might involve writing, images, colours, symbols or simple digital storytelling.</p></details>
       <details><summary>How many people will be there?</summary><p>Usually around 10–15 students may take part in each workshop round. The exact number may vary depending on the session.</p></details>
       <details><summary>Will I have to speak in front of everyone?</summary><p>No. You will not be expected to speak in front of the group if you do not want to.</p></details>
       <details><summary>Do I have to talk about personal or difficult experiences?</summary><p>No. You choose what you want to explore and what you want to keep private.</p></details>
       <details><summary>What if I don't know what to make or say?</summary><p>That's fine. You do not need to arrive with a story or idea ready. There will be prompts and choices to help you get started.</p></details>
-      <h3>Access &amp; Comfort</h3>
+      <h3 id="faq-access-and-comfort">Access &amp; Comfort</h3>
       <details><summary>Can I take a break or leave early?</summary><p>Yes. You can pause, take a break or leave if you need to. You can also skip an activity or decide not to continue.</p></details>
       <details><summary>Can I communicate in a way that works for me?</summary><p>You do not always have to respond by speaking. Depending on the activity, you may be able to write, use images or symbols, create something, or use a digital approach instead.</p></details>
       <details><summary>Can I ask for accessibility support?</summary><p>Yes. If there is something that could make the workshop easier or more comfortable for you, please let Charlie know.</p></details>
-      <h3>Research &amp; Privacy</h3>
+      <h3 id="faq-research-and-privacy">Research &amp; Privacy</h3>
       <details><summary>Is this a research study?</summary><p>Yes. BITS is a doctoral research project led by Charlie Kwong at Falmouth University.</p></details>
       <details><summary>What am I agreeing to?</summary><p>Before taking part, you will receive information explaining the research and what participation involves. Consent is an ongoing choice throughout the research.</p></details>
       <details><summary>Can I change my mind?</summary><p>Yes. Taking part is voluntary, and you can choose to withdraw without giving a reason.</p></details>
@@ -331,7 +340,6 @@ const pageContent = {
       <h2>How will my information be used?</h2>
       <p>Contact information provided for the prize draw will only be used to <strong>administer the draw and contact winners</strong>.</p>
       <p>Prize draw information will be kept separate from your research responses.</p>
-      <p><strong>[RESEARCHER TO CONFIRM: where prize draw information will be stored, who will have access to it, and when it will be deleted.]</strong></p>
     </section>
     <section>
       <h2>What about the workshop journal?</h2>

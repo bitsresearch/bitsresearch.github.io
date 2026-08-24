@@ -273,6 +273,7 @@ type FAQItem = {
 };
 
 type FAQSectionData = {
+  id: string;
   title: string;
   items: FAQItem[];
 };
@@ -296,12 +297,13 @@ const homepageWorkshopFaqs: FAQItem[] = [
   },
   {
     question: 'Can I take a break or leave early?',
-    answer: <p>Yes. You can pause, take a break or leave if you need to. You do not need to explain why.</p>,
+    answer: <p>Yes. You can take a break or leave whenever you need to. You do not need to give a reason.</p>,
   },
 ];
 
 const fullFaqSections: FAQSectionData[] = [
   {
+    id: 'faq-before-you-join',
     title: 'Before You Join',
     items: [
       {
@@ -361,6 +363,7 @@ const fullFaqSections: FAQSectionData[] = [
     ],
   },
   {
+    id: 'faq-what-to-expect',
     title: 'What to Expect',
     items: [
       {
@@ -411,6 +414,7 @@ const fullFaqSections: FAQSectionData[] = [
     ],
   },
   {
+    id: 'faq-access-and-comfort',
     title: 'Access & Comfort',
     items: [
       {
@@ -443,6 +447,7 @@ const fullFaqSections: FAQSectionData[] = [
     ],
   },
   {
+    id: 'faq-research-and-privacy',
     title: 'Research & Privacy',
     items: [
       {
@@ -516,28 +521,43 @@ const FAQAccordion: React.FC<{
   items: FAQItem[];
   idPrefix: string;
   compact?: boolean;
-}> = ({ items, idPrefix, compact = false }) => {
-  const [openItems, setOpenItems] = useState<number[]>([]);
+  openItemKeys?: Set<string>;
+  onToggleItem?: (itemKey: string) => void;
+}> = ({ items, idPrefix, compact = false, openItemKeys, onToggleItem }) => {
+  const [internalOpenItems, setInternalOpenItems] = useState<Set<string>>(() => new Set());
 
-  const toggleItem = (index: number) => {
-    setOpenItems((current) =>
-      current.includes(index)
-        ? current.filter((item) => item !== index)
-        : [...current, index]
-    );
+  const toggleItem = (itemKey: string) => {
+    if (openItemKeys && onToggleItem) {
+      onToggleItem(itemKey);
+      return;
+    }
+
+    setInternalOpenItems((current) => {
+      const next = new Set(current);
+      if (next.has(itemKey)) next.delete(itemKey);
+      else next.add(itemKey);
+      return next;
+    });
   };
 
+  const currentOpenItems = openItemKeys ?? internalOpenItems;
+
   return (
-    <div className={`space-y-2 ${compact ? '' : 'sm:space-y-3'}`}>
+    <div className={compact ? 'space-y-3' : 'space-y-3'}>
       {items.map((item, index) => {
-        const isOpen = openItems.includes(index);
+        const itemKey = `${idPrefix}-${index}`;
+        const isOpen = currentOpenItems.has(itemKey);
         const buttonId = `${idPrefix}-question-${index}`;
         const panelId = `${idPrefix}-answer-${index}`;
 
         return (
           <div
             key={item.question}
-            className="overflow-hidden rounded-2xl border border-earth-300 bg-white dark:border-earth-600 dark:bg-earth-800"
+            className={`overflow-hidden rounded-2xl border transition-colors ${
+              isOpen
+                ? 'border-sage-600 bg-sage-50 dark:border-sage-500 dark:bg-sage-900/25'
+                : 'border-earth-300 bg-white dark:border-earth-600 dark:bg-earth-800'
+            }`}
           >
             <h4 className="m-0 font-sans">
               <button
@@ -545,17 +565,17 @@ const FAQAccordion: React.FC<{
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() => toggleItem(index)}
-                className={`flex min-h-[52px] w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold text-earth-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sage-700 dark:text-earth-50 dark:focus-visible:ring-sage-300 sm:px-5 sm:text-base ${
+                onClick={() => toggleItem(itemKey)}
+                className={`flex min-h-[54px] w-full items-center justify-between gap-4 px-5 py-3.5 text-left text-sm font-semibold text-earth-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sage-700 dark:text-earth-50 dark:focus-visible:ring-sage-300 sm:px-6 sm:text-base ${
                   isOpen
-                    ? 'bg-sage-50 dark:bg-sage-900/35'
+                    ? 'bg-sage-50 dark:bg-sage-900/25'
                     : 'bg-transparent hover:bg-earth-50 dark:hover:bg-earth-700'
                 }`}
               >
-                <span>{item.question}</span>
+                <span className="leading-snug">{item.question}</span>
                 <span
                   aria-hidden="true"
-                  className="inline-flex h-7 w-7 flex-none items-center justify-center rounded-full bg-sage-100 text-lg leading-none text-sage-800 dark:bg-sage-800 dark:text-sage-100"
+                  className="inline-flex h-8 w-8 flex-none items-center justify-center rounded-full bg-sage-100 text-xl leading-none text-sage-800 dark:bg-sage-800 dark:text-sage-100"
                 >
                   {isOpen ? '−' : '+'}
                 </span>
@@ -566,7 +586,7 @@ const FAQAccordion: React.FC<{
               role="region"
               aria-labelledby={buttonId}
               hidden={!isOpen}
-              className="border-t border-earth-200 px-4 py-4 text-left text-sm leading-relaxed text-earth-700 dark:border-earth-700 dark:text-earth-300 sm:px-5 sm:text-base [&_p+p]:mt-3"
+              className="border-t border-earth-200 px-5 py-4 text-left text-sm leading-7 text-earth-700 dark:border-earth-700 dark:text-earth-300 sm:px-6 sm:py-5 sm:text-base [&_p]:max-w-[68ch] [&_p+p]:mt-3"
             >
               {item.answer}
             </div>
@@ -578,55 +598,85 @@ const FAQAccordion: React.FC<{
 };
 
 const FullFAQ: React.FC = () => {
-  const [expandAll, setExpandAll] = useState(false);
+  const allFaqKeys = fullFaqSections.flatMap((section) =>
+    section.items.map((_, index) => `${section.id}-${index}`)
+  );
+  const [openFaqItems, setOpenFaqItems] = useState<Set<string>>(() => new Set());
+
+  const allExpanded = openFaqItems.size === allFaqKeys.length;
+
+  const toggleFaqItem = (itemKey: string) => {
+    setOpenFaqItems((current) => {
+      const next = new Set(current);
+      if (next.has(itemKey)) next.delete(itemKey);
+      else next.add(itemKey);
+      return next;
+    });
+  };
+
+  const toggleAllFaqs = () => {
+    setOpenFaqItems(allExpanded ? new Set() : new Set(allFaqKeys));
+  };
 
   return (
     <section id="frequently-asked-questions" className="mt-16 scroll-mt-32 text-left" aria-labelledby="faq-heading">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-8 text-center">
+        <div className="mb-6 text-center">
           <h2 id="faq-heading" className="text-3xl font-serif text-earth-900 dark:text-earth-50 md:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-earth-700 dark:text-earth-300">
+          <p className="mx-auto mt-3 max-w-2xl text-base leading-7 text-earth-700 dark:text-earth-300">
             Thinking about joining a BITS workshop? Here are some questions you might have.
           </p>
         </div>
 
-        <div className="mb-8 flex flex-col gap-3 rounded-2xl border border-sage-200 bg-sage-50 p-4 dark:border-sage-700 dark:bg-sage-900/40 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm font-medium text-earth-800 dark:text-earth-200">
-            Prefer to read everything at once?
-          </p>
+        <nav
+          aria-label="Frequently asked question categories"
+          className="mb-5 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm"
+        >
+          {fullFaqSections.map((section) => (
+            <a
+              key={section.id}
+              href={`#${section.id}`}
+              className="inline-flex min-h-11 items-center rounded-lg px-2 py-2 font-semibold text-sage-800 underline decoration-sage-400 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300"
+            >
+              {section.title}
+            </a>
+          ))}
+        </nav>
+
+        <div className="mb-10 flex items-center justify-between gap-4 border-b border-earth-200 pb-4 text-sm dark:border-earth-700">
+          <span className="text-earth-600 dark:text-earth-400">21 questions</span>
           <button
             type="button"
-            aria-pressed={expandAll}
-            onClick={() => setExpandAll((value) => !value)}
-            className="min-h-11 rounded-full bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-700 dark:focus-visible:ring-sage-300"
+            aria-pressed={allExpanded}
+            onClick={toggleAllFaqs}
+            className="min-h-11 rounded-lg px-2 py-2 font-semibold text-sage-800 underline decoration-sage-400 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300"
           >
-            {expandAll ? 'Collapse all' : 'Expand all'}
+            {allExpanded ? 'Collapse all answers' : 'Expand all answers'}
           </button>
         </div>
 
-        <div className="space-y-10">
-          {fullFaqSections.map((section, sectionIndex) => (
-            <section key={section.title} aria-labelledby={`faq-section-${sectionIndex}`}>
+        <div className="space-y-14">
+          {fullFaqSections.map((section) => (
+            <section
+              key={section.id}
+              id={section.id}
+              className="scroll-mt-32"
+              aria-labelledby={`${section.id}-heading`}
+            >
               <h3
-                id={`faq-section-${sectionIndex}`}
-                className="mb-4 text-2xl font-serif text-earth-900 dark:text-earth-50"
+                id={`${section.id}-heading`}
+                className="mb-5 text-2xl font-serif text-earth-900 dark:text-earth-50 md:text-3xl"
               >
                 {section.title}
               </h3>
-              {expandAll ? (
-                <div className="space-y-2 sm:space-y-3">
-                  {section.items.map((item, itemIndex) => (
-                    <div key={item.question} className="rounded-2xl border border-earth-300 bg-white p-4 dark:border-earth-600 dark:bg-earth-800 sm:p-5">
-                      <h4 className="font-sans text-sm font-semibold text-earth-900 dark:text-earth-50 sm:text-base">{item.question}</h4>
-                      <div className="mt-3 text-sm leading-relaxed text-earth-700 dark:text-earth-300 sm:text-base [&_p+p]:mt-3">{item.answer}</div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <FAQAccordion items={section.items} idPrefix={`full-faq-${sectionIndex}`} />
-              )}
+              <FAQAccordion
+                items={section.items}
+                idPrefix={section.id}
+                openItemKeys={openFaqItems}
+                onToggleItem={toggleFaqItem}
+              />
             </section>
           ))}
         </div>
@@ -1191,21 +1241,32 @@ const WorkshopSection: React.FC = () => {
             </p>
         </div>
 
-        <section className="mx-auto mt-12 max-w-3xl text-left" aria-labelledby="workshop-faq-heading">
-          <div className="mb-5 text-center">
+        <section className="mx-auto mt-12 max-w-[720px] text-left" aria-labelledby="workshop-faq-heading">
+          <div className="mb-6 text-center">
             <h3 id="workshop-faq-heading" className="text-2xl font-serif text-earth-900 dark:text-earth-50 md:text-3xl">
               Questions you might have
             </h3>
+            <p className="mx-auto mt-2 max-w-2xl text-base leading-7 text-earth-700 dark:text-earth-300">
+              It’s okay to check what to expect before deciding whether to join.
+            </p>
           </div>
           <FAQAccordion items={homepageWorkshopFaqs} idPrefix="workshop-faq" compact />
-          <div className="mt-6 text-center">
-            <p className="font-semibold text-earth-900 dark:text-earth-50">Still have questions?</p>
-            <Link
-              to={`${PageRoute.INVOLVED}#frequently-asked-questions`}
-              className="mt-1 inline-flex min-h-11 items-center justify-center gap-1 rounded-full px-4 py-2 font-semibold text-sage-800 underline decoration-sage-500 underline-offset-4 hover:text-sage-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus:ring-sage-300"
-            >
-              Read common questions about taking part <ArrowRight size={15} aria-hidden="true" />
-            </Link>
+          <div className="mt-7 text-center">
+            <p className="font-semibold text-earth-900 dark:text-earth-50">Want to know more before deciding?</p>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm sm:text-base">
+              <Link
+                to={`${PageRoute.INVOLVED}#frequently-asked-questions`}
+                className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg px-2 py-2 font-semibold text-sage-800 underline decoration-sage-500 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300"
+              >
+                See all questions <ArrowRight size={15} aria-hidden="true" />
+              </Link>
+              <Link
+                to={PageRoute.CONTACT}
+                className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg px-2 py-2 font-semibold text-earth-700 underline decoration-earth-400 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-earth-300 dark:hover:text-white dark:focus-visible:ring-sage-300"
+              >
+                Contact us <ArrowRight size={15} aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </section>
     </section>
@@ -2781,11 +2842,6 @@ const ThankYouPrizeTerms: React.FC = () => {
           <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
             Prize draw information will be kept separate from your research responses.
           </p>
-          <div className="rounded-2xl border border-earth-300 bg-earth-50 p-4 dark:border-earth-600 dark:bg-earth-900/40">
-            <p className="text-earth-800 dark:text-earth-200 leading-relaxed font-medium">
-              [RESEARCHER TO CONFIRM: where prize draw information will be stored, who will have access to it, and when it will be deleted.]
-            </p>
-          </div>
         </section>
 
         <section className="space-y-4">
