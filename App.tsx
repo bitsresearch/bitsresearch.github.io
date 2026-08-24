@@ -18,7 +18,7 @@ const SITE_ORIGIN = 'https://bitsresearch.github.io';
 const SITE_NAME = 'BITS | Building Identity through Stories';
 const SITE_AUTHOR = 'Charlie Tak Hei Kwong 鄺德希';
 const OG_IMAGE = `${SITE_ORIGIN}/images/og-image.jpg`;
-const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics'].flatMap(slug => [slug, `${slug}.html`]);
+const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics', 'thank-you-prize-terms'].flatMap(slug => [slug, `${slug}.html`]);
 
 const personSchema = {
   "@type": "Person",
@@ -546,7 +546,11 @@ const FAQAccordion: React.FC<{
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggleItem(index)}
-                className="flex min-h-[52px] w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold text-earth-900 transition-colors hover:bg-earth-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-sage-700 dark:text-earth-50 dark:hover:bg-earth-700 dark:focus:ring-sage-300 sm:px-5 sm:text-base"
+                className={`flex min-h-[52px] w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold text-earth-900 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-sage-700 dark:text-earth-50 dark:focus-visible:ring-sage-300 sm:px-5 sm:text-base ${
+                  isOpen
+                    ? 'bg-sage-50 dark:bg-sage-900/35'
+                    : 'bg-transparent hover:bg-earth-50 dark:hover:bg-earth-700'
+                }`}
               >
                 <span>{item.question}</span>
                 <span
@@ -596,7 +600,7 @@ const FullFAQ: React.FC = () => {
             type="button"
             aria-pressed={expandAll}
             onClick={() => setExpandAll((value) => !value)}
-            className="min-h-11 rounded-full bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+            className="min-h-11 rounded-full bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-sage-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-700 dark:focus-visible:ring-sage-300"
           >
             {expandAll ? 'Collapse all' : 'Expand all'}
           </button>
@@ -2638,6 +2642,214 @@ const Accessibility: React.FC = () => {
   );
 };
 
+
+const ThankYouPrizeTerms: React.FC = () => {
+  return (
+    <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <SEO
+        title="Thank-you Prize Terms and Conditions | Building Identity through Stories"
+        description="Read the terms and conditions for the optional BITS thank-you prize draw, including eligibility, prizes, entry, winner selection, privacy, and research participation."
+        canonicalPath="/thank-you-prize-terms/"
+        ogTitle="Thank-you Prize Terms and Conditions | Building Identity through Stories"
+        ogDescription="Terms for the optional BITS thank-you prize draw for eligible research workshops and online sessions."
+      />
+      <JSONLD
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            { "@type": "WebPage", "name": "Thank-you Prize Terms and Conditions", "url": `${SITE_ORIGIN}/thank-you-prize-terms/` },
+            researchProjectSchema
+          ]
+        }}
+      />
+
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-serif text-earth-900 dark:text-earth-50 mb-4">
+          Thank-you Prize Terms and Conditions
+        </h1>
+        <p className="text-sm text-earth-700 dark:text-earth-300">
+          <strong>Last updated:</strong> 24 August 2026
+          <span className="mx-2" aria-hidden="true">·</span>
+          <strong>Research ethics reference:</strong> RIEC 25-222
+        </p>
+      </div>
+
+      <div className="bg-white dark:bg-earth-800 p-6 sm:p-8 md:p-12 rounded-4xl shadow-sm border border-earth-100 dark:border-earth-700 space-y-9">
+        <section className="space-y-4">
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            BITS offers an optional prize draw as a small thank-you to students who give their time to the research.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            These terms explain how the prize draw works for each eligible BITS session.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Who can enter?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Students taking part in an eligible <strong>BITS workshop or online research session</strong> can choose to enter that session's prize draw.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Entering is free and completely optional. You can still take part in BITS if you do not want to enter the draw.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">What can I win?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Each prize is a <strong>local grocery gift card worth up to £10</strong>.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            The number of prizes available for each session will be clearly shown before that session takes place.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">How do I enter?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            If you take part in an eligible BITS session, you will be given the option to enter that session's prize draw.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">You can enter <strong>once per eligible session</strong>.</p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">Entering the draw is separate from your research responses.</p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            You do <strong>not</strong> need to stay until the end of a session to enter or to be included in the draw.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Do I need to complete everything to enter?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">No.</p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Your chance of winning does not depend on how much of the activity you complete, how long your answers are, what you create, or how much personal information you choose to share.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            You can skip a question or activity, take a break or leave early without reducing your chance of winning.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">How are winners chosen?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Winners will be selected <strong>at random</strong> from all eligible entries for that session.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">Each eligible entry has the same chance of being selected.</p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Your chance of winning will depend on the number of eligible entries and the number of prizes available for that session.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">When will the draw take place?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            The <strong>number of prizes and closing time</strong> will be shown for each eligible session.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            The draw will close at the stated time. Winners will then be selected at random and contacted privately.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            You do <strong>not</strong> need to stay until the end of the session or be present when winners are selected.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">What happens if I win?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            You will be contacted <strong>privately</strong> using the contact details you provided for the prize draw.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            If a winner does not respond within <strong>14 days</strong>, another eligible entry may be selected at random.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">Prizes cannot be exchanged for cash.</p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Does entering affect my research participation?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">No.</p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Choosing to enter — or not to enter — will not affect your participation in BITS, your studies, university support, or your relationship with Falmouth University.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            The prize draw is a small thank-you. It is <strong>not based on what you say, create or choose to share</strong> during the research.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">How will my information be used?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Contact information provided for the prize draw will only be used to <strong>administer the draw and contact winners</strong>.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Prize draw information will be kept separate from your research responses.
+          </p>
+          <div className="rounded-2xl border border-earth-300 bg-earth-50 p-4 dark:border-earth-600 dark:bg-earth-900/40">
+            <p className="text-earth-800 dark:text-earth-200 leading-relaxed font-medium">
+              [RESEARCHER TO CONFIRM: where prize draw information will be stored, who will have access to it, and when it will be deleted.]
+            </p>
+          </div>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">What about the workshop journal?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Some students using the written workshop activity may receive a small journal worth up to <strong>£2</strong>.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            The journal is part of the workshop activity and is separate from the prize draw.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Can these terms change?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Yes. These terms may be updated if the research or prize draw arrangements change.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            BITS intends to continue offering a <strong>thank-you prize</strong> for eligible sessions. The type or value of the prize may change in the future.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Any change that affects the approved research arrangements will be reviewed through the appropriate <strong>Falmouth University research ethics process before it is introduced</strong>.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            If these terms change, the updated information will be published on this page with a new <strong>Last updated</strong> date.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Changes will not be applied retrospectively to a prize draw that has already opened. The prize information shown when you enter a draw will continue to apply to that draw.
+          </p>
+        </section>
+
+        <section className="space-y-4">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">Questions?</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            If you have a question about the prize draw, please contact <strong>Charlie Kwong</strong> through the BITS contact page.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            You can ask a question before deciding whether you want to take part.
+          </p>
+          <Link
+            to={PageRoute.CONTACT}
+            className="inline-flex min-h-11 items-center justify-center rounded-full bg-sage-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-sage-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-700 dark:focus-visible:ring-sage-300"
+          >
+            Contact BITS
+          </Link>
+        </section>
+
+        <section className="space-y-4 border-t border-earth-200 pt-8 dark:border-earth-700">
+          <h2 className="text-2xl font-serif text-earth-900 dark:text-earth-50">About the research</h2>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            BITS is a doctoral research project at <strong>Falmouth University</strong>.
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            The research has received ethical approval from Falmouth University's Research Integrity &amp; Ethics Committee (<strong>RIEC 25-222</strong>).
+          </p>
+          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">
+            Taking part in the prize draw is optional and separate from deciding whether to take part in the research.
+          </p>
+        </section>
+      </div>
+    </div>
+  );
+};
+
 const ResearchEthics: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -2752,6 +2964,7 @@ const App: React.FC = () => {
           <Route path={PageRoute.TERMS} element={<TermsOfUse />} />
           <Route path={PageRoute.ACCESSIBILITY} element={<Accessibility />} />
           <Route path={PageRoute.ETHICS} element={<ResearchEthics />} />
+          <Route path={PageRoute.PRIZE_TERMS} element={<ThankYouPrizeTerms />} />
           <Route path="/about.html" element={<About />} />
           <Route path="/people.html" element={<People />} />
           <Route path="/what-we-care.html" element={<WhatWeCare />} />
@@ -2767,6 +2980,7 @@ const App: React.FC = () => {
           <Route path="/terms-of-use.html" element={<TermsOfUse />} />
           <Route path="/accessibility.html" element={<Accessibility />} />
           <Route path="/research-ethics.html" element={<ResearchEthics />} />
+          <Route path="/thank-you-prize-terms.html" element={<ThankYouPrizeTerms />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/blog/finding-private-accommodation-falmouth-penryn" element={<Navigate to="/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/" replace />} />
           <Route path="/blog/finding-private-accommodation-falmouth-penryn/" element={<Navigate to="/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/" replace />} />

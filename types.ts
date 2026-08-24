@@ -32,4 +32,5 @@ export enum PageRoute {
   TERMS = '/terms-of-use',
   ACCESSIBILITY = '/accessibility',
   ETHICS = '/research-ethics',
+  PRIZE_TERMS = '/thank-you-prize-terms',
 }

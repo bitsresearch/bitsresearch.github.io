@@ -645,6 +645,7 @@ export const Layout: React.FC = () => {
               <h3 className="text-xs font-bold uppercase tracking-widest mb-6 text-earth-900 dark:text-earth-100">Legal</h3>
               <div className="flex flex-col space-y-3">
                 <Link to={PageRoute.ETHICS} className="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Research Ethics</Link>
+                <Link to={PageRoute.PRIZE_TERMS} className="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Thank-you Prize Terms and Conditions</Link>
                 <Link to={PageRoute.ACCESSIBILITY} className="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Accessibility</Link>
                 <Link to={PageRoute.PRIVACY} className="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Privacy Policy</Link>
                 <Link to={PageRoute.TERMS} className="text-earth-700 dark:text-earth-300 hover:text-sage-700 dark:hover:text-sage-300 text-sm">Terms of Use</Link>

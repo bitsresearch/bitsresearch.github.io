@@ -22,10 +22,11 @@ const nav = [
 ];
 
 const legalNav = [
+  ['/research-ethics/', 'Research Ethics'],
+  ['/thank-you-prize-terms/', 'Thank-you Prize Terms and Conditions'],
+  ['/accessibility/', 'Accessibility'],
   ['/privacy-policy/', 'Privacy Policy'],
   ['/terms-of-use/', 'Terms of Use'],
-  ['/accessibility/', 'Accessibility'],
-  ['/research-ethics/', 'Research Ethics'],
 ];
 
 const pageContent = {
@@ -271,6 +272,93 @@ const pageContent = {
       <p>These Terms of Use may be updated from time to time to reflect changes in the research project, legal requirements, or institutional policies.</p>
     </section>
   `,
+  '/thank-you-prize-terms/': `
+    <section>
+      <h1>Thank-you Prize Terms and Conditions</h1>
+      <p><strong>Last updated:</strong> 24 August 2026</p>
+      <p><strong>Research ethics reference:</strong> RIEC 25-222</p>
+      <p>BITS offers an optional prize draw as a small thank-you to students who give their time to the research.</p>
+      <p>These terms explain how the prize draw works for each eligible BITS session.</p>
+    </section>
+    <section>
+      <h2>Who can enter?</h2>
+      <p>Students taking part in an eligible <strong>BITS workshop or online research session</strong> can choose to enter that session's prize draw.</p>
+      <p>Entering is free and completely optional. You can still take part in BITS if you do not want to enter the draw.</p>
+    </section>
+    <section>
+      <h2>What can I win?</h2>
+      <p>Each prize is a <strong>local grocery gift card worth up to £10</strong>.</p>
+      <p>The number of prizes available for each session will be clearly shown before that session takes place.</p>
+    </section>
+    <section>
+      <h2>How do I enter?</h2>
+      <p>If you take part in an eligible BITS session, you will be given the option to enter that session's prize draw.</p>
+      <p>You can enter <strong>once per eligible session</strong>.</p>
+      <p>Entering the draw is separate from your research responses.</p>
+      <p>You do <strong>not</strong> need to stay until the end of a session to enter or to be included in the draw.</p>
+    </section>
+    <section>
+      <h2>Do I need to complete everything to enter?</h2>
+      <p>No.</p>
+      <p>Your chance of winning does not depend on how much of the activity you complete, how long your answers are, what you create, or how much personal information you choose to share.</p>
+      <p>You can skip a question or activity, take a break or leave early without reducing your chance of winning.</p>
+    </section>
+    <section>
+      <h2>How are winners chosen?</h2>
+      <p>Winners will be selected <strong>at random</strong> from all eligible entries for that session.</p>
+      <p>Each eligible entry has the same chance of being selected.</p>
+      <p>Your chance of winning will depend on the number of eligible entries and the number of prizes available for that session.</p>
+    </section>
+    <section>
+      <h2>When will the draw take place?</h2>
+      <p>The <strong>number of prizes and closing time</strong> will be shown for each eligible session.</p>
+      <p>The draw will close at the stated time. Winners will then be selected at random and contacted privately.</p>
+      <p>You do <strong>not</strong> need to stay until the end of the session or be present when winners are selected.</p>
+    </section>
+    <section>
+      <h2>What happens if I win?</h2>
+      <p>You will be contacted <strong>privately</strong> using the contact details you provided for the prize draw.</p>
+      <p>If a winner does not respond within <strong>14 days</strong>, another eligible entry may be selected at random.</p>
+      <p>Prizes cannot be exchanged for cash.</p>
+    </section>
+    <section>
+      <h2>Does entering affect my research participation?</h2>
+      <p>No.</p>
+      <p>Choosing to enter — or not to enter — will not affect your participation in BITS, your studies, university support, or your relationship with Falmouth University.</p>
+      <p>The prize draw is a small thank-you. It is <strong>not based on what you say, create or choose to share</strong> during the research.</p>
+    </section>
+    <section>
+      <h2>How will my information be used?</h2>
+      <p>Contact information provided for the prize draw will only be used to <strong>administer the draw and contact winners</strong>.</p>
+      <p>Prize draw information will be kept separate from your research responses.</p>
+      <p><strong>[RESEARCHER TO CONFIRM: where prize draw information will be stored, who will have access to it, and when it will be deleted.]</strong></p>
+    </section>
+    <section>
+      <h2>What about the workshop journal?</h2>
+      <p>Some students using the written workshop activity may receive a small journal worth up to <strong>£2</strong>.</p>
+      <p>The journal is part of the workshop activity and is separate from the prize draw.</p>
+    </section>
+    <section>
+      <h2>Can these terms change?</h2>
+      <p>Yes. These terms may be updated if the research or prize draw arrangements change.</p>
+      <p>BITS intends to continue offering a <strong>thank-you prize</strong> for eligible sessions. The type or value of the prize may change in the future.</p>
+      <p>Any change that affects the approved research arrangements will be reviewed through the appropriate <strong>Falmouth University research ethics process before it is introduced</strong>.</p>
+      <p>If these terms change, the updated information will be published on this page with a new <strong>Last updated</strong> date.</p>
+      <p>Changes will not be applied retrospectively to a prize draw that has already opened. The prize information shown when you enter a draw will continue to apply to that draw.</p>
+    </section>
+    <section>
+      <h2>Questions?</h2>
+      <p>If you have a question about the prize draw, please contact <strong>Charlie Kwong</strong> through the BITS contact page.</p>
+      <p>You can ask a question before deciding whether you want to take part.</p>
+      <p><a href="/contact/">Contact BITS</a></p>
+    </section>
+    <section>
+      <h2>About the research</h2>
+      <p>BITS is a doctoral research project at <strong>Falmouth University</strong>.</p>
+      <p>The research has received ethical approval from Falmouth University's Research Integrity &amp; Ethics Committee (<strong>RIEC 25-222</strong>).</p>
+      <p>Taking part in the prize draw is optional and separate from deciding whether to take part in the research.</p>
+    </section>
+  `,
   '/accessibility/': `
     <section>
       <h1>Accessibility</h1>
@@ -341,6 +429,7 @@ const routeFiles = [
   ['/terms-of-use/', 'terms-of-use/index.html'],
   ['/accessibility/', 'accessibility/index.html'],
   ['/research-ethics/', 'research-ethics/index.html'],
+  ['/thank-you-prize-terms/', 'thank-you-prize-terms/index.html'],
   ['/404.html', '404.html'],
 ];
 
@@ -409,7 +498,7 @@ const indexableNavigationSlugs = new Set([
 ]);
 
 const redirects = [
-  ...['about','people','what-we-care','research-update','output-resources','get-involved','contact','privacy-policy','terms-of-use','accessibility','research-ethics']
+  ...['about','people','what-we-care','research-update','output-resources','get-involved','contact','privacy-policy','terms-of-use','accessibility','research-ethics','thank-you-prize-terms']
     .filter(slug => !indexableNavigationSlugs.has(slug))
     .map(slug => [`${slug}.html`, `/${slug}/`, `${SITE_ORIGIN}/${slug}/`, slug.replaceAll('-', ' ')]),
   ['upcomingworkshops.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
