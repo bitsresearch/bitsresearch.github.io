@@ -632,26 +632,26 @@ const FullFAQ: React.FC = () => {
 
         <nav
           aria-label="Frequently asked question categories"
-          className="mb-5 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm"
+          className="mb-6 flex flex-wrap justify-center gap-2.5 text-sm"
         >
           {fullFaqSections.map((section) => (
             <a
               key={section.id}
               href={`#${section.id}`}
-              className="inline-flex min-h-11 items-center rounded-lg px-2 py-2 font-semibold text-sage-800 underline decoration-sage-400 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-earth-300 bg-white px-4 py-2.5 font-semibold text-earth-800 shadow-sm transition-colors hover:border-sage-600 hover:bg-sage-50 hover:text-sage-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-700 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100 dark:hover:border-sage-400 dark:hover:bg-sage-900/30 dark:hover:text-sage-100 dark:focus-visible:ring-sage-300"
             >
               {section.title}
             </a>
           ))}
         </nav>
 
-        <div className="mb-10 flex items-center justify-between gap-4 border-b border-earth-200 pb-4 text-sm dark:border-earth-700">
+        <div className="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-earth-200 pb-5 text-sm dark:border-earth-700">
           <span className="text-earth-600 dark:text-earth-400">21 questions</span>
           <button
             type="button"
             aria-pressed={allExpanded}
             onClick={toggleAllFaqs}
-            className="min-h-11 rounded-lg px-2 py-2 font-semibold text-sage-800 underline decoration-sage-400 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-sage-700 bg-transparent px-4 py-2.5 font-semibold text-sage-800 transition-colors hover:bg-sage-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-700 dark:border-sage-300 dark:text-sage-200 dark:hover:bg-sage-900/30 dark:focus-visible:ring-sage-300"
           >
             {allExpanded ? 'Collapse all answers' : 'Expand all answers'}
           </button>
@@ -1241,34 +1241,54 @@ const WorkshopSection: React.FC = () => {
             </p>
         </div>
 
-        <section className="mx-auto mt-12 max-w-[720px] text-left" aria-labelledby="workshop-faq-heading">
-          <div className="mb-6 text-center">
-            <h3 id="workshop-faq-heading" className="text-2xl font-serif text-earth-900 dark:text-earth-50 md:text-3xl">
-              Questions you might have
-            </h3>
-            <p className="mx-auto mt-2 max-w-2xl text-base leading-7 text-earth-700 dark:text-earth-300">
+    </section>
+  );
+};
+
+
+const HomepageFAQSection: React.FC = () => {
+  return (
+    <section
+      id="homepage-questions"
+      className="px-4 py-10 md:py-14"
+      aria-labelledby="homepage-faq-heading"
+    >
+      <div className="mx-auto max-w-7xl rounded-4xl bg-earth-100 px-4 py-12 dark:bg-earth-800/70 sm:px-6 md:py-16 lg:px-8">
+        <div className="mx-auto max-w-[720px] text-left">
+          <div className="mb-7 text-center">
+            <div className="mb-3 flex items-center justify-center gap-3 sm:gap-4">
+              <span className="h-px w-8 bg-sage-600 sm:w-12" aria-hidden="true"></span>
+              <h2 id="homepage-faq-heading" className="text-3xl font-serif leading-tight text-earth-900 dark:text-earth-50 md:text-4xl">
+                Questions you might have
+              </h2>
+              <span className="h-px w-8 bg-sage-600 sm:w-12" aria-hidden="true"></span>
+            </div>
+            <p className="mx-auto max-w-2xl text-base leading-7 text-earth-700 dark:text-earth-300">
               It’s okay to check what to expect before deciding whether to join.
             </p>
           </div>
+
           <FAQAccordion items={homepageWorkshopFaqs} idPrefix="workshop-faq" compact />
-          <div className="mt-7 text-center">
+
+          <div className="mt-8 text-center">
             <p className="font-semibold text-earth-900 dark:text-earth-50">Want to know more before deciding?</p>
-            <div className="mt-2 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm sm:text-base">
+            <div className="mt-4 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
               <Link
                 to={`${PageRoute.INVOLVED}#frequently-asked-questions`}
-                className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg px-2 py-2 font-semibold text-sage-800 underline decoration-sage-500 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-sage-200 dark:hover:text-white dark:focus-visible:ring-sage-300"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-sage-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sage-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sage-700 dark:focus-visible:ring-sage-300"
               >
                 See all questions <ArrowRight size={15} aria-hidden="true" />
               </Link>
               <Link
                 to={PageRoute.CONTACT}
-                className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg px-2 py-2 font-semibold text-earth-700 underline decoration-earth-400 underline-offset-4 hover:text-earth-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 dark:text-earth-300 dark:hover:text-white dark:focus-visible:ring-sage-300"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border-2 border-earth-700 bg-transparent px-6 py-3 text-sm font-semibold text-earth-800 transition-colors hover:bg-earth-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-earth-700 dark:border-earth-300 dark:text-earth-100 dark:hover:bg-earth-700 dark:focus-visible:ring-earth-300"
               >
                 Contact us <ArrowRight size={15} aria-hidden="true" />
               </Link>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
     </section>
   );
 };
@@ -1633,6 +1653,9 @@ const Home: React.FC = () => {
 
       {/* Upcoming Workshops Section */}
       <WorkshopSection />
+
+      {/* Participant Reassurance FAQ Section */}
+      <HomepageFAQSection />
 
       {/* Institutional Affiliation Section */}
       <section className="py-16 px-4">
