@@ -2,6 +2,8 @@
 
 Date: 24 August 2026
 
+Content update: the People page profile now uses the approved concise BITS role statement and revised experience/research-focus paragraphs. No layout, interaction or accessibility behaviour was changed.
+
 Update: the external Tailwind Play CDN has been replaced with a project-built CSS bundle. This removes the external render-blocking stylesheet dependency that can leave Meta's in-app browsers on a blank page when the CDN does not load.
 
 Update: the app now safely handles unavailable `MutationObserver`, `matchMedia` and text-to-speech browser features, allowing the page to continue rendering instead of failing at startup in a restricted in-app browser.

@@ -1908,7 +1908,7 @@ const People: React.FC = () => {
                       <p className="text-earth-700 dark:text-earth-300 font-medium tracking-wide uppercase text-sm">Doctoral Researcher</p>
                   </div>
                   <p className="text-lg text-earth-700 dark:text-earth-300 leading-relaxed font-light">
-                      Charlie is a doctoral researcher and registered teacher passionate about the intersection of creative media and inclusive education. His fully funded research explores how transmedia storytelling can create supportive spaces for students with diverse needs as they navigate their journey into higher education.
+                      Charlie is the doctoral researcher behind BITS, a research project exploring how storytelling can support students as they begin higher education.
                   </p>
                   <div className="flex gap-4">
                       <a href="https://thkwong.uk" target="_blank" rel="noopener noreferrer" className="p-3 bg-earth-100 dark:bg-earth-700 rounded-full hover:bg-sage-700 hover:text-white transition-colors" aria-label="Visit Charlie Kwong’s website"><Globe size={20} /></a>
@@ -1917,8 +1917,8 @@ const People: React.FC = () => {
                   <div>
                       <h2 className="font-serif text-2xl text-earth-900 dark:text-earth-50 mb-6">Experience and Research Focus</h2>
                       <div className="bg-earth-50 dark:bg-earth-900/50 p-8 rounded-3xl border border-earth-100 dark:border-earth-700">
-                          <p className="text-earth-700 dark:text-earth-300 leading-relaxed mb-4">Charlie’s journey began as a school teacher in Hong Kong. Between his early research assistantships in education, and his time living in Hong Kong, Canada, UK, and the Netherlands, he developed an interest in the way people learn and handle the move into new chapters of their lives.</p>
-                          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">After spending over eight years shaping blended learning and academic projects, Charlie has turned his focus toward making higher education more inclusive. These days, he’s exploring how arts-based research and creative practice can empower and support people with diverse backgrounds.</p>
+                          <p className="text-earth-700 dark:text-earth-300 leading-relaxed mb-4">Charlie began his journey as a school teacher in Hong Kong. Through working in education, creative media and academic projects, and living across Hong Kong, Canada, the UK and the Netherlands, he became interested in how people learn, find their place and navigate new chapters of life.</p>
+                          <p className="text-earth-700 dark:text-earth-300 leading-relaxed">He brings this experience to BITS, with a particular interest in inclusive, arts-based approaches that recognise students’ different backgrounds, needs and ways of making sense of change.</p>
                       </div>
                   </div>
               </div>
