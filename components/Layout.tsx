@@ -198,6 +198,12 @@ export const Layout: React.FC = () => {
 
   // Handle Text-to-Speech
   const toggleTTS = () => {
+    if (!window.speechSynthesis) {
+      setIsTTSActive(false);
+      setTtsStatus('Text to Speech is not available in this browser.');
+      return;
+    }
+
     if (isTTSActive) {
       window.speechSynthesis.cancel();
       setIsTTSActive(false);
@@ -210,6 +216,7 @@ export const Layout: React.FC = () => {
   };
 
   const speakContent = () => {
+    if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     // Simple heuristic: read the main content
     const mainContent = document.querySelector('main')?.innerText;
@@ -229,7 +236,7 @@ export const Layout: React.FC = () => {
 
   // Stop speaking when route changes
   useEffect(() => {
-    window.speechSynthesis.cancel();
+    window.speechSynthesis?.cancel();
     if (isTTSActive) {
         // Slight delay to allow DOM to update
         setTimeout(() => speakContent(), 500);

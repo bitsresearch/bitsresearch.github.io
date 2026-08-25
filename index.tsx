@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './styles.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -14,12 +15,14 @@ const revealApp = () => {
   document.documentElement.classList.remove('app-loading');
 };
 
-const mountObserver = new MutationObserver(() => {
-  mountObserver.disconnect();
-  revealApp();
-});
-
-mountObserver.observe(rootElement, { childList: true });
+let mountObserver: MutationObserver | null = null;
+if (typeof MutationObserver === 'function') {
+  mountObserver = new MutationObserver(() => {
+    mountObserver?.disconnect();
+    revealApp();
+  });
+  mountObserver.observe(rootElement, { childList: true });
+}
 
 root.render(
   <React.StrictMode>
@@ -29,6 +32,6 @@ root.render(
 
 // Safety fallback so the page is never left hidden if mounting is interrupted.
 window.setTimeout(() => {
-  mountObserver.disconnect();
+  mountObserver?.disconnect();
   revealApp();
 }, 2000);

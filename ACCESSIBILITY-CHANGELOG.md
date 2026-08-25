@@ -2,6 +2,10 @@
 
 Date: 24 August 2026
 
+Update: the external Tailwind Play CDN has been replaced with a project-built CSS bundle. This removes the external render-blocking stylesheet dependency that can leave Meta's in-app browsers on a blank page when the CDN does not load.
+
+Update: the app now safely handles unavailable `MutationObserver`, `matchMedia` and text-to-speech browser features, allowing the page to continue rendering instead of failing at startup in a restricted in-app browser.
+
 Update: the academic-output `View` link now has a fixed minimum width, cannot shrink, and uses `white-space: nowrap`, preventing the word from splitting over two lines at high zoom.
 
 Update: homepage FAQ questions now use `h3` under the section’s `h2`; detailed FAQ page questions remain `h4` under their category `h3` headings.
@@ -56,8 +60,9 @@ This is a reviewed copy of the website. The original uploaded ZIP was not change
 - Review hero text contrast against every rotating background image at runtime.
 - Test speech output in supported browsers; the built-in text-to-speech control is not a substitute for screen-reader support.
 
-## Build and dependency limitations
+## Build verification and remaining limitations
 
-- The uploaded project contains no dependency lockfile and no installed dependencies. A full Vite/TypeScript production build could not be reproduced offline without selecting new dependency versions. Generate and commit a lockfile in the project’s normal trusted development environment, then run `npm ci`, `npm run build` and browser regression tests.
-- Tailwind Play CDN remains in the entry HTML. Replacing it with a pinned, compiled production stylesheet requires a reproducible dependency installation and production build.
-- Because the manual tests and reproducible production build above remain outstanding, this review does **not** claim that the website conforms to WCAG 2.2 Level AA.
+- A production Vite build and the project’s SEO/static-output validation completed successfully after this update. A `package-lock.json` is included so the project can use `npm ci` in GitHub Actions and normal development.
+- The generated site contains no Tailwind Play CDN references and links to its own versioned CSS asset instead.
+- Meta’s Facebook and Instagram in-app browsers are controlled by Meta, so final testing from both apps is still required. This change removes the site-side condition most likely to cause the blank page, but cannot guarantee against an app or network fault outside the website.
+- Because the manual tests above remain outstanding, this review does **not** claim that the website conforms to WCAG 2.2 Level AA.

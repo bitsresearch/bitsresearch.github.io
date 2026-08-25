@@ -267,6 +267,11 @@ const getSafeExternalUrl = (url: string) => {
   }
 };
 
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  typeof window.matchMedia === 'function' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // --- Helper: Workshop Interface & Component ---
 
 interface Workshop {
@@ -1367,15 +1372,13 @@ const ResearchUpdate: React.FC = () => {
 const Home: React.FC = () => {
   const location = useLocation();
   const [bgIndex, setBgIndex] = useState(0);
-  const [isHeroPaused, setIsHeroPaused] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
+  const [isHeroPaused, setIsHeroPaused] = useState(prefersReducedMotion);
 
   useEffect(() => {
     if (location.hash === '#upcoming-workshops') {
       const element = document.getElementById('upcoming-workshops');
       if (element) {
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const reduceMotion = prefersReducedMotion();
         window.setTimeout(() => {
           element.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
           const heading = element.querySelector<HTMLElement>('h2');
@@ -2213,7 +2216,7 @@ const GetInvolved: React.FC = () => {
       window.setTimeout(() => {
         const target = document.getElementById('frequently-asked-questions');
         if (!target) return;
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reduceMotion = prefersReducedMotion();
         target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
         const heading = document.getElementById('faq-heading');
         if (heading) {
