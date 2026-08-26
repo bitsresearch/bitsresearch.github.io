@@ -3,6 +3,9 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { blogPosts } from '../blogPosts';
 
 const SITE_ORIGIN = 'https://bitsresearch.github.io';
+const legacyBlogSlugs: Record<string, string> = {
+  'falmouth-university-map-2026-new-students': 'falmouth-university-map-2026',
+};
 
 const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
   let element = document.querySelector<HTMLMetaElement>(selector);
@@ -17,6 +20,9 @@ const setMeta = (selector: string, attribute: 'name' | 'property', key: string, 
 export const BlogPostPage: React.FC = () => {
   const { slug } = useParams();
   const post = blogPosts.find(item => item.slug === slug);
+  if (!post && slug && legacyBlogSlugs[slug]) {
+    return <Navigate to={`/blog/${legacyBlogSlugs[slug]}/`} replace />;
+  }
   if (!post) return <Navigate to="/404.html" replace />;
 
   const canonicalPath = `/blog/${post.slug}/`;
@@ -24,7 +30,7 @@ export const BlogPostPage: React.FC = () => {
   const readingMinutes = Math.max(1, Math.ceil(post.bodyHtml.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).length / 220));
 
   useEffect(() => {
-    document.title = `${post.title} | BITS`;
+    document.title = `${post.seoTitle || post.title} | BITS`;
     setMeta('meta[name="description"]', 'name', 'description', post.description);
     setMeta('meta[name="robots"]', 'name', 'robots', 'index, follow');
     setMeta('meta[property="og:type"]', 'property', 'og:type', 'article');

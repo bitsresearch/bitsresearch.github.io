@@ -2,6 +2,16 @@
 
 Date: 24 August 2026
 
+Content and SEO update: replaced the initial Falmouth map post with “Falmouth & Penryn Community Map 2026: GPS & Accessibility Guide”, using the approved short URL, search title, description, cover image, structured-data fields, sitemap entry and a contextual internal link from the Clearing guide. The initial draft URL now redirects to the final URL.
+
+Accessibility update: added responsive, BITS-themed map and step-card styling; a titled, lazy-loaded Google Maps iframe; a direct map link; native expandable step sections; and descriptive alternative text for every new instructional image. The third-party Google Maps interface itself still needs manual keyboard and screen-reader testing.
+
+Content update: the Falmouth University map post now includes the supplied inline filter/menu icon at `/images/menu-icon.png`, with descriptive alternative text.
+
+Content update: added the blog post “Moving to Falmouth University in September 2026? Start With This Map”. Its phone guidance uses semantic ordered lists with continuous step numbers, and the embedded Google Map has a descriptive title and lazy loading.
+
+Engineering update: static blog route generation now rebases the compiled CSS and JavaScript asset paths correctly. Direct blog links therefore render and hydrate correctly on GitHub Pages, while continuing to provide route-specific static content for search engines.
+
 Content update: the People page profile now uses the approved concise BITS role statement and revised experience/research-focus paragraphs. No layout, interaction or accessibility behaviour was changed.
 
 Update: the external Tailwind Play CDN has been replaced with a project-built CSS bundle. This removes the external render-blocking stylesheet dependency that can leave Meta's in-app browsers on a blank page when the CDN does not load.

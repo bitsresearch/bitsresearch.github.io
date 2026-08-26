@@ -2,6 +2,7 @@ import blogPostData from './content/blog-posts.json';
 
 export interface BlogPost {
   slug: string;
+  seoTitle?: string;
   title: string;
   description: string;
   category: string;
