@@ -682,9 +682,12 @@ if (fs.existsSync(blogDataPath)) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     const canonicalUrl = `${SITE_ORIGIN}/blog/${post.slug}/`;
     const fallback = buildBlogFallback(post, file);
-    let html = appEntryHtml.replace('src="./index.tsx"', 'src="../../index.tsx"');
+    // Blog entry pages sit two directories below the site root. Rebase Vite's
+    // relative asset URLs and replace the existing static fallback before
+    // writing post-specific SEO content.
+    let html = appEntryHtml.replaceAll('"./assets/', '"../../assets/');
     html = html
-      .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(post.title)} | BITS</title>`)
+      .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(post.seoTitle || post.title)} | BITS</title>`)
       .replace(/<meta name="description" content="[^"]*"\s*\/?\>/, `<meta name="description" content="${escapeHtml(post.description)}" />`)
       .replace(/<link rel="canonical" href="[^"]*"\s*\/?\>/, `<link rel="canonical" href="${canonicalUrl}" />`)
       .replace(/<meta property="og:type" content="[^"]*"\s*\/?\>/, '<meta property="og:type" content="article" />')
@@ -694,7 +697,8 @@ if (fs.existsSync(blogDataPath)) {
       .replace(/<meta property="og:image" content="[^"]*"\s*\/?\>/, `<meta property="og:image" content="${post.image ? SITE_ORIGIN + post.image : `${SITE_ORIGIN}/images/og-image.jpg`}" />`)
       .replace(/<meta name="twitter:title" content="[^"]*"\s*\/?\>/, `<meta name="twitter:title" content="${escapeHtml(post.title)}" />`)
       .replace(/<meta name="twitter:description" content="[^"]*"\s*\/?\>/, `<meta name="twitter:description" content="${escapeHtml(post.description)}" />`)
-      .replace(/<div id="root">[\s\S]*?<\/div>(\s*<script type="module")/, `${fallback}$1`);
+      .replace(/<div id="root">\s*<!-- BEGIN_STATIC_SEO_CONTENT -->[\s\S]*?<!-- END_STATIC_SEO_CONTENT -->\s*<\/div>/, fallback)
+      .replace(/<div id="root"><\/div>/, fallback);
     fs.writeFileSync(filePath, html);
   }
 
@@ -705,5 +709,13 @@ if (fs.existsSync(blogDataPath)) {
     '/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/',
     `${SITE_ORIGIN}/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/`,
     'the private accommodation guide'
+  ));
+
+  const oldMapPost = path.join(rootDir, 'blog', 'falmouth-university-map-2026-new-students', 'index.html');
+  fs.mkdirSync(path.dirname(oldMapPost), { recursive: true });
+  fs.writeFileSync(oldMapPost, redirectHtml(
+    '/blog/falmouth-university-map-2026/',
+    `${SITE_ORIGIN}/blog/falmouth-university-map-2026/`,
+    'the Falmouth and Penryn community map'
   ));
 }
