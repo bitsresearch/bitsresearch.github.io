@@ -3252,6 +3252,7 @@ const App: React.FC = () => {
           <Route path="/research-ethics.html" element={<ResearchEthics />} />
           <Route path="/thank-you-prize-terms.html" element={<ThankYouPrizeTerms />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/blog/:slug/index.html" element={<BlogPostPage />} />
           <Route path="/blog/finding-private-accommodation-falmouth-penryn" element={<Navigate to="/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/" replace />} />
           <Route path="/blog/finding-private-accommodation-falmouth-penryn/" element={<Navigate to="/blog/finding-private-accommodation-falmouth-penryn-neurodivergent-guide/" replace />} />
           <Route path="/404.html" element={<NotFound />} />

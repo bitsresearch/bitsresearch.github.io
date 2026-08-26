@@ -669,7 +669,7 @@ if (fs.existsSync(blogDataPath)) {
               <p>By <a href="/people/">Charlie Tak Hei Kwong 鄺德希</a> · <time datetime="${escapeHtml(post.dateISO)}">${escapeHtml(post.dateText)}</time></p>
             </header>
             ${image}
-            <div>${post.bodyHtml}</div>
+            <div class="blog-prose">${post.bodyHtml}</div>
           </article>
         </main>
         <!-- END_STATIC_SEO_CONTENT -->

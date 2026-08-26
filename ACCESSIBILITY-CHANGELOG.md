@@ -2,6 +2,15 @@
 
 Date: 24 August 2026
 
+## Falmouth community map direct-entry fix — 26 August 2026
+
+- Added an explicit React route for `/blog/:slug/index.html`, so a physical blog `index.html` entry no longer hydrates into the 404 page.
+- Updated `content/blog-posts.json`, the client-side source of truth, with the approved community-map wording, centred map link, 45px menu/filter icon, consistent portrait screenshot sizing, local step numbering and titled plus/minus disclosures.
+- Kept `/blog/falmouth-university-map-2026/` as the canonical URL while ensuring `/blog/falmouth-university-map-2026/index.html` serves and renders the same article.
+- Updated the static generator so direct blog entry fallbacks receive the shared blog typography.
+- Extended build validation to require every blog `index.html`, the explicit React index route and the revised map content.
+- Verified that both local URL forms return HTTP 200 with byte-identical HTML after a production build.
+
 Content and SEO update: replaced the initial Falmouth map post with “Falmouth & Penryn Community Map 2026: GPS & Accessibility Guide”, using the approved short URL, search title, description, cover image, structured-data fields, sitemap entry and a contextual internal link from the Clearing guide. The initial draft URL now redirects to the final URL.
 
 Accessibility update: added responsive, BITS-themed map and step-card styling; a titled, lazy-loaded Google Maps iframe; a direct map link; native expandable step sections; and descriptive alternative text for every new instructional image. The third-party Google Maps interface itself still needs manual keyboard and screen-reader testing.

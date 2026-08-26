@@ -8,6 +8,7 @@ const indexableNavigationRoutes = ['/about/', '/what-we-care/', '/people/', '/ou
 const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
 const read = file => fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+const blogPosts = JSON.parse(read(path.resolve(process.cwd(), 'content/blog-posts.json')) || '[]');
 
 for (const route of routes) {
   const file = route === '/' ? path.join(dist, 'index.html') : path.join(dist, route.slice(1), 'index.html');
@@ -26,6 +27,22 @@ for (const route of indexableNavigationRoutes) {
   assert(!/<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(html), `Page contains noindex: ${route}`);
   assert(!fs.existsSync(path.join(dist, `${route.slice(1, -1)}.html`)), `Duplicate .html alias exists for indexable page: ${route}`);
 }
+
+for (const post of blogPosts) {
+  const route = `/blog/${post.slug}/`;
+  const html = read(path.join(dist, 'blog', post.slug, 'index.html'));
+  assert(Boolean(html), `Missing blog index.html: ${route}`);
+  assert(html.includes(`<link rel="canonical" href="${origin}${route}"`), `Incorrect blog canonical: ${route}`);
+  assert(/<meta name="description" content="[^"]+"/.test(html), `Missing blog description: ${route}`);
+  assert(/<h1[\s>]/i.test(html), `Missing static blog H1: ${route}`);
+}
+
+const mapHtml = read(path.join(dist, 'blog', 'falmouth-university-map-2026', 'index.html'));
+assert(!/Falmouth and Penryn student map/i.test(mapHtml), 'Map page contains stale “student map” wording');
+assert(mapHtml.includes('Want to see more or less markers?'), 'Map page is missing the menu/filter instruction');
+assert(mapHtml.includes('3. Get directions and find the map again'), 'Map page is missing the revised disclosure title');
+assert(!mapHtml.includes('Show the numbered steps'), 'Map page contains stale disclosure labels');
+assert(!/<ol\s+start=/i.test(mapHtml), 'Map page carries ordered-list numbering across functions');
 
 for (const file of ['sitemap.xml','robots.txt','.nojekyll']) {
   assert(fs.existsSync(path.join(dist,file)) || fs.existsSync(path.join(dist,'public',file)), `Missing deployment file: ${file}`);
@@ -57,6 +74,7 @@ walk(dist);
 const bundledJs = jsFiles.filter(f=>f.endsWith('.js')).map(read).join('\n');
 const sourceApp = read(path.join(dist, 'App.tsx'));
 const js = bundledJs || sourceApp;
+assert(js.includes('/blog/:slug/index.html'), 'Application does not route explicit blog index.html URLs');
 for (const marker of ['2PACX-1vSHQGTMTLaBAyxMZYxyjG1JrhOtHwvzZmDCgJ_3jaBJnCg81qmtRuN3Mj4toSFcPgJQ113wI1qyi7cS','2PACX-1vSLAX_TguHx2FXd0pxNxM5ViTiTnGnbZPsdrO7KGm98aekIxu4kkHHhAVwM2_W1xiB_WJTbPfSZLet2','2PACX-1vTqnqjMFiQ3G6ehRg-Zh8GdjbbcpbeaEsp4CpgmHNcsdJR0-SgcrXkSDF8Hnypub4Jz4zII4zCL8-Ue']) {
   assert(js.includes(marker), `Protected Google CSV integration missing: ${marker.slice(0,24)}…`);
 }
