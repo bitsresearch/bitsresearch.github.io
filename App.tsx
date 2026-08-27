@@ -2265,7 +2265,7 @@ const GetInvolved: React.FC = () => {
                       href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/upcoming-workshop/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block whitespace-nowrap px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Session Details
                   </a>
@@ -2273,9 +2273,9 @@ const GetInvolved: React.FC = () => {
                       href="https://forms.office.com/e/FPSgmUxEhD" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block whitespace-nowrap px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Join the Session — Microsoft Forms ↗
+                      Join the Session
                   </a>
               </div>
           </div>
@@ -2294,7 +2294,7 @@ const GetInvolved: React.FC = () => {
                       href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/community-advisors-wanted-supporting-identity-transition-in-higher-education/#roles" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block whitespace-nowrap px-8 py-4 bg-sage-700 text-white rounded-full font-bold hover:bg-sage-800 transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
                       Learn More
                   </a>
@@ -2302,9 +2302,9 @@ const GetInvolved: React.FC = () => {
                       href="https://forms.cloud.microsoft/e/LM0sFix788" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-block px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
+                      className="inline-block whitespace-nowrap px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Expression of Interest — Microsoft Forms ↗
+                      Book My Place
                   </a>
               </div>
           </div>
