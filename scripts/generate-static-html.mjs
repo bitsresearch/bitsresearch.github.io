@@ -158,11 +158,11 @@ const pageContent = {
       <h2>Join a Creative Workshop</h2>
       <p>Are you settling into uni and still figuring things out? Join our creative workshops to explore identity, belonging, and your learning journey at your own pace.</p>
       <p><a href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/upcoming-workshop/">Session Details</a></p>
-      <p><a href="https://forms.office.com/e/FPSgmUxEhD">Join the Session</a></p>
+      <p><a href="https://forms.office.com/e/FPSgmUxEhD">Book My Place</a></p>
       <h2>Collaborate as a Community Advisor</h2>
       <p>Join us as a Community Advisor [Remote/On-site] and help shape workshop design, delivery, safeguarding, and ethical practice to better support students in transition!</p>
       <p><a href="https://charliekwong.myblog.arts.ac.uk/2026/02/01/community-advisors-wanted-supporting-identity-transition-in-higher-education/#roles">Learn More</a></p>
-      <p><a href="https://forms.cloud.microsoft/e/LM0sFix788">Book My Place</a></p>
+      <p><a href="https://forms.cloud.microsoft/e/LM0sFix788">Join Us</a></p>
     </section>
     <section id="frequently-asked-questions">
       <h2>Frequently Asked Questions</h2>

@@ -2275,7 +2275,7 @@ const GetInvolved: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-block whitespace-nowrap px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Join the Session
+                      Book My Place
                   </a>
               </div>
           </div>
@@ -2304,7 +2304,7 @@ const GetInvolved: React.FC = () => {
                       rel="noopener noreferrer"
                       className="inline-block whitespace-nowrap px-8 py-4 bg-earth-800 dark:bg-earth-200 text-white dark:text-earth-900 rounded-full font-bold hover:bg-earth-900 dark:hover:bg-white transition-colors shadow-lg hover:shadow-xl hover:-translate-y-1 transform duration-300 text-center"
                   >
-                      Book My Place
+                      Join Us
                   </a>
               </div>
           </div>
