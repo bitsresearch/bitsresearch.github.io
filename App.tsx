@@ -267,6 +267,65 @@ const getSafeExternalUrl = (url: string) => {
   }
 };
 
+const getSafeImageUrl = (url: string) => {
+  const trimmed = url.trim();
+  if (!trimmed) return null;
+  if (trimmed.startsWith('/') && !trimmed.startsWith('//')) return trimmed;
+  return getSafeExternalUrl(trimmed);
+};
+
+const getSafeMailtoUrl = (value: string) => {
+  const trimmed = value.trim();
+  if (!trimmed || /[\r\n]/.test(trimmed)) return null;
+
+  if (/^mailto:/i.test(trimmed)) {
+    try {
+      const parsed = new URL(trimmed);
+      return parsed.protocol === 'mailto:' ? parsed.toString() : null;
+    } catch {
+      return null;
+    }
+  }
+
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed) ? `mailto:${trimmed}` : null;
+};
+
+const parseCsv = (text: string) => {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let field = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (char === '"') {
+      if (inQuotes && next === '"') {
+        field += '"';
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+    } else if (char === ',' && !inQuotes) {
+      row.push(field.trim());
+      field = '';
+    } else if ((char === '\n' || char === '\r') && !inQuotes) {
+      if (char === '\r' && next === '\n') i += 1;
+      row.push(field.trim());
+      if (row.some(cell => cell !== '')) rows.push(row);
+      row = [];
+      field = '';
+    } else {
+      field += char;
+    }
+  }
+
+  row.push(field.trim());
+  if (row.some(cell => cell !== '')) rows.push(row);
+  return rows;
+};
+
 const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   typeof window.matchMedia === 'function' &&
@@ -280,7 +339,10 @@ interface Workshop {
   time: string;
   venue: string;
   remarks: string;
-  link: string;
+  registrationLink: string;
+  emailBooking: string;
+  coverImage: string;
+  luckDraw: string;
   parsedDate: Date;
 }
 
@@ -824,61 +886,83 @@ const WorkshopSection: React.FC = () => {
         if (!response.ok) throw new Error('Network response was not ok');
         
         const text = await response.text();
-        
-        // Robust CSV Splitting handling \r\n and empty lines
-        const rows = text.split(/\r?\n/).filter(row => row.trim() !== "");
-        
+        const rows = parseCsv(text);
+
         if (rows.length <= 1) {
           setWorkshops([]);
           setLoading(false);
           return;
         }
 
-        const dataRows = rows.slice(1); // Skip header
-        
-        const parsedData: Workshop[] = dataRows.map(row => {
-          // Regex to split by comma but ignore commas inside quotes
-          const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
-          const cols = row.split(regex).map(col => col.replace(/^"|"$/g, '').trim());
-          
-          if (cols.length < 2) return null;
+        const headers = rows[0].map(header => header.trim().toLowerCase());
+        const getColumnIndex = (...names: string[]) =>
+          names.map(name => headers.indexOf(name.toLowerCase())).find(index => index >= 0) ?? -1;
 
-          // Mapping: Title, Date (DD/MM/YYYY or similar), Time, Venue, Remarks, Registration Link
-          const title = cols[0] || "Untitled Workshop";
-          const dateStr = cols[1] || "";
-          const time = cols[2] || "";
-          const venue = cols[3] || "";
-          const remarks = cols[4] || "";
-          const link = getSafeExternalUrl(ensureAbsoluteUrl(cols[5] || "")) ?? "";
-          
-          // Date Parsing Logic (Prioritizing DD/MM/YYYY for UK context)
+        const columnIndex = {
+          title: getColumnIndex('Title'),
+          date: getColumnIndex('Date MM/DD/YYYY', 'Date'),
+          time: getColumnIndex('Time'),
+          venue: getColumnIndex('Venue'),
+          remarks: getColumnIndex('Remarks'),
+          registrationLink: getColumnIndex('Registration Link'),
+          emailBooking: getColumnIndex('E-mail Booking', 'Email Booking'),
+          coverImage: getColumnIndex('Cover Image'),
+          luckDraw: getColumnIndex('Luck Draw', 'Lucky Draw'),
+        };
+
+        const dataRows = rows.slice(1);
+
+        const parsedData: Workshop[] = dataRows.map(cols => {
+          const readColumn = (index: number) => index >= 0 ? (cols[index] || '').trim() : '';
+          const title = readColumn(columnIndex.title) || 'Untitled Workshop';
+          const dateStr = readColumn(columnIndex.date);
+          const time = readColumn(columnIndex.time);
+          const venue = readColumn(columnIndex.venue);
+          const remarks = readColumn(columnIndex.remarks);
+          const registrationLinkRaw = readColumn(columnIndex.registrationLink);
+          const registrationLink = registrationLinkRaw
+            ? getSafeExternalUrl(ensureAbsoluteUrl(registrationLinkRaw)) ?? ''
+            : '';
+          const emailBooking = getSafeMailtoUrl(readColumn(columnIndex.emailBooking)) ?? '';
+          const coverImage = getSafeImageUrl(readColumn(columnIndex.coverImage)) ?? '';
+          const luckDrawRaw = readColumn(columnIndex.luckDraw);
+          const luckDraw = /^(yes|y|true)$/i.test(luckDrawRaw)
+            ? 'Optional £10 grocery gift card draw'
+            : /^(no|n|false|none|n\/a)$/i.test(luckDrawRaw)
+              ? ''
+              : luckDrawRaw;
+
+          if (!dateStr) return null;
+
+          // The published sheet labels this field as MM/DD/YYYY. Parse it explicitly
+          // so dates such as 10/07/2026 are treated as 7 October, not 10 July.
           let dateObj: Date | null = null;
           const cleanDateStr = dateStr.trim();
-          
-          // Check for DD/MM/YYYY or DD-MM-YYYY (Common in UK/HK)
-          // Matches 02/03/2026 or 2-3-2026
-          const ddmmyyyy = /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/;
-          const match = cleanDateStr.match(ddmmyyyy);
-          
+          const mmddyyyy = /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/;
+          const match = cleanDateStr.match(mmddyyyy);
+
           if (match) {
-             const d = parseInt(match[1], 10);
-             const m = parseInt(match[2], 10);
-             const y = parseInt(match[3], 10);
-             if (!isNaN(d) && !isNaN(m) && !isNaN(y)) {
-                 // Month is 0-indexed in JS Date
-                 dateObj = new Date(y, m - 1, d);
-             }
-          } 
-          
-          // Fallback if regex didn't match (e.g. "Oct 12, 2025" or ISO)
-          if (!dateObj || isNaN(dateObj.getTime())) {
-              const timestamp = Date.parse(cleanDateStr);
-              if (!isNaN(timestamp)) {
-                  dateObj = new Date(timestamp);
-              }
+            const month = parseInt(match[1], 10);
+            const day = parseInt(match[2], 10);
+            const year = parseInt(match[3], 10);
+            const candidate = new Date(year, month - 1, day);
+            if (
+              month >= 1 && month <= 12 &&
+              day >= 1 && day <= 31 &&
+              candidate.getFullYear() === year &&
+              candidate.getMonth() === month - 1 &&
+              candidate.getDate() === day
+            ) {
+              dateObj = candidate;
+            }
           }
 
-          // Final validation: skip if we still have no valid date
+          // Fallback supports ISO or written dates if the sheet format changes later.
+          if (!dateObj || isNaN(dateObj.getTime())) {
+            const timestamp = Date.parse(cleanDateStr);
+            if (!isNaN(timestamp)) dateObj = new Date(timestamp);
+          }
+
           if (!dateObj || isNaN(dateObj.getTime())) return null;
 
           return {
@@ -887,8 +971,11 @@ const WorkshopSection: React.FC = () => {
             time,
             venue,
             remarks,
-            link,
-            parsedDate: dateObj
+            registrationLink,
+            emailBooking,
+            coverImage,
+            luckDraw,
+            parsedDate: dateObj,
           };
         }).filter((item): item is Workshop => item !== null);
 
@@ -976,7 +1063,7 @@ const WorkshopSection: React.FC = () => {
         `SUMMARY:${ws.title}`,
         `DESCRIPTION:${ws.remarks || 'Join our workshop!'}`,
         `LOCATION:${ws.venue}`,
-        `URL:${ws.link}`,
+        `URL:${ws.registrationLink}`,
         'END:VEVENT',
         'END:VCALENDAR'
     ].join('\r\n');
@@ -1176,73 +1263,113 @@ const WorkshopSection: React.FC = () => {
                             {(() => {
                                 const venueTheme = getVenueTheme(ws.venue);
                                 return (
-                            <div className={`${venueTheme.card} rounded-[1.25rem] md:rounded-3xl p-5 md:p-7 shadow-sm border-2 hover:shadow-md transition-shadow duration-300 motion-reduce:transition-none flex flex-col h-full group`}>
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className={`px-4 py-2 ${venueTheme.badge} text-xs font-bold uppercase tracking-widest rounded-full`}>
-                                        {ws.parsedDate.toLocaleDateString('en-GB', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
+                            <article className={`${venueTheme.card} rounded-[1.25rem] md:rounded-3xl overflow-hidden shadow-sm border-2 hover:shadow-md transition-shadow duration-300 motion-reduce:transition-none flex flex-col h-full group`}>
+                                {ws.coverImage && (
+                                    <div className="aspect-[16/9] bg-earth-100 dark:bg-earth-700 overflow-hidden">
+                                        <img
+                                            src={ws.coverImage}
+                                            alt=""
+                                            loading="lazy"
+                                            className="h-full w-full object-cover"
+                                        />
                                     </div>
-                                </div>
+                                )}
 
-                                <h3 className="text-xl font-serif font-bold text-earth-900 dark:text-earth-50 mb-4 leading-snug line-clamp-2">
-                                    {ws.title}
-                                </h3>
+                                <div className="p-5 md:p-7 flex flex-col flex-grow">
+                                    <h3 className="text-xl font-serif font-bold text-earth-900 dark:text-earth-50 mb-5 leading-snug">
+                                        {ws.title}
+                                    </h3>
 
-                                <div className="space-y-3 mb-6 flex-grow">
-                                    <div className="flex items-start gap-3 text-earth-700 dark:text-earth-300 text-sm">
-                                        <Clock size={16} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
-                                        <span>{ws.time}</span>
-                                    </div>
-                                    <div className="flex items-start gap-3 text-earth-700 dark:text-earth-300 text-sm">
-                                        <MapPinIcon size={16} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
-                                        <span>{ws.venue}</span>
-                                    </div>
+                                    <dl className="space-y-3 mb-5 text-sm">
+                                        <div className="grid grid-cols-[4.5rem_1fr] items-start gap-2 text-earth-800 dark:text-earth-200">
+                                            <dt className="font-bold inline-flex items-center gap-1.5">
+                                                <Calendar size={16} className={venueTheme.icon} aria-hidden="true" /> Date
+                                            </dt>
+                                            <dd>
+                                                <time dateTime={`${ws.parsedDate.getFullYear()}-${String(ws.parsedDate.getMonth() + 1).padStart(2, '0')}-${String(ws.parsedDate.getDate()).padStart(2, '0')}`}>
+                                                    {ws.parsedDate.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                                                </time>
+                                            </dd>
+                                        </div>
+                                        <div className="grid grid-cols-[4.5rem_1fr] items-start gap-2 text-earth-800 dark:text-earth-200">
+                                            <dt className="font-bold inline-flex items-center gap-1.5">
+                                                <Clock size={16} className={venueTheme.icon} aria-hidden="true" /> Time
+                                            </dt>
+                                            <dd>{ws.time || 'To be confirmed'}</dd>
+                                        </div>
+                                        <div className="grid grid-cols-[4.5rem_1fr] items-start gap-2 text-earth-800 dark:text-earth-200">
+                                            <dt className="font-bold inline-flex items-center gap-1.5">
+                                                <MapPinIcon size={16} className={venueTheme.icon} aria-hidden="true" /> Venue
+                                            </dt>
+                                            <dd>
+                                                <span className={`inline-block px-2.5 py-1 ${venueTheme.badge} rounded-lg font-semibold`}>{ws.venue || 'To be confirmed'}</span>
+                                            </dd>
+                                        </div>
+                                    </dl>
+
                                     {ws.remarks && (
-                                        <div className="flex items-start gap-3 text-earth-700 dark:text-earth-400 text-sm italic mt-2 p-3 bg-earth-50 dark:bg-earth-700/30 rounded-xl">
-                                            <AlertCircle size={16} className="mt-0.5 flex-shrink-0 text-earth-500" />
-                                            <span>{linkify(ws.remarks)}</span>
+                                        <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-earth-200/80 bg-white/60 px-3.5 py-3 text-sm leading-relaxed text-earth-800 dark:border-earth-600 dark:bg-black/10 dark:text-earth-200">
+                                            <AlertCircle size={17} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
+                                            <div>
+                                                <span className="font-bold">Good to know: </span>
+                                                <span>{linkify(ws.remarks)}</span>
+                                            </div>
                                         </div>
                                     )}
-                                </div>
 
-                                <div className="mb-3 flex items-start gap-2 rounded-xl bg-white/55 px-3 py-2.5 text-xs font-medium text-earth-700 dark:bg-black/10 dark:text-earth-200">
-                                    <Gift size={15} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
-                                    <span>Optional £10 grocery gift card draw</span>
-                                </div>
+                                    {ws.luckDraw && (
+                                        <div className="mb-4 flex items-start gap-2.5 rounded-xl bg-white/55 px-3.5 py-3 text-sm font-medium leading-relaxed text-earth-800 dark:bg-black/10 dark:text-earth-200">
+                                            <Gift size={17} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
+                                            <span>{ws.luckDraw}</span>
+                                        </div>
+                                    )}
 
-                                <div className="space-y-2 mt-auto">
-                                    {ws.link.trim() ? (
-                                        <a 
-                                            href={ensureAbsoluteUrl(ws.link)} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="w-full min-h-11 py-3 bg-sage-700 text-white rounded-xl font-semibold text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
-                                            onMouseDown={(e) => e.stopPropagation()}
-                                        >
-                                            Save My Place · 1 min <ArrowRight size={16} aria-hidden="true" />
-                                            <span className="sr-only"> (opens in a new tab)</span>
-                                        </a>
-                                    ) : (
-                                        <button
-                                            type="button"
-                                            disabled
-                                            aria-disabled="true"
-                                            className="w-full min-h-11 py-3 bg-earth-200 dark:bg-earth-700 text-earth-700 dark:text-earth-300 border border-earth-300 dark:border-earth-600 rounded-xl font-semibold text-center cursor-not-allowed opacity-80"
-                                        >
-                                            Booking Opens Soon
-                                        </button>
-                                    )}
-                                    
-                                    {hasConfirmedDateTime(ws) && (
-                                        <button
-                                            onClick={() => downloadICS(ws)}
-                                            className="w-full min-h-11 py-3 bg-transparent border border-earth-300 dark:border-earth-600 text-earth-700 dark:text-earth-300 rounded-xl font-medium text-center hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-earth-500"
-                                            onMouseDown={(e) => e.stopPropagation()}
-                                        >
-                                            <CalendarPlus size={16} aria-hidden="true" /> Add to My Calendar
-                                        </button>
-                                    )}
+                                    <div className="space-y-2 mt-auto">
+                                        {ws.registrationLink ? (
+                                            <a
+                                                href={ws.registrationLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-full min-h-11 px-4 py-3 bg-sage-700 text-white rounded-xl font-semibold text-center hover:bg-sage-800 transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                                                onMouseDown={(e) => e.stopPropagation()}
+                                            >
+                                                Book My Place <ArrowRight size={16} aria-hidden="true" />
+                                                <span className="sr-only"> (opens in a new tab)</span>
+                                            </a>
+                                        ) : !ws.emailBooking ? (
+                                            <button
+                                                type="button"
+                                                disabled
+                                                aria-disabled="true"
+                                                className="w-full min-h-11 px-4 py-3 bg-earth-200 dark:bg-earth-700 text-earth-700 dark:text-earth-300 border border-earth-300 dark:border-earth-600 rounded-xl font-semibold text-center cursor-not-allowed opacity-80"
+                                            >
+                                                Booking Opens Soon
+                                            </button>
+                                        ) : null}
+
+                                        {ws.emailBooking && (
+                                            <a
+                                                href={ws.emailBooking}
+                                                className="w-full min-h-11 px-4 py-3 bg-white/65 dark:bg-earth-800 border border-earth-300 dark:border-earth-600 text-earth-800 dark:text-earth-200 rounded-xl font-semibold text-center hover:bg-white dark:hover:bg-earth-700 transition-colors flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sage-700 dark:focus:ring-sage-300"
+                                                onMouseDown={(e) => e.stopPropagation()}
+                                            >
+                                                <Mail size={16} aria-hidden="true" /> Email to Book
+                                            </a>
+                                        )}
+
+                                        {hasConfirmedDateTime(ws) && (
+                                            <button
+                                                type="button"
+                                                onClick={() => downloadICS(ws)}
+                                                className="w-full min-h-11 px-4 py-3 bg-transparent border border-earth-300 dark:border-earth-600 text-earth-800 dark:text-earth-200 rounded-xl font-medium text-center hover:bg-earth-100 dark:hover:bg-earth-700 transition-colors flex items-center justify-center gap-2 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-earth-500"
+                                                onMouseDown={(e) => e.stopPropagation()}
+                                            >
+                                                <CalendarPlus size={16} aria-hidden="true" /> Add to My Calendar
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            </article>
                                 );
                             })()}
                         </div>
