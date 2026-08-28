@@ -900,7 +900,7 @@ const WorkshopSection: React.FC = () => {
 
         const columnIndex = {
           title: getColumnIndex('Title'),
-          date: getColumnIndex('Date MM/DD/YYYY', 'Date'),
+          date: getColumnIndex('Date DD/MM/YYYY', 'Date MM/DD/YYYY', 'Date'),
           time: getColumnIndex('Time'),
           venue: getColumnIndex('Venue'),
           remarks: getColumnIndex('Remarks'),
@@ -934,16 +934,16 @@ const WorkshopSection: React.FC = () => {
 
           if (!dateStr) return null;
 
-          // The published sheet labels this field as MM/DD/YYYY. Parse it explicitly
-          // so dates such as 10/07/2026 are treated as 7 October, not 10 July.
+          // BITS uses UK dates (DD/MM/YYYY). Parse explicitly so ambiguous
+          // values such as 07/10/2026 are always treated as 7 October 2026.
           let dateObj: Date | null = null;
           const cleanDateStr = dateStr.trim();
-          const mmddyyyy = /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/;
-          const match = cleanDateStr.match(mmddyyyy);
+          const ddmmyyyy = /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/;
+          const match = cleanDateStr.match(ddmmyyyy);
 
           if (match) {
-            const month = parseInt(match[1], 10);
-            const day = parseInt(match[2], 10);
+            const day = parseInt(match[1], 10);
+            const month = parseInt(match[2], 10);
             const year = parseInt(match[3], 10);
             const candidate = new Date(year, month - 1, day);
             if (
