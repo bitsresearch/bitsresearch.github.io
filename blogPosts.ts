@@ -13,6 +13,7 @@ export interface BlogPost {
   imageAlt: string;
   caption: string;
   bodyHtml: string;
+  interactive?: 'storyteller-quiz';
   tags: string[];
 }
 
