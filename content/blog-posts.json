@@ -103,5 +103,27 @@
       "student support links",
       "university transition"
     ]
+  },
+  {
+    "slug": "what-kind-of-storyteller-are-you",
+    "seoTitle": "What Kind of Storyteller Are You?",
+    "title": "What Kind of Storyteller Are You?",
+    "description": "Try a short, playful BITS quiz, receive a small story prompt, then find a workshop that works for you.",
+    "category": "Stories & University Life",
+    "standfirst": "Choose what feels most like you. Then try a tiny story prompt — in words, pictures, sound, collage or simply in your head.",
+    "dateISO": "2026-09-01",
+    "dateText": "1 September 2026",
+    "image": "",
+    "imageAlt": "",
+    "caption": "",
+    "interactive": "storyteller-quiz",
+    "bodyHtml": "<p>This is for fun and reflection — not a test or a label. Pick the answer that feels right today.</p>\n<p>You can write, draw, make a collage, record a voice note — or just think. No art skills or sharing needed.</p>\n<h2>Where did these ideas come from?</h2>\n<p>The quiz is a playful way into four different approaches to storytelling. These are not fixed or proven personality types. They draw on BITS research about stories, belonging, disability and creative expression.</p>\n<details class=\"why sources\"><summary>Explore the research behind the ideas</summary><ul><li><a href=\"https://doi.org/10.1080/03098265.2023.2266995\" target=\"_blank\" rel=\"noopener noreferrer\">Storying student belonging in UK higher education</a></li><li><a href=\"https://doi.org/10.15353/cjds.v12i1.970\" target=\"_blank\" rel=\"noopener noreferrer\">Cripping digital storytelling: disability, accessibility and celebrating difference</a></li><li><a href=\"https://doi.org/10.1177/13623613221132107\" target=\"_blank\" rel=\"noopener noreferrer\">Neurodivergent storying and narrative agency</a></li><li><a href=\"https://doi.org/10.15353/cjds.v8i1.473\" target=\"_blank\" rel=\"noopener noreferrer\">Multimedia storytelling: access and inclusion</a></li></ul></details>",
+    "tags": [
+      "storytelling quiz",
+      "student belonging",
+      "creative reflection",
+      "university transition",
+      "BITS workshops"
+    ]
   }
 ]

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" class="app-loading">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./images/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="ptagI-INdQC0TRl4XHkELOL2RhIRIcDjIrjVdF8r5Lc" />
+    <title>What Kind of Storyteller Are You? | BITS</title>
+    <meta name="description" content="Try a short, playful BITS quiz, receive a small story prompt, then find a workshop that works for you." />
+    <meta name="author" content="Charlie Tak Hei Kwong 鄺德希" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://bitsresearch.github.io/blog/what-kind-of-storyteller-are-you/" />
+    <meta property="og:site_name" content="BITS | Building Identity through Stories" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="What Kind of Storyteller Are You?" />
+    <meta property="og:description" content="Try a short, playful BITS quiz, receive a small story prompt, then find a workshop that works for you." />
+    <meta property="og:url" content="https://bitsresearch.github.io/blog/what-kind-of-storyteller-are-you/" />
+    <meta property="og:image" content="https://bitsresearch.github.io/images/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="What Kind of Storyteller Are You?" />
+    <meta name="twitter:description" content="Try a short, playful BITS quiz, receive a small story prompt, then find a workshop that works for you." />
+    <meta name="twitter:image" content="https://bitsresearch.github.io/images/og-image.jpg" />
+    <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "name": "Charlie Tak Hei Kwong", "alternateName": "鄺德希", "jobTitle": "Doctoral Researcher", "knowsAbout": ["Transmedia storytelling", "Inclusive education", "Creative media", "Arts-based research", "Higher education transition", "Identity exploration", "Student agency"]}, {"@type": "ResearchProject", "name": "Building Identity Through Stories", "alternateName": "BITS", "author": {"@type": "Person", "name": "Charlie Tak Hei Kwong", "alternateName": "鄺德希"}, "about": ["Transmedia storytelling", "Identity exploration", "Student transition", "Higher education transition", "Students with diverse learning journeys", "Inclusive education", "Arts-based educational research"]}, {"@type": "CollegeOrUniversity", "name": "Falmouth University"}, {"@type": "CollegeOrUniversity", "name": "University of the Arts London", "alternateName": "UAL"}]}</script>
+    <script>
+      // Apply saved visual preferences before React renders to avoid theme/font flashing.
+      (() => {
+        try {
+          const key = 'bits.accessibilityPreferences.v1';
+          const saved = window.localStorage.getItem(key);
+          const prefs = saved ? JSON.parse(saved) : null;
+          const useDark = prefs?.theme === 'dark' || (!prefs?.theme && window.matchMedia?.('(prefers-color-scheme: dark)').matches);
+          document.documentElement.classList.toggle('dark', Boolean(useDark));
+          document.documentElement.classList.toggle('font-atkinson', prefs?.font === 'atkinson');
+          document.documentElement.classList.toggle('text-enlarged', Boolean(prefs?.enlargedText));
+          window.addEventListener('DOMContentLoaded', () => {
+            document.body?.classList.toggle('spacing-enhanced', Boolean(prefs?.textSpacing));
+          }, { once: true });
+        } catch {
+          // Ignore unavailable/corrupt storage and continue with accessible defaults.
+        }
+      })();
+    </script>
+    <!-- Styles are compiled into the application bundle. -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Chewy&display=swap');
+      body { font-family: Verdana, Geneva, Tahoma, sans-serif; line-height: 1.6; }
+      p, li { text-wrap: pretty; }
+      h1, h2, h3 { text-wrap: balance; }
+      /* Consistent interaction sizing: comfortably above WCAG 2.2's 24px minimum target. */
+      button, input:not([type="checkbox"]):not([type="radio"]), select, textarea, [role="button"] { min-height: 44px; }
+      /* Keep long-form reading comfortable without forcing a specialist accessibility mode. */
+      .reading-width { max-width: 72ch; }
+      html.font-atkinson body, html.font-atkinson body * { font-family: 'Atkinson Hyperlegible', Verdana, Geneva, Tahoma, sans-serif !important; }
+      body.spacing-enhanced p, body.spacing-enhanced span, body.spacing-enhanced h1, body.spacing-enhanced h2, body.spacing-enhanced h3, body.spacing-enhanced h4, body.spacing-enhanced h5, body.spacing-enhanced h6, body.spacing-enhanced li, body.spacing-enhanced a { line-height: 2 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+      body.spacing-enhanced p { margin-bottom: 2em !important; }
+      html.text-enlarged { font-size: 120%; }
+      h1, h2, h3, h4, h5, h6 { font-family: 'Chewy', cursive; }
+      html { scroll-behavior: smooth; scroll-padding-top: 8rem; overflow-x: hidden; }
+      body { overflow-wrap: anywhere; }
+      img, video, iframe { max-width: 100%; }
+      main:focus { outline: none; }
+      [id] { scroll-margin-top: 8rem; }
+      ::-moz-selection { background-color: #6B5B54; color: #ffffff; }
+      ::selection { background-color: #6B5B54; color: #ffffff; }
+      .dark ::-moz-selection { background-color: #B4C4B7; color: #2C2825; }
+      .dark ::selection { background-color: #B4C4B7; color: #2C2825; }
+      :focus-visible { outline: 3px solid #ffffff; outline-offset: 2px; box-shadow: 0 0 0 5px #3E3630; }
+      .dark :focus-visible { outline-color: #ffffff; box-shadow: 0 0 0 5px #B4C4B7; }
+      /* Shared blog typography: every blog post is rendered by the same React layout/template. */
+      .blog-prose { color: inherit; font-size: 1.0625rem; line-height: 1.8; }
+      .blog-prose > * + * { margin-top: 1.25rem; }
+      .blog-prose h2 { margin-top: 2.5rem; font-size: clamp(1.75rem, 4vw, 2.35rem); line-height: 1.2; color: #1A1614; }
+      .dark .blog-prose h2 { color: #F5F2ED; }
+      .blog-prose h3 { margin-top: 2rem; font-size: 1.35rem; line-height: 1.3; color: #1A1614; }
+      .dark .blog-prose h3 { color: #F5F2ED; }
+      .blog-prose p, .blog-prose li { color: #5C5148; }
+      .dark .blog-prose p, .dark .blog-prose li { color: #D1C7BE; }
+      .blog-prose ul, .blog-prose ol { padding-left: 1.5rem; }
+      .blog-prose ul { list-style: disc; }
+      .blog-prose ol { list-style: decimal; }
+      .blog-prose li + li { margin-top: .6rem; }
+      .blog-prose a { color: #566054; text-decoration: underline; text-underline-offset: .2em; }
+      .dark .blog-prose a { color: #B4C4B7; }
+      .blog-prose blockquote { border-left: 4px solid #728070; padding: .75rem 0 .75rem 1.25rem; margin: 2rem 0; }
+      .blog-prose blockquote p { font-size: 1.15rem; font-style: italic; }
+      .blog-prose img { border-radius: 1.5rem; }
+      .blog-prose .blog-inline-icon { display: inline-block; width: 45px; height: auto; margin: 0 .25rem; border-radius: 0; vertical-align: middle; }
+      .blog-map-cta { text-align: center; }
+      .blog-prose .blog-instruction-figure { width: min(100%, 26rem); margin: 1.75rem auto; }
+      .blog-prose .blog-instruction-figure img { display: block; width: 100%; height: auto; }
+      .blog-prose details.blog-steps { padding: 0 1.25rem; }
+      .blog-steps > summary { cursor: pointer; list-style: none; padding: 1rem 0; }
+      .blog-steps > summary::-webkit-details-marker { display: none; }
+      .blog-steps > summary::marker { content: ""; }
+      .blog-steps > summary h3 { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 0; }
+      .blog-steps-indicator { flex: 0 0 auto; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 1.5rem; line-height: 1; }
+      .blog-steps-indicator .when-open { display: none; }
+      .blog-steps[open] .blog-steps-indicator .when-closed { display: none; }
+      .blog-steps[open] .blog-steps-indicator .when-open { display: inline; }
+      .blog-steps-content { padding-bottom: 1.25rem; }
+      @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+    </style>
+    <script type="module" crossorigin src="../../assets/index-B-i0auC-.js"></script>
+    <link rel="stylesheet" crossorigin href="../../assets/index-CbZ2_PD1.css">
+  </head>
+  <body class="bg-earth-50 text-earth-900 dark:bg-earth-900 dark:text-earth-50 transition-colors duration-300">
+    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <div id="root">
+        <!-- BEGIN_STATIC_SEO_CONTENT -->
+        <a class="sr-only" href="#content">Skip to content</a>
+        <header role="banner"><nav aria-label="Main navigation"><ul><li><a href="../../">Home</a></li><li><a href="../../about/">About</a></li><li><a href="../../what-we-care/">What We Care About</a></li><li><a href="../../people/">People</a></li><li><a href="../../output-resources/">Outputs & Resources</a></li><li><a href="../../get-involved/">Get Involved</a></li><li><a href="../../contact/">Contact</a></li><li><a href="../../research-ethics/">Research Ethics</a></li><li><a href="../../thank-you-prize-terms/">Thank-you Prize Terms and Conditions</a></li><li><a href="../../accessibility/">Accessibility</a></li><li><a href="../../privacy-policy/">Privacy Notice</a></li><li><a href="../../terms-of-use/">Terms of Use</a></li></ul></nav></header>
+        <main id="content" role="main">
+          <article>
+            <header>
+              <p class="text-sm md:text-base font-bold uppercase tracking-[0.16em] text-sage-700 dark:text-sage-300 mb-4">Stories &amp; University Life</p>
+              <h1>What Kind of Storyteller Are You?</h1>
+              <p>Choose what feels most like you. Then try a tiny story prompt — in words, pictures, sound, collage or simply in your head.</p>
+              <p>By <a href="../../people/">Charlie Tak Hei Kwong 鄺德希</a> · <time datetime="2026-09-01">1 September 2026</time></p>
+            </header>
+            
+            <div class="blog-prose"><p>This is for fun and reflection — not a test or a label. Pick the answer that feels right today.</p>
+<p>You can write, draw, make a collage, record a voice note — or just think. No art skills or sharing needed.</p>
+<h2>Where did these ideas come from?</h2>
+<p>The quiz is a playful way into four different approaches to storytelling. These are not fixed or proven personality types. They draw on BITS research about stories, belonging, disability and creative expression.</p>
+<details class="why sources"><summary>Explore the research behind the ideas</summary><ul><li><a href="https://doi.org/10.1080/03098265.2023.2266995" target="_blank" rel="noopener noreferrer">Storying student belonging in UK higher education</a></li><li><a href="https://doi.org/10.15353/cjds.v12i1.970" target="_blank" rel="noopener noreferrer">Cripping digital storytelling: disability, accessibility and celebrating difference</a></li><li><a href="https://doi.org/10.1177/13623613221132107" target="_blank" rel="noopener noreferrer">Neurodivergent storying and narrative agency</a></li><li><a href="https://doi.org/10.15353/cjds.v8i1.473" target="_blank" rel="noopener noreferrer">Multimedia storytelling: access and inclusion</a></li></ul></details></div>
+          </article>
+        </main>
+        <!-- END_STATIC_SEO_CONTENT -->
+      </div>
+  </body>
+</html>
