@@ -18,7 +18,7 @@ const setMeta = (selector: string, attribute: 'name' | 'property', key: string, 
   element.setAttribute('content', content);
 };
 
-export const BlogPostPage: React.FC<{ workshopSection?: React.ReactNode }> = ({ workshopSection }) => {
+export const BlogPostPage: React.FC = () => {
   const { slug } = useParams();
   const post = blogPosts.find(item => item.slug === slug);
   if (!post && slug && legacyBlogSlugs[slug]) {
@@ -100,7 +100,6 @@ export const BlogPostPage: React.FC<{ workshopSection?: React.ReactNode }> = ({ 
         <div className="bg-white dark:bg-earth-800 border border-earth-200 dark:border-earth-700 rounded-4xl shadow-sm px-6 py-9 sm:px-10 md:px-14 md:py-12">
           <div className="blog-prose" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
           {post.interactive === 'storyteller-quiz' && <StorytellerQuiz />}
-          {post.interactive === 'storyteller-quiz' && workshopSection}
           {post.tags.length > 0 && (
             <footer className="mt-10 pt-7 border-t border-earth-200 dark:border-earth-700">
               <h2 className="text-sm font-bold uppercase tracking-widest text-earth-900 dark:text-earth-100 mb-4">Topics</h2>
