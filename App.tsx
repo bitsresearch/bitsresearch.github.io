@@ -768,7 +768,9 @@ const FullFAQ: React.FC = () => {
   );
 };
 
-const WorkshopSection: React.FC = () => {
+type WorkshopSectionProps = { layout?: 'homepage' | 'article' };
+
+const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }) => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
   const [campusFilter, setCampusFilter] = useState<'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online'>('all');
   const [loading, setLoading] = useState(true);
@@ -850,7 +852,7 @@ const WorkshopSection: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
         if (window.innerWidth >= 1024) {
-            setItemsPerPage(3); // Desktop: Row of three
+            setItemsPerPage(layout === 'article' ? 2 : 3);
         } else if (window.innerWidth >= 768) {
             setItemsPerPage(2); // Tablet: Two items
         } else {
@@ -861,7 +863,7 @@ const WorkshopSection: React.FC = () => {
     handleResize(); // Initial check
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [layout]);
 
   // Reset index if out of bounds (e.g., resizing window or changing the campus filter)
   useEffect(() => {
@@ -1229,7 +1231,7 @@ const WorkshopSection: React.FC = () => {
             </div>
         ) : (
             <div 
-                className="overflow-hidden -mx-4 px-4 py-4 cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-xl"
+                className="overflow-hidden py-4 cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-sage-700 dark:focus:ring-sage-300 rounded-xl"
                 onTouchStart={onTouchStart}
                 onTouchMove={onTouchMove}
                 onTouchEnd={onTouchEnd}
@@ -1308,13 +1310,13 @@ const WorkshopSection: React.FC = () => {
                                     </dl>
 
                                     {ws.remarks && (
-                                        <div className="mb-4 flex items-start gap-2.5 rounded-xl border border-earth-200/80 bg-white/60 px-3.5 py-3 text-sm leading-relaxed text-earth-800 dark:border-earth-600 dark:bg-black/10 dark:text-earth-200">
-                                            <AlertCircle size={17} className={`mt-0.5 flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
-                                            <div>
-                                                <span className="font-bold">Good to know: </span>
-                                                <span>{linkify(ws.remarks)}</span>
-                                            </div>
-                                        </div>
+                                        <details className="mb-4 rounded-xl border border-earth-200/80 bg-white/60 px-3.5 py-3 text-sm leading-relaxed text-earth-800 dark:border-earth-600 dark:bg-black/10 dark:text-earth-200">
+                                            <summary className="flex cursor-pointer items-center gap-2.5 font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2 rounded-sm">
+                                                <AlertCircle size={17} className={`flex-shrink-0 ${venueTheme.icon}`} aria-hidden="true" />
+                                                What we'll do and what to expect
+                                            </summary>
+                                            <div className="mt-3 border-t border-earth-200/80 pt-3 dark:border-earth-600">{linkify(ws.remarks)}</div>
+                                        </details>
                                     )}
 
                                     {ws.luckDraw && (
@@ -1399,7 +1401,7 @@ const WorkshopSection: React.FC = () => {
 
 // The quiz blog post intentionally reuses this exact component so both pages
 // keep the same workshop cards, filters and responsive carousel behaviour.
-(globalThis as typeof globalThis & { BitsWorkshopSection?: React.FC }).BitsWorkshopSection = WorkshopSection;
+(globalThis as typeof globalThis & { BitsWorkshopSection?: React.ComponentType<WorkshopSectionProps> }).BitsWorkshopSection = WorkshopSection;
 
 
 const HomepageFAQSection: React.FC = () => {
