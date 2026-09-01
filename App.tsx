@@ -1397,6 +1397,10 @@ const WorkshopSection: React.FC = () => {
   );
 };
 
+// The quiz blog post intentionally reuses this exact component so both pages
+// keep the same workshop cards, filters and responsive carousel behaviour.
+(globalThis as typeof globalThis & { BitsWorkshopSection?: React.FC }).BitsWorkshopSection = WorkshopSection;
+
 
 const HomepageFAQSection: React.FC = () => {
   return (
