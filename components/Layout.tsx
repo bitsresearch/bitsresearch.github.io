@@ -249,7 +249,7 @@ export const Layout: React.FC = () => {
     { name: 'People', path: PageRoute.PEOPLE },
     { name: 'Outputs & Resources', path: PageRoute.OUTPUT },
     { name: 'Get Involved', path: PageRoute.INVOLVED },
-    { name: 'Workshops', path: PageRoute.EVENTS },
+    { name: 'Events', path: PageRoute.EVENTS },
     { name: 'Contact', path: PageRoute.CONTACT },
   ];
 
@@ -317,14 +317,14 @@ export const Layout: React.FC = () => {
             </div>
 
             {/* Desktop Nav */}
-            <div className="hidden md:flex items-center space-x-2">
-              <nav aria-label="Main navigation" className="flex items-center bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 mr-4">
+            <div className="hidden lg:flex min-w-0 items-center gap-2">
+              <nav aria-label="Main navigation" className="flex min-w-0 items-center gap-0.5 bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 mr-2">
                 {navLinks.map((link) => (
                   <NavLink
                     key={link.name}
                     to={link.path}
                     className={({ isActive }) =>
-                      `px-4 py-2 text-xs uppercase tracking-widest rounded-full transition-all duration-300 ${
+                      `whitespace-nowrap px-3 xl:px-4 py-2 text-[11px] xl:text-xs uppercase tracking-[0.12em] rounded-full transition-all duration-300 ${
                         isActive 
                         ? 'bg-earth-800 text-white shadow-md font-bold' 
                         : 'text-earth-700 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800'
@@ -483,7 +483,7 @@ export const Layout: React.FC = () => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden flex items-center">
+            <div className="lg:hidden flex items-center">
               <button
                 ref={mobileBtnRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -505,7 +505,7 @@ export const Layout: React.FC = () => {
             role="navigation"
             aria-label="Mobile navigation"
             ref={mobileMenuRef}
-            className="md:hidden absolute top-24 left-4 right-4 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 z-40"
+            className="lg:hidden absolute top-24 left-4 right-4 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 z-40"
           >
             <div className="p-4 space-y-2">
               {navLinks.map((link) => (
