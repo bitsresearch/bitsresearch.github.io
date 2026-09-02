@@ -18,6 +18,7 @@ const nav = [
   ['/people/', 'People'],
   ['/output-resources/', 'Outputs & Resources'],
   ['/get-involved/', 'Get Involved'],
+  ['/events/', 'Workshops'],
   ['/contact/', 'Contact'],
 ];
 
@@ -195,6 +196,50 @@ const pageContent = {
       <details><summary>Is this a research study?</summary><p>Yes. BITS is a doctoral research project led by Charlie Kwong at Falmouth University.</p></details>
       <details><summary>What am I agreeing to?</summary><p>Before taking part, you will receive information explaining the research and what participation involves. Consent is an ongoing choice throughout the research.</p></details>
       <details><summary>Can I change my mind?</summary><p>Yes. Taking part is voluntary, and you can choose to withdraw without giving a reason.</p></details>
+      <details><summary>What happens to what I create or share?</summary><p>Creative work will only be collected and analysed as research where you have given consent.</p></details>
+      <details><summary>Will I be recorded?</summary><p>There will be no video recording of you during the workshops. Audio may be recorded for parts of the research, but only with your consent.</p></details>
+      <details><summary>Will my name be used?</summary><p>Your research data will normally be anonymised or pseudonymised rather than published using your full name.</p></details>
+      <details><summary>Who can I contact if I have a question?</summary><p>You can contact Charlie Kwong through the BITS contact page.</p></details>
+    </section>
+  `,
+  '/events/': `
+    <section id="upcoming-workshops">
+      <h1>Falmouth &amp; Penryn Student Workshops</h1>
+      <p>Find upcoming BITS creative student workshops at Falmouth University’s Woodlane Campus, Penryn Campus and online. These workshops explore identity, belonging and the transition into university through flexible creative storytelling activities.</p>
+      <h2>Upcoming Workshops</h2>
+      <p>Current workshop dates, times, locations and booking links are loaded from the published BITS workshop schedule. Use the campus filter to find sessions at Falmouth University Woodlane Campus, Penryn Campus or online.</p>
+    </section>
+    <section id="frequently-asked-questions">
+      <h2>Frequently Asked Questions</h2>
+      <p>Thinking about joining a BITS workshop? Here are some questions you might have.</p>
+      <nav aria-label="Frequently asked question categories">
+        <a href="#faq-before-you-join">Before You Join</a> ·
+        <a href="#faq-what-to-expect">What to Expect</a> ·
+        <a href="#faq-access-and-comfort">Access &amp; Comfort</a> ·
+        <a href="#faq-research-and-privacy">Research &amp; Privacy</a>
+      </nav>
+      <p>21 questions</p>
+      <h3 id="faq-before-you-join">Before You Join</h3>
+      <details><summary>Who can take part?</summary><p>BITS workshops are open to students aged 18 or over who are in their first or foundation year of university. The research particularly focuses on students with different learning experiences. You do not need to have SEND or a diagnosis to register.</p></details>
+      <details><summary>Do I need SEND or a diagnosis to join?</summary><p>No. You do not need a formal diagnosis, and you do not need to identify as SEND or disabled. Students without SEND can register too.</p></details>
+      <details><summary>Do I need to be good at art?</summary><p>Not at all. You do not need any art or creative experience.</p></details>
+      <details><summary>Is taking part part of my course?</summary><p>No. Taking part in BITS research is voluntary and separate from your course.</p></details>
+      <details><summary>Is there a thank-you for taking part?</summary><p>You may be eligible for an optional prize draw for a local grocery gift card worth up to £10.</p></details>
+      <details><summary>Who will I meet at the workshop?</summary><p>Charlie Kwong, the researcher behind BITS, will run the workshop. A facilitator or Community Advisor may also help with some sessions.</p></details>
+      <h3 id="faq-what-to-expect">What to Expect</h3>
+      <details><summary>What actually happens in a workshop?</summary><p>You will be invited to try a short creative activity around identity, experiences and starting university, using approaches such as writing, images, colours, symbols or simple digital storytelling.</p></details>
+      <details><summary>How many people will be there?</summary><p>Usually around 10–15 students may take part in each workshop round.</p></details>
+      <details><summary>Will I have to speak in front of everyone?</summary><p>No. You choose how much you want to say or share.</p></details>
+      <details><summary>Do I have to talk about personal or difficult experiences?</summary><p>No. You choose what you want to explore and what you want to keep private.</p></details>
+      <details><summary>What if I don't know what to make or say?</summary><p>That's fine. You do not need to arrive with a story or idea ready.</p></details>
+      <h3 id="faq-access-and-comfort">Access &amp; Comfort</h3>
+      <details><summary>Can I take a break or leave early?</summary><p>Yes. You can pause, take a break or leave if you need to.</p></details>
+      <details><summary>Can I communicate in a way that works for me?</summary><p>You do not always have to respond by speaking. Depending on the activity, you may be able to write, use images or symbols, create something, or use a digital approach instead.</p></details>
+      <details><summary>Can I ask for accessibility support?</summary><p>Yes. If something could make the workshop easier or more comfortable for you, please let Charlie know. You do not need to disclose a diagnosis.</p></details>
+      <h3 id="faq-research-and-privacy">Research &amp; Privacy</h3>
+      <details><summary>Is this a research study?</summary><p>Yes. BITS is a doctoral research project led by Charlie Kwong at Falmouth University.</p></details>
+      <details><summary>What am I agreeing to?</summary><p>Before taking part, you will receive information explaining the research and what participation involves.</p></details>
+      <details><summary>Can I change my mind?</summary><p>Yes. Taking part is voluntary, and you can choose to withdraw.</p></details>
       <details><summary>What happens to what I create or share?</summary><p>Creative work will only be collected and analysed as research where you have given consent.</p></details>
       <details><summary>Will I be recorded?</summary><p>There will be no video recording of you during the workshops. Audio may be recorded for parts of the research, but only with your consent.</p></details>
       <details><summary>Will my name be used?</summary><p>Your research data will normally be anonymised or pseudonymised rather than published using your full name.</p></details>
@@ -544,6 +589,7 @@ const routeFiles = [
   ['/research-update/', 'research-update/index.html'],
   ['/output-resources/', 'output-resources/index.html'],
   ['/get-involved/', 'get-involved/index.html'],
+  ['/events/', 'events/index.html'],
   ['/contact/', 'contact/index.html'],
   ['/privacy-policy/', 'privacy-policy/index.html'],
   ['/terms-of-use/', 'terms-of-use/index.html'],
@@ -614,17 +660,18 @@ const indexableNavigationSlugs = new Set([
   'people',
   'output-resources',
   'get-involved',
+  'events',
   'contact',
 ]);
 
 const redirects = [
-  ...['about','people','what-we-care','research-update','output-resources','get-involved','contact','privacy-policy','terms-of-use','accessibility','research-ethics','thank-you-prize-terms']
+  ...['about','people','what-we-care','research-update','output-resources','get-involved','events','contact','privacy-policy','terms-of-use','accessibility','research-ethics','thank-you-prize-terms']
     .filter(slug => !indexableNavigationSlugs.has(slug))
     .map(slug => [`${slug}.html`, `/${slug}/`, `${SITE_ORIGIN}/${slug}/`, slug.replaceAll('-', ' ')]),
-  ['upcomingworkshops.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
-  ['upcomingworkshops/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
-  ['upcomingworkshop.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
-  ['upcomingworkshop/index.html', '/#upcoming-workshops', `${SITE_ORIGIN}/`, 'the Upcoming Workshops section'],
+  ['upcomingworkshops.html', '/events/', `${SITE_ORIGIN}/events/`, 'Workshops'],
+  ['upcomingworkshops/index.html', '/events/', `${SITE_ORIGIN}/events/`, 'Workshops'],
+  ['upcomingworkshop.html', '/events/', `${SITE_ORIGIN}/events/`, 'Workshops'],
+  ['upcomingworkshop/index.html', '/events/', `${SITE_ORIGIN}/events/`, 'Workshops'],
   ['team.html', '/people/', `${SITE_ORIGIN}/people/`, 'People'],
   ['team/index.html', '/people/', `${SITE_ORIGIN}/people/`, 'People'],
 ];

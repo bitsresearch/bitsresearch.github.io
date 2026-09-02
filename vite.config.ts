@@ -10,6 +10,7 @@ const pageInputs = {
   people: path.resolve(__dirname, 'people/index.html'),
   outputResources: path.resolve(__dirname, 'output-resources/index.html'),
   getInvolved: path.resolve(__dirname, 'get-involved/index.html'),
+  events: path.resolve(__dirname, 'events/index.html'),
   contact: path.resolve(__dirname, 'contact/index.html'),
   privacyPolicy: path.resolve(__dirname, 'privacy-policy/index.html'),
   termsOfUse: path.resolve(__dirname, 'terms-of-use/index.html'),

@@ -3,8 +3,8 @@ import path from 'node:path';
 
 const dist = path.resolve(process.cwd(), process.argv[2] || 'dist');
 const origin = 'https://bitsresearch.github.io';
-const routes = ['/', '/about/', '/people/', '/what-we-care/', '/research-update/', '/output-resources/', '/get-involved/', '/contact/', '/privacy-policy/', '/terms-of-use/', '/accessibility/', '/research-ethics/'];
-const indexableNavigationRoutes = ['/about/', '/what-we-care/', '/people/', '/output-resources/', '/get-involved/', '/contact/'];
+const routes = ['/', '/about/', '/people/', '/what-we-care/', '/research-update/', '/output-resources/', '/get-involved/', '/events/', '/contact/', '/privacy-policy/', '/terms-of-use/', '/accessibility/', '/research-ethics/'];
+const indexableNavigationRoutes = ['/about/', '/what-we-care/', '/people/', '/output-resources/', '/get-involved/', '/events/', '/contact/'];
 const failures = [];
 const assert = (condition, message) => { if (!condition) failures.push(message); };
 const read = file => fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
@@ -59,8 +59,8 @@ assert(/User-agent:\s*\*/i.test(robots) && /Allow:\s*\//i.test(robots), 'robots.
 assert(!/^\s*Disallow:\s*\/(?:about|what-we-care|people|output-resources|get-involved|contact)\/?\s*$/im.test(robots), 'robots.txt blocks an indexable navigation page');
 
 const redirectChecks = [
-  ['upcomingworkshops/index.html','/#upcoming-workshops'], ['upcomingworkshops.html','/#upcoming-workshops'],
-  ['upcomingworkshop/index.html','/#upcoming-workshops'], ['upcomingworkshop.html','/#upcoming-workshops'],
+  ['upcomingworkshops/index.html','/events/'], ['upcomingworkshops.html','/events/'],
+  ['upcomingworkshop/index.html','/events/'], ['upcomingworkshop.html','/events/'],
   ['team/index.html','/people/'], ['team.html','/people/']
 ];
 for (const [file,target] of redirectChecks) {

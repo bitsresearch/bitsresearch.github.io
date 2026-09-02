@@ -18,7 +18,7 @@ const SITE_ORIGIN = 'https://bitsresearch.github.io';
 const SITE_NAME = 'BITS | Building Identity through Stories';
 const SITE_AUTHOR = 'Charlie Tak Hei Kwong 鄺德希';
 const OG_IMAGE = `${SITE_ORIGIN}/images/og-image.jpg`;
-const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics', 'thank-you-prize-terms'].flatMap(slug => [slug, `${slug}.html`]);
+const routeSlugs = ['about', 'what-we-care', 'research-update', 'output-resources', 'people', 'get-involved', 'events', 'contact', 'privacy-policy', 'terms-of-use', 'accessibility', 'research-ethics', 'thank-you-prize-terms'].flatMap(slug => [slug, `${slug}.html`]);
 
 const personSchema = {
   "@type": "Person",
@@ -2449,6 +2449,71 @@ const GetInvolved: React.FC = () => {
 };
 
 // 7. Contact Page
+
+const Events: React.FC = () => {
+  const eventsSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      researchProjectSchema,
+      {
+        "@type": "WebPage",
+        "name": "Falmouth University Events & Student Workshops",
+        "url": `${SITE_ORIGIN}/events/`,
+        "description": "Upcoming BITS creative workshops for university students at Falmouth University's Woodlane Campus, Penryn Campus and online, with workshop FAQs and accessibility information.",
+        "isPartOf": { "@type": "WebSite", "name": SITE_NAME, "url": SITE_ORIGIN },
+        "about": [
+          "Falmouth University events",
+          "Penryn Campus workshops",
+          "Woodlane Campus workshops",
+          "student workshops",
+          "university transition support",
+          "student wellbeing and belonging",
+          "inclusive student support"
+        ]
+      },
+      {
+        "@type": "EventSeries",
+        "name": "BITS Creative Storytelling Workshops",
+        "description": "Creative storytelling workshops for first-year and foundation-year university students exploring identity, belonging and the transition into higher education.",
+        "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+        "organizer": personSchema,
+        "location": [
+          { "@type": "Place", "name": "Falmouth University, Woodlane Campus", "address": { "@type": "PostalAddress", "addressLocality": "Falmouth", "addressRegion": "Cornwall", "addressCountry": "GB" } },
+          { "@type": "Place", "name": "Penryn Campus", "address": { "@type": "PostalAddress", "addressLocality": "Penryn", "addressRegion": "Cornwall", "addressCountry": "GB" } }
+        ],
+        "url": `${SITE_ORIGIN}/events/`
+      }
+    ]
+  };
+
+  return (
+    <div className="bg-earth-50 dark:bg-earth-900 min-h-screen pb-20">
+      <SEO
+        title="Falmouth University Events & Student Workshops | BITS"
+        description="Find upcoming BITS student workshops at Falmouth University, Woodlane and Penryn Campus, plus online sessions. Explore creative university transition support, accessibility information and FAQs."
+        ogTitle="Falmouth University Events & Student Workshops | BITS"
+        ogDescription="Upcoming creative student workshops at Falmouth University, Penryn Campus, Woodlane Campus and online, with practical FAQs before you join."
+        canonicalPath="/events/"
+      />
+      <JSONLD data={eventsSchema} />
+      <div className="px-4 pt-10 md:pt-14">
+        <div className="mx-auto max-w-7xl">
+          <header className="mx-auto max-w-3xl text-center">
+            <h1 className="text-4xl font-serif leading-tight text-earth-900 dark:text-earth-50 md:text-5xl">
+              Falmouth & Penryn Student Workshops
+            </h1>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-earth-700 dark:text-earth-300 md:text-lg">
+              Upcoming BITS creative workshops at Falmouth University’s Woodlane Campus, Penryn Campus and online.
+            </p>
+          </header>
+          <WorkshopSection />
+          <FullFAQ />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   
@@ -3362,6 +3427,7 @@ const App: React.FC = () => {
           <Route path={PageRoute.RESEARCH} element={<ResearchUpdate />} />
           <Route path={PageRoute.OUTPUT} element={<Output />} />
           <Route path={PageRoute.INVOLVED} element={<GetInvolved />} />
+          <Route path={PageRoute.EVENTS} element={<Events />} />
           <Route path={PageRoute.CONTACT} element={<Contact />} />
           <Route path={PageRoute.PRIVACY} element={<PrivacyPolicy />} />
           <Route path={PageRoute.TERMS} element={<TermsOfUse />} />
@@ -3374,11 +3440,12 @@ const App: React.FC = () => {
           <Route path="/research-update.html" element={<ResearchUpdate />} />
           <Route path="/output-resources.html" element={<Output />} />
           <Route path="/get-involved.html" element={<GetInvolved />} />
+          <Route path="/events.html" element={<Navigate to="/events/" replace />} />
           <Route path="/contact.html" element={<Contact />} />
-          <Route path="/upcomingworkshops" element={<Navigate to="/#upcoming-workshops" replace />} />
-          <Route path="/upcomingworkshops.html" element={<Navigate to="/#upcoming-workshops" replace />} />
-          <Route path="/upcomingworkshop" element={<Navigate to="/#upcoming-workshops" replace />} />
-          <Route path="/upcomingworkshop.html" element={<Navigate to="/#upcoming-workshops" replace />} />
+          <Route path="/upcomingworkshops" element={<Navigate to="/events/" replace />} />
+          <Route path="/upcomingworkshops.html" element={<Navigate to="/events/" replace />} />
+          <Route path="/upcomingworkshop" element={<Navigate to="/events/" replace />} />
+          <Route path="/upcomingworkshop.html" element={<Navigate to="/events/" replace />} />
           <Route path="/privacy-policy.html" element={<PrivacyPolicy />} />
           <Route path="/terms-of-use.html" element={<TermsOfUse />} />
           <Route path="/accessibility.html" element={<Accessibility />} />

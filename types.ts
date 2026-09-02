@@ -27,6 +27,7 @@ export enum PageRoute {
   RESEARCH = '/research-update',
   OUTPUT = '/output-resources',
   INVOLVED = '/get-involved',
+  EVENTS = '/events',
   CONTACT = '/contact',
   PRIVACY = '/privacy-policy',
   TERMS = '/terms-of-use',

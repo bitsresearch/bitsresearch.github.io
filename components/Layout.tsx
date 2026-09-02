@@ -249,6 +249,7 @@ export const Layout: React.FC = () => {
     { name: 'People', path: PageRoute.PEOPLE },
     { name: 'Outputs & Resources', path: PageRoute.OUTPUT },
     { name: 'Get Involved', path: PageRoute.INVOLVED },
+    { name: 'Workshops', path: PageRoute.EVENTS },
     { name: 'Contact', path: PageRoute.CONTACT },
   ];
 
