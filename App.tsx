@@ -9,7 +9,7 @@ import {
   ArrowRight, Mail, MapPin, Phone, Play, Pause, 
   Facebook, Twitter, Linkedin, CheckCircle2, Check,
   BookOpen, FileText, Presentation, Mic, Globe, Instagram, Calendar, Clock, MapPin as MapPinIcon, AlertCircle, CalendarPlus,
-  ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake, Gift, Video
+  ChevronLeft, ChevronRight, Search, Loader2, ExternalLink, Book, GraduationCap, Palette, HeartHandshake, Gift, Video, List
 } from 'lucide-react';
 
 // --- Helper: SEO Component ---
@@ -768,13 +768,26 @@ const FullFAQ: React.FC = () => {
   );
 };
 
-type WorkshopSectionProps = { layout?: 'homepage' | 'article' };
+type WorkshopSectionProps = {
+  layout?: 'homepage' | 'article';
+  defaultView?: 'list' | 'calendar';
+  allowViewSwitch?: boolean;
+};
 
-const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }) => {
+const WorkshopSection: React.FC<WorkshopSectionProps> = ({
+  layout = 'homepage',
+  defaultView = 'list',
+  allowViewSwitch = false,
+}) => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
   const [campusFilter, setCampusFilter] = useState<'all' | 'Penryn Campus' | 'Woodlane Campus' | 'Online'>('all');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [viewMode, setViewMode] = useState<'list' | 'calendar'>(defaultView);
+  const [calendarMonth, setCalendarMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
   
   // Carousel State
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -991,6 +1004,10 @@ const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }
         futureWorkshops.sort((a, b) => a.parsedDate.getTime() - b.parsedDate.getTime());
 
         setWorkshops(futureWorkshops);
+        if (defaultView === 'calendar' && futureWorkshops.length > 0) {
+          const first = futureWorkshops[0].parsedDate;
+          setCalendarMonth(new Date(first.getFullYear(), first.getMonth(), 1));
+        }
         setError(false);
       } catch (err) {
         console.error("Failed to load workshops", err);
@@ -1080,6 +1097,87 @@ const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }
     document.body.removeChild(link);
   };
 
+
+  const changeCalendarMonth = (offset: number) => {
+    setCalendarMonth((current) => new Date(current.getFullYear(), current.getMonth() + offset, 1));
+  };
+
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
+  const localDateKey = (date: Date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+  const calendarMonthWorkshops = filteredWorkshops.filter((workshop) =>
+    workshop.parsedDate.getFullYear() === calendarMonth.getFullYear() &&
+    workshop.parsedDate.getMonth() === calendarMonth.getMonth()
+  );
+
+  const firstDayOfMonth = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+  const mondayOffset = (firstDayOfMonth.getDay() + 6) % 7;
+  const calendarStart = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1 - mondayOffset);
+  const calendarDays = Array.from({ length: 42 }, (_, index) =>
+    new Date(calendarStart.getFullYear(), calendarStart.getMonth(), calendarStart.getDate() + index)
+  );
+  const calendarRows = Array.from({ length: 6 }, (_, row) => calendarDays.slice(row * 7, row * 7 + 7));
+  const monthLabel = calendarMonth.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+
+  const renderCalendarEvent = (ws: Workshop, compact = false) => {
+    const venueTheme = getVenueTheme(ws.venue);
+    return (
+      <article
+        key={`${ws.title}-${ws.parsedDate.toISOString()}-${ws.venue}`}
+        className={`${venueTheme.card} rounded-xl border p-2.5 shadow-sm ${compact ? 'text-xs' : 'p-4'}`}
+        aria-label={`${ws.title}, ${ws.parsedDate.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}, ${ws.time || 'time to be confirmed'}, ${ws.venue || 'venue to be confirmed'}`}
+      >
+        <h4 className={`font-serif font-bold text-earth-900 dark:text-earth-50 leading-snug ${compact ? 'text-sm' : 'text-base'}`}>{ws.title}</h4>
+        <p className={`mt-1 text-earth-700 dark:text-earth-300 ${compact ? 'text-[11px]' : 'text-sm'}`}>{ws.time || 'Time to be confirmed'}</p>
+        <p className={`mt-1 inline-flex rounded-md px-2 py-0.5 font-semibold ${venueTheme.badge} ${compact ? 'text-[11px]' : 'text-xs'}`}>{ws.venue || 'Venue TBC'}</p>
+
+        {ws.remarks && !compact && (
+          <details className="mt-3 rounded-lg border border-earth-200/80 bg-white/55 p-2.5 text-sm dark:border-earth-600 dark:bg-black/10">
+            <summary className="cursor-pointer font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2 rounded-sm">What we'll do</summary>
+            <div className="mt-2 leading-relaxed text-earth-700 dark:text-earth-300">{linkify(ws.remarks)}</div>
+          </details>
+        )}
+
+        <div className={`mt-3 flex flex-wrap gap-2 ${compact ? 'flex-col' : ''}`}>
+          {ws.registrationLink ? (
+            <a
+              href={ws.registrationLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="min-h-11 inline-flex items-center justify-center rounded-lg bg-sage-700 px-3 py-2 text-xs font-bold text-white hover:bg-sage-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2"
+            >
+              Book <span className="sr-only">{ws.title} (opens in a new tab)</span>
+            </a>
+          ) : ws.emailBooking ? (
+            <a
+              href={ws.emailBooking}
+              className="min-h-11 inline-flex items-center justify-center rounded-lg border border-earth-300 bg-white/70 px-3 py-2 text-xs font-bold text-earth-800 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2"
+            >
+              Email to book
+            </a>
+          ) : (
+            <span className="inline-flex min-h-11 items-center rounded-lg bg-earth-200 px-3 py-2 text-xs font-semibold text-earth-700 dark:bg-earth-700 dark:text-earth-300">Booking soon</span>
+          )}
+          {hasConfirmedDateTime(ws) && (
+            <button
+              type="button"
+              onClick={() => downloadICS(ws)}
+              className="min-h-11 inline-flex items-center justify-center gap-1 rounded-lg border border-earth-300 bg-white/70 px-3 py-2 text-xs font-semibold text-earth-800 hover:bg-earth-100 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100 dark:hover:bg-earth-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2"
+            >
+              <CalendarPlus size={14} aria-hidden="true" /> Add
+              <span className="sr-only"> {ws.title} to my calendar</span>
+            </button>
+          )}
+        </div>
+      </article>
+    );
+  };
+
   const nextSlide = () => {
     if (currentIndex < filteredWorkshops.length - itemsPerPage) {
         setCurrentIndex(prev => prev + 1);
@@ -1141,7 +1239,7 @@ const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }
   return (
     <section 
       id="upcoming-workshops"
-      className="py-16 px-4 max-w-7xl mx-auto select-none" 
+      className="py-16 px-4 max-w-7xl mx-auto" 
       aria-label="Upcoming Workshops Carousel"
     >
         <div className="mb-7 md:mb-10 px-1 sm:px-2">
@@ -1151,7 +1249,29 @@ const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }
                 <span className="h-px w-8 sm:w-12 bg-sage-600" aria-hidden="true"></span>
             </div>
 
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-3xl mx-auto">
+                {allowViewSwitch && (
+                  <div className="mb-6 flex justify-center" role="group" aria-label="Workshop view">
+                    <div className="inline-flex rounded-full border border-earth-300 bg-white p-1 dark:border-earth-600 dark:bg-earth-800">
+                      <button
+                        type="button"
+                        onClick={() => setViewMode('calendar')}
+                        aria-pressed={viewMode === 'calendar'}
+                        className={`min-h-11 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2 ${viewMode === 'calendar' ? 'bg-earth-800 text-white dark:bg-earth-100 dark:text-earth-900' : 'text-earth-700 hover:bg-earth-100 dark:text-earth-200 dark:hover:bg-earth-700'}`}
+                      >
+                        <Calendar size={17} aria-hidden="true" /> Calendar
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setViewMode('list')}
+                        aria-pressed={viewMode === 'list'}
+                        className={`min-h-11 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2 ${viewMode === 'list' ? 'bg-earth-800 text-white dark:bg-earth-100 dark:text-earth-900' : 'text-earth-700 hover:bg-earth-100 dark:text-earth-200 dark:hover:bg-earth-700'}`}
+                      >
+                        <List size={17} aria-hidden="true" /> List
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <p id="campus-filter-label" className="text-sm font-bold text-earth-800 dark:text-earth-200 mb-2.5 md:text-center">Campus</p>
                 <div
                     className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center"
@@ -1183,7 +1303,7 @@ const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }
                     })}
                 </div>
 
-                {filteredWorkshops.length > 0 && (
+                {filteredWorkshops.length > 0 && viewMode === 'list' && (
                     <div className="mt-5 flex items-center justify-center gap-4" aria-label="Workshop carousel controls">
                         <button
                             onClick={prevSlide}
@@ -1228,6 +1348,94 @@ const WorkshopSection: React.FC<WorkshopSectionProps> = ({ layout = 'homepage' }
             <div className="bg-white dark:bg-earth-800 rounded-3xl p-8 text-center border border-earth-200 dark:border-earth-700 shadow-sm max-w-2xl mx-auto" role="status">
                 <h3 className="text-xl font-serif text-earth-900 dark:text-earth-50 mb-3">No upcoming workshops at this campus</h3>
                 <p className="text-earth-700 dark:text-earth-300">Try another campus filter or choose <strong>All</strong> to see every upcoming workshop.</p>
+            </div>
+        ) : viewMode === 'calendar' ? (
+            <div className="mt-2" aria-labelledby="calendar-month-heading">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-earth-200 bg-white/65 p-3 dark:border-earth-700 dark:bg-earth-800/70">
+                <button
+                  type="button"
+                  onClick={() => changeCalendarMonth(-1)}
+                  className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-full border border-earth-300 bg-white text-earth-800 hover:bg-earth-100 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100 dark:hover:bg-earth-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2"
+                  aria-label={`Previous month, ${new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() - 1, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`}
+                >
+                  <ChevronLeft size={20} aria-hidden="true" />
+                </button>
+                <h3 id="calendar-month-heading" className="text-xl md:text-2xl font-serif text-earth-900 dark:text-earth-50" aria-live="polite">{monthLabel}</h3>
+                <button
+                  type="button"
+                  onClick={() => changeCalendarMonth(1)}
+                  className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-full border border-earth-300 bg-white text-earth-800 hover:bg-earth-100 dark:border-earth-600 dark:bg-earth-800 dark:text-earth-100 dark:hover:bg-earth-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sage-700 focus-visible:ring-offset-2"
+                  aria-label={`Next month, ${new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`}
+                >
+                  <ChevronRight size={20} aria-hidden="true" />
+                </button>
+              </div>
+
+              {/* Mobile: month agenda. This avoids a cramped seven-column calendar and preserves 44px targets. */}
+              <div className="md:hidden space-y-4">
+                {calendarMonthWorkshops.length === 0 ? (
+                  <div role="status" className="rounded-2xl border border-earth-200 bg-white p-6 text-center text-earth-700 dark:border-earth-700 dark:bg-earth-800 dark:text-earth-300">No workshops in {monthLabel} for this campus filter.</div>
+                ) : (
+                  Array.from(new Set(calendarMonthWorkshops.map(ws => localDateKey(ws.parsedDate)))).map((dateKey) => {
+                    const dayEvents = calendarMonthWorkshops.filter(ws => localDateKey(ws.parsedDate) === dateKey);
+                    const date = dayEvents[0].parsedDate;
+                    return (
+                      <section key={dateKey} aria-labelledby={`agenda-${dateKey}`}>
+                        <h4 id={`agenda-${dateKey}`} className="mb-2 text-base font-bold text-earth-900 dark:text-earth-50">
+                          {date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}
+                        </h4>
+                        <div className="space-y-3">{dayEvents.map(ws => renderCalendarEvent(ws, false))}</div>
+                      </section>
+                    );
+                  })
+                )}
+              </div>
+
+              {/* Tablet/desktop: semantic calendar table, Monday to Sunday. */}
+              <div className="hidden md:block overflow-x-auto rounded-2xl border border-earth-200 bg-white dark:border-earth-700 dark:bg-earth-800">
+                <table className="w-full table-fixed border-collapse" aria-label={`${monthLabel} workshop calendar`}>
+                  <caption className="sr-only">Upcoming BITS workshops for {monthLabel}. Use the campus filters above to narrow results.</caption>
+                  <thead>
+                    <tr className="bg-earth-100 dark:bg-earth-900/60">
+                      {['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map(day => (
+                        <th key={day} scope="col" className="border-b border-earth-200 px-2 py-3 text-center text-xs font-bold uppercase tracking-wide text-earth-700 dark:border-earth-700 dark:text-earth-300">
+                          <span className="lg:hidden">{day.slice(0,3)}</span><span className="hidden lg:inline">{day}</span>
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {calendarRows.map((week, weekIndex) => (
+                      <tr key={weekIndex}>
+                        {week.map((day) => {
+                          const inMonth = day.getMonth() === calendarMonth.getMonth();
+                          const dayEvents = filteredWorkshops.filter(ws => isSameDay(ws.parsedDate, day));
+                          const today = isSameDay(day, new Date());
+                          return (
+                            <td
+                              key={day.toISOString()}
+                              className={`align-top border-r border-b border-earth-200 p-2 last:border-r-0 dark:border-earth-700 ${inMonth ? 'bg-white dark:bg-earth-800' : 'bg-earth-50/70 dark:bg-earth-900/35'}`}
+                            >
+                              <div className="min-h-[10rem]">
+                                <div className="mb-2 flex items-center justify-between">
+                                  <time
+                                    dateTime={`${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`}
+                                    className={`inline-flex h-8 min-w-8 items-center justify-center rounded-full px-1 text-sm font-bold ${today ? 'bg-earth-800 text-white dark:bg-earth-100 dark:text-earth-900' : inMonth ? 'text-earth-800 dark:text-earth-100' : 'text-earth-400 dark:text-earth-500'}`}
+                                    aria-label={day.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                                  >
+                                    {day.getDate()}
+                                  </time>
+                                </div>
+                                <div className="space-y-2">{dayEvents.map(ws => renderCalendarEvent(ws, true))}</div>
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
         ) : (
             <div 
@@ -2506,7 +2714,7 @@ const Events: React.FC = () => {
               Upcoming BITS creative workshops at Falmouth University’s Woodlane Campus, Penryn Campus and online.
             </p>
           </header>
-          <WorkshopSection />
+          <WorkshopSection defaultView="calendar" allowViewSwitch />
           <FullFAQ />
         </div>
       </div>

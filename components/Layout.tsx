@@ -301,10 +301,10 @@ export const Layout: React.FC = () => {
 
       {/* Header */}
       <header className="sticky top-4 z-50 w-full px-4 max-w-7xl mx-auto">
-        <div className="bg-white/80 dark:bg-earth-800/80 backdrop-blur-md rounded-full shadow-sm border border-earth-100 dark:border-earth-700 px-6 sm:px-8">
-          <div className="flex justify-between items-center py-4">
-            {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
+        <div className="bg-white/80 dark:bg-earth-800/80 backdrop-blur-md rounded-full shadow-sm border border-earth-100 dark:border-earth-700 px-5 sm:px-6 xl:px-7">
+          <div className="flex items-center justify-between py-3.5 xl:grid xl:grid-cols-[minmax(9rem,1fr)_auto_minmax(9rem,1fr)] xl:gap-4">
+            {/* Logo: left column. The centre nav is independent so it stays visually centred. */}
+            <div className="flex-shrink-0 flex items-center xl:justify-self-start">
               <NavLink to={PageRoute.HOME} className="flex items-center gap-3 group" aria-label="bits(~) Home">
                 <img 
                     src="/images/bits-research-logo.png" 
@@ -316,15 +316,14 @@ export const Layout: React.FC = () => {
               </NavLink>
             </div>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex min-w-0 items-center gap-2">
-              <nav aria-label="Main navigation" className="flex min-w-0 items-center gap-0.5 bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 mr-2">
+            {/* Desktop Nav: genuinely centred in its own grid column. */}
+            <nav aria-label="Main navigation" className="hidden xl:flex xl:justify-self-center items-center bg-earth-100 dark:bg-earth-900 rounded-full px-1 py-1 whitespace-nowrap">
                 {navLinks.map((link) => (
                   <NavLink
                     key={link.name}
                     to={link.path}
                     className={({ isActive }) =>
-                      `whitespace-nowrap px-3 xl:px-4 py-2 text-[11px] xl:text-xs uppercase tracking-[0.12em] rounded-full transition-all duration-300 ${
+                      `whitespace-nowrap px-3.5 py-2 text-[11px] uppercase tracking-[0.13em] rounded-full transition-all duration-300 ${
                         isActive 
                         ? 'bg-earth-800 text-white shadow-md font-bold' 
                         : 'text-earth-700 dark:text-earth-300 hover:text-earth-900 dark:hover:text-earth-50 hover:bg-earth-200 dark:hover:bg-earth-800'
@@ -334,9 +333,9 @@ export const Layout: React.FC = () => {
                     {link.name}
                   </NavLink>
                 ))}
-              </nav>
+            </nav>
 
-              <div className="flex items-center space-x-2">
+            <div className="hidden xl:flex xl:justify-self-end items-center space-x-1">
                 {/* Accessibility Dropdown */}
                 <div className="relative" ref={accessMenuRef}>
                     <button
@@ -480,10 +479,9 @@ export const Layout: React.FC = () => {
                   {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
                 </button>
               </div>
-            </div>
 
             {/* Mobile menu button */}
-            <div className="lg:hidden flex items-center">
+            <div className="xl:hidden flex items-center">
               <button
                 ref={mobileBtnRef}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -505,7 +503,7 @@ export const Layout: React.FC = () => {
             role="navigation"
             aria-label="Mobile navigation"
             ref={mobileMenuRef}
-            className="lg:hidden absolute top-24 left-4 right-4 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 z-40"
+            className="xl:hidden absolute top-24 left-4 right-4 max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-contain bg-white dark:bg-earth-800 rounded-3xl shadow-xl border border-earth-100 dark:border-earth-700 z-40"
           >
             <div className="p-4 space-y-2">
               {navLinks.map((link) => (
