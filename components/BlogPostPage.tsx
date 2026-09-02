@@ -81,7 +81,9 @@ export const BlogPostPage: React.FC = () => {
         <header className="text-center max-w-4xl mx-auto mb-10">
           <p className="text-sm md:text-base font-bold uppercase tracking-[0.16em] text-sage-700 dark:text-sage-300 mb-4">{post.category}</p>
           <h1 id="blog-post-title" className="text-4xl md:text-6xl font-serif text-earth-900 dark:text-earth-50 leading-tight mb-6">{post.title}</h1>
-          <p className="text-lg md:text-xl text-earth-700 dark:text-earth-300 leading-relaxed mb-6">{post.standfirst}</p>
+          {post.standfirst && (
+            <p className="text-lg md:text-xl text-earth-700 dark:text-earth-300 leading-relaxed mb-6">{post.standfirst}</p>
+          )}
           <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-sm text-earth-700 dark:text-earth-300" aria-label="Post details">
             <span>By <Link to="/people/" rel="author" className="underline underline-offset-4 hover:text-sage-700 dark:hover:text-sage-300">Charlie Tak Hei Kwong 鄺德希</Link></span>
             <span aria-hidden="true">•</span>
