@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BITS Letter of Completion</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#20312b}*{box-sizing:border-box}
+body{margin:0;background:#f4f7f5}.app{max-width:980px;margin:0 auto;padding:20px}
+.panel{background:#fff;border:1px solid #dbe5df;border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(31,58,49,.08)}
+h1{margin:0 0 8px;font-size:1.45rem}.intro{margin:0 0 18px;color:#4e625b;line-height:1.5}
+.fields{display:grid;grid-template-columns:1fr 240px;gap:14px}label{display:block;font-weight:700;margin-bottom:6px}
+input{width:100%;border:1px solid #9fb2a9;border-radius:10px;padding:11px 12px;font:inherit}
+input:focus{outline:3px solid rgba(43,111,83,.18);border-color:#2b6f53}input[readonly]{background:#f1f5f2;color:#365a4c}
+.help{margin-top:6px;color:#596b64;font-size:.92rem;line-height:1.45}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+button,a.button{border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.primary{background:#2b6f53;color:#fff}.secondary{background:#e7efe9;color:#173d2f}.status{min-height:1.4em;margin-top:10px;color:#365a4c}
+.preview-wrap{margin-top:22px;display:none}.preview-wrap.show{display:block}.preview-title{font-weight:700;margin:0 0 10px}
+.sheet-shell{overflow:auto;background:#dfe6e2;border-radius:12px;padding:16px}
+canvas{display:block;width:210mm;height:297mm;max-width:100%;margin:0 auto;background:#fff;box-shadow:0 5px 20px rgba(0,0,0,.18)}
+@media(max-width:760px){.fields{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="panel" aria-labelledby="title">
+<h1 id="title">Create your Letter of Completion</h1>
+<p class="intro">Enter your name. Your completion date is added automatically using today’s date. After checking the preview, choose <strong>Download PDF</strong>.</p>
+<div class="fields">
+<div><label for="fullName">Full name</label><input id="fullName" maxlength="55" autocomplete="name" placeholder="e.g. Alex Morgan"></div>
+<div><label for="completedDate">Date completed</label><input id="completedDate" readonly aria-readonly="true"><div class="help">This date cannot be changed.</div></div>
+</div>
+<div class="actions"><button id="previewBtn" class="primary" type="button">Create preview</button><button id="downloadBtn" class="secondary" type="button" disabled>Download PDF</button></div>
+<div id="status" class="status" role="status" aria-live="polite"></div>
+</section>
+<section id="previewWrap" class="preview-wrap" aria-label="Letter preview"><p class="preview-title">Preview</p><div class="sheet-shell"><canvas id="previewCanvas" width="2482" height="3510"></canvas></div></section>
+</div>
+<script>
+(function(){
+const nameInput=document.getElementById('fullName'),dateField=document.getElementById('completedDate'),previewBtn=document.getElementById('previewBtn'),downloadBtn=document.getElementById('downloadBtn'),previewWrap=document.getElementById('previewWrap'),status=document.getElementById('status'),canvas=document.getElementById('previewCanvas'),ctx=canvas.getContext('2d');
+const img=new Image(); let ready=false,currentName='';
+function localDate(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())}
+function formatDate(d){return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'long',year:'numeric'}).format(d)}
+function refreshDate(){dateField.value=formatDate(localDate())}
+function drawWrappedRich(ctx,segments,x,y,maxWidth,lineHeight,fontSize){
+  let lines=[[]], lineWidth=0;
+  for(const seg of segments){
+    const words=seg.text.split(/(\s+)/).filter(Boolean);
+    for(const word of words){
+      ctx.font=`${seg.bold?'700':'400'} ${fontSize}px Arial, Helvetica, sans-serif`;
+      const w=ctx.measureText(word).width;
+      if(!/^\s+$/.test(word) && lineWidth+w>maxWidth && lines[lines.length-1].length){lines.push([]);lineWidth=0;}
+      lines[lines.length-1].push({text:word,bold:seg.bold,width:w}); lineWidth+=w;
+    }
+  }
+  lines.forEach((line,i)=>{let xx=x;for(const p of line){ctx.font=`${p.bold?'700':'400'} ${fontSize}px Arial, Helvetica, sans-serif`;ctx.fillText(p.text,xx,y+i*lineHeight);xx+=p.width;}});
+  return lines.length;
+}
+function renderLetter(name){
+  ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+  ctx.fillStyle='rgb(242,241,233)';ctx.fillRect(240,1270,2080,205);ctx.fillRect(240,2575,1100,100);
+  ctx.fillStyle='rgb(95,115,93)';ctx.textBaseline='alphabetic';
+  const seg=[{text:'This letter confirms that ',bold:false},{text:name,bold:true},{text:' completed the ',bold:false},{text:'Community Advisor Training 2026/27',bold:true},{text:' as part of the Building Identity Through Stories (BITS) doctoral research project.',bold:false}];
+  let fs=48; while(fs>34){ctx.font=`400 ${fs}px Arial`; const rough=seg.reduce((s,a)=>s+ctx.measureText(a.text).width,0); if(rough/2080*2.2<3.1)break;fs-=1;}
+  drawWrappedRich(ctx,seg,250,1335,2040,61,fs);
+  ctx.font='400 48px Arial, Helvetica, sans-serif';ctx.fillText('Date completed: '+formatDate(localDate()),250,2645);
+}
+function preview(){const n=nameInput.value.trim().replace(/\s+/g,' ');if(!n){status.textContent='Please enter your full name.';nameInput.focus();return}if(!ready){status.textContent='The letter template is still loading.';return}currentName=n;refreshDate();renderLetter(n);previewWrap.classList.add('show');downloadBtn.disabled=false;status.textContent='Preview ready. Choose Download PDF when you are happy with your name.';previewWrap.scrollIntoView({behavior:'smooth',block:'start'});}
+function downloadUrl(name){const u=new URL('download.html',window.location.href);u.hash='name='+encodeURIComponent(name);return u.toString();}
+previewBtn.addEventListener('click',preview);
+downloadBtn.addEventListener('click',()=>{if(!currentName)return;const w=window.open(downloadUrl(currentName),'_blank');if(!w)status.textContent='Your browser blocked the download tab. Please allow pop-ups for this page and choose Download PDF again.';else status.textContent='Your PDF download is opening in a new tab.';});
+nameInput.addEventListener('keydown',e=>{if(e.key==='Enter')preview()});
+img.onload=()=>{ready=true;status.textContent='Template ready.'};img.onerror=()=>status.textContent='The letter template could not be loaded.';img.src='assets/letter-template.png';refreshDate();
+})();
+</script>
+</body></html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<title>BITS Community Advisor Training</title>
+<style>
+:root{--ink:#17233d;--muted:#5d687b;--line:#d8deea;--accent:#6c4cff;--accent-dark:#5336d7;--bg:#f5f7fb;--card:#fff;--ok:#126b45;--err:#a61b1b}
+*{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+#gate{min-height:100%;display:grid;place-items:center;padding:24px}.card{width:min(100%,620px);background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 36px rgba(23,35,61,.1);padding:34px}
+.eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-dark);margin:0 0 8px}h1{font-size:clamp(1.9rem,4vw,2.45rem);line-height:1.15;margin:0 0 14px}
+p{line-height:1.6}.intro{color:var(--muted)}.note{background:#edf8f3;color:#174d37;padding:15px 16px;border-radius:12px;margin:18px 0}.notice{background:#f0edff;padding:15px 16px;border-radius:12px;margin:18px 0}
+button,input{font:inherit}button{width:100%;min-height:48px;border-radius:10px;font-weight:700;cursor:pointer}#confirm{background:#ece9ff;color:#3e2ea5;border:2px solid #cfc6ff;margin:4px 0 20px}#confirm[aria-pressed="true"]{background:#e8f6ef;color:var(--ok);border-color:#9bd4ba}
+label{display:block;font-weight:700;margin:0 0 8px}input{width:100%;min-height:48px;border:1px solid #aeb7c8;border-radius:10px;padding:10px 12px;margin-bottom:12px}#open{border:0;background:var(--accent);color:#fff}#open:hover:not(:disabled){background:var(--accent-dark)}button:disabled,input:disabled{opacity:.55;cursor:not-allowed}button:focus-visible,input:focus{outline:3px solid #9f8fff;outline-offset:2px}
+#status{min-height:1.5em;margin-top:12px;font-weight:700}.error{color:var(--err)}.ok{color:var(--ok)}.help{border-top:1px solid var(--line);padding-top:18px;margin-top:22px;color:var(--muted);font-size:.95rem}a{color:#4931c6;font-weight:700}
+#courseShell{display:none;height:100%}#toolbar{height:52px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 14px;gap:12px}#toolbar strong{font-size:.95rem}#saved{font-size:.85rem;color:var(--muted)}#courseFrame{width:100%;height:calc(100% - 52px);border:0;background:white}
+</style>
+</head>
+<body>
+<section id="gate">
+  <main class="card">
+    <p class="eyebrow">BITS · 2026/27</p>
+    <h1>Community Advisor Training</h1>
+    <p class="intro">This training is for <strong>BITS Community Advisors only</strong>. Please confirm that you are a Community Advisor and enter the training password to continue.</p>
+
+    <div class="note" role="note">
+      <strong>Your progress is saved in this browser.</strong><br>
+      You can leave and return later using the same browser and device. Clearing browser data, using private browsing, or switching devices may reset your progress.
+    </div>
+
+    <div class="notice" role="note">Please don’t share the password or training materials outside the Community Advisor group.</div>
+
+    <button id="confirm" type="button" aria-pressed="false">I confirm I am a BITS Community Advisor</button>
+
+    <label for="password">Training password</label>
+    <input id="password" type="password" autocomplete="current-password" disabled>
+    <button id="open" type="button" disabled>Access training</button>
+    <div id="status" role="status" aria-live="polite"></div>
+
+    <p class="help">Having trouble getting in? Please <a href="mailto:tk290331@falmouth.ac.uk?subject=BITS%20Community%20Advisor%20Training%20Access">contact Charlie</a>.</p>
+  </main>
+</section>
+
+<section id="courseShell" aria-label="BITS Community Advisor Training">
+  <div id="toolbar">
+    <strong>BITS Community Advisor Training</strong>
+    <span id="saved">Progress is saved in this browser</span>
+  </div>
+  <iframe id="courseFrame" title="BITS Community Advisor Training course" allow="fullscreen"></iframe>
+</section>
+
+<script src="scorm-runtime.js"></script>
+<script>
+(() => {
+  const HASH = "b86e85bf9b9ec5223167f2517a9cc1954b2e9bd0b358acf5deaff73728adeb44";
+  const LAUNCH = "scorm/scormdriver/indexAPI.html";
+  const confirmBtn = document.getElementById('confirm');
+  const pw = document.getElementById('password');
+  const openBtn = document.getElementById('open');
+  const status = document.getElementById('status');
+  const gate = document.getElementById('gate');
+  const shell = document.getElementById('courseShell');
+  const frame = document.getElementById('courseFrame');
+  const saved = document.getElementById('saved');
+
+  async function sha256(s) {
+    const b = new TextEncoder().encode(s);
+    const d = await crypto.subtle.digest('SHA-256', b);
+    return Array.from(new Uint8Array(d)).map(x => x.toString(16).padStart(2,'0')).join('');
+  }
+
+  function updateSavedText() {
+    const when = window.BITS_SCORM && window.BITS_SCORM.lastSaved();
+    if (when) {
+      try {
+        const d = new Date(when);
+        saved.textContent = 'Progress saved ' + d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+      } catch (_) {}
+    }
+  }
+
+  confirmBtn.addEventListener('click', () => {
+    const on = confirmBtn.getAttribute('aria-pressed') !== 'true';
+    confirmBtn.setAttribute('aria-pressed', String(on));
+    confirmBtn.textContent = on ? '✓ Community Advisor confirmed' : 'I confirm I am a BITS Community Advisor';
+    pw.disabled = !on; openBtn.disabled = !on;
+    status.textContent = ''; status.className = '';
+    if (on) pw.focus(); else pw.value = '';
+  });
+
+  async function openCourse() {
+    if (confirmBtn.getAttribute('aria-pressed') !== 'true') return;
+    if (!pw.value) {
+      status.textContent = 'Please enter the training password.';
+      status.className = 'error'; return;
+    }
+    openBtn.disabled = true; pw.disabled = true; openBtn.textContent = 'Checking…';
+
+    if ((await sha256(pw.value)) !== HASH) {
+      status.textContent = 'That password doesn’t look right. Please try again, or contact Charlie if you need help.';
+      status.className = 'error';
+      openBtn.disabled = false; pw.disabled = false; openBtn.textContent = 'Access training'; pw.select();
+      return;
+    }
+
+    status.textContent = window.BITS_SCORM && window.BITS_SCORM.hasProgress()
+      ? 'Welcome back — opening your saved training progress…'
+      : 'Access confirmed. Opening your training…';
+    status.className = 'ok';
+
+    // Parent window exposes window.API before the SCORM iframe loads.
+    // Rise will discover this API and use it for suspend_data / lesson_location / status.
+    frame.src = LAUNCH;
+    gate.style.display = 'none';
+    shell.style.display = 'block';
+    updateSavedText();
+    setInterval(updateSavedText, 5000);
+  }
+
+  openBtn.addEventListener('click', openCourse);
+  pw.addEventListener('keydown', e => { if (e.key === 'Enter') openCourse(); });
+})();
+</script>
+</body>
+</html>

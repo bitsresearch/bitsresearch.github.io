@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BITS Letter Download</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#20312b}*{box-sizing:border-box}body{margin:0;background:#eef2ef}.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;padding:14px;background:#fff;border-bottom:1px solid #dbe5df}.toolbar button{border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:700;cursor:pointer;background:#2b6f53;color:#fff}.toolbar .secondary{background:#e7efe9;color:#173d2f}.toolbar span{color:#596b64}.shell{padding:18px;overflow:auto}canvas{display:block;width:210mm;height:297mm;max-width:100%;margin:0 auto;background:#fff;box-shadow:0 5px 20px rgba(0,0,0,.18)}
+</style></head><body>
+<div class="toolbar"><button id="downloadNow" type="button">Save PDF</button><span id="message">Preparing your protected PDF…</span></div>
+<div class="shell"><canvas id="letterCanvas" width="2482" height="3510"></canvas></div>
+<script>
+(function(){
+const canvas=document.getElementById('letterCanvas'),ctx=canvas.getContext('2d'),btn=document.getElementById('downloadNow'),msg=document.getElementById('message'),img=new Image();
+let currentBlob=null;
+
+function getName(){const h=location.hash.replace(/^#/,'');const p=new URLSearchParams(h);return (p.get('name')||'').trim().replace(/\s+/g,' ')}
+const name=getName()||'Community Advisor';
+function localDate(){const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())}
+function formatDate(d){return new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'long',year:'numeric'}).format(d)}
+function safeFileName(s){return s.replace(/[^a-z0-9 _.-]/gi,'').trim().replace(/\s+/g,'_').slice(0,60)||'Community_Advisor'}
+function drawWrappedRich(ctx,segments,x,y,maxWidth,lineHeight,fontSize){let lines=[[]],lineWidth=0;for(const seg of segments){for(const word of seg.text.split(/(\s+)/).filter(Boolean)){ctx.font=`${seg.bold?'700':'400'} ${fontSize}px Arial, Helvetica, sans-serif`;const w=ctx.measureText(word).width;if(!/^\s+$/.test(word)&&lineWidth+w>maxWidth&&lines[lines.length-1].length){lines.push([]);lineWidth=0}lines[lines.length-1].push({text:word,bold:seg.bold,width:w});lineWidth+=w}}lines.forEach((line,i)=>{let xx=x;for(const p of line){ctx.font=`${p.bold?'700':'400'} ${fontSize}px Arial, Helvetica, sans-serif`;ctx.fillText(p.text,xx,y+i*lineHeight);xx+=p.width}})}
+function render(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);ctx.fillStyle='rgb(242,241,233)';ctx.fillRect(240,1270,2080,205);ctx.fillRect(240,2575,1100,100);ctx.fillStyle='rgb(95,115,93)';ctx.textBaseline='alphabetic';const seg=[{text:'This letter confirms that ',bold:false},{text:name,bold:true},{text:' completed the ',bold:false},{text:'Community Advisor Training 2026/27',bold:true},{text:' as part of the Building Identity Through Stories (BITS) doctoral research project.',bold:false}];drawWrappedRich(ctx,seg,250,1335,2040,61,46);ctx.font='400 48px Arial, Helvetica, sans-serif';ctx.fillText('Date completed: '+formatDate(localDate()),250,2645)}
+function dataUrlToBytes(dataUrl){const b64=dataUrl.split(',')[1],bin=atob(b64),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return a}
+function ascii(s){return new TextEncoder().encode(s)}
+function concat(parts){let n=parts.reduce((s,p)=>s+p.length,0),o=new Uint8Array(n),x=0;for(const p of parts){o.set(p,x);x+=p.length}return o}
+function hex(bytes){return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('').toUpperCase()}
+
+// --- PDF Standard Security Handler (128-bit RC4, Revision 3) ---
+// The PDF opens without a password. A random owner password is generated for each
+// document and is never displayed. Printing is allowed; modification, copying,
+// annotations, form filling and page assembly are restricted in conforming readers.
+const PAD=new Uint8Array([0x28,0xBF,0x4E,0x5E,0x4E,0x75,0x8A,0x41,0x64,0x00,0x4E,0x56,0xFF,0xFA,0x01,0x08,0x2E,0x2E,0x00,0xB6,0xD0,0x68,0x3E,0x80,0x2F,0x0C,0xA9,0xFE,0x64,0x53,0x69,0x7A]);
+function md5(bytes){
+  const len=bytes.length, total=(((len+8)>>>6)+1)*64, buf=new Uint8Array(total);buf.set(bytes);buf[len]=0x80;
+  const bitLo=(len*8)>>>0, bitHi=Math.floor((len*8)/4294967296)>>>0;
+  const dv=new DataView(buf.buffer);dv.setUint32(total-8,bitLo,true);dv.setUint32(total-4,bitHi,true);
+  let a0=0x67452301,b0=0xefcdab89,c0=0x98badcfe,d0=0x10325476;
+  const S=[7,12,17,22,7,12,17,22,7,12,17,22,7,12,17,22,5,9,14,20,5,9,14,20,5,9,14,20,5,9,14,20,4,11,16,23,4,11,16,23,4,11,16,23,4,11,16,23,6,10,15,21,6,10,15,21,6,10,15,21,6,10,15,21];
+  const K=new Uint32Array(64);for(let i=0;i<64;i++)K[i]=Math.floor(Math.abs(Math.sin(i+1))*4294967296)>>>0;
+  const rol=(x,n)=>((x<<n)|(x>>>(32-n)))>>>0;
+  for(let off=0;off<total;off+=64){
+    const M=new Uint32Array(16);for(let j=0;j<16;j++)M[j]=dv.getUint32(off+j*4,true);
+    let A=a0,B=b0,C=c0,D=d0;
+    for(let i=0;i<64;i++){
+      let F,g;
+      if(i<16){F=(B&C)|((~B)&D);g=i}
+      else if(i<32){F=(D&B)|((~D)&C);g=(5*i+1)%16}
+      else if(i<48){F=B^C^D;g=(3*i+5)%16}
+      else{F=C^(B|(~D));g=(7*i)%16}
+      F=F>>>0;
+      const tmp=D;D=C;C=B;
+      const sum=(A+F+K[i]+M[g])>>>0;
+      B=(B+rol(sum,S[i]))>>>0;A=tmp;
+    }
+    a0=(a0+A)>>>0;b0=(b0+B)>>>0;c0=(c0+C)>>>0;d0=(d0+D)>>>0;
+  }
+  const out=new Uint8Array(16),odv=new DataView(out.buffer);odv.setUint32(0,a0,true);odv.setUint32(4,b0,true);odv.setUint32(8,c0,true);odv.setUint32(12,d0,true);return out;
+}
+function rc4(data,key){
+  const S=new Uint8Array(256);for(let i=0;i<256;i++)S[i]=i;let j=0;
+  for(let i=0;i<256;i++){j=(j+S[i]+key[i%key.length])&255;const t=S[i];S[i]=S[j];S[j]=t}
+  const out=new Uint8Array(data.length);let i=0;j=0;
+  for(let k=0;k<data.length;k++){i=(i+1)&255;j=(j+S[i])&255;const t=S[i];S[i]=S[j];S[j]=t;out[k]=data[k]^S[(S[i]+S[j])&255]}
+  return out;
+}
+function xorKey(key,n){const out=new Uint8Array(key.length);for(let i=0;i<key.length;i++)out[i]=key[i]^n;return out}
+function padPassword(bytes){const out=new Uint8Array(32);const n=Math.min(bytes.length,32);out.set(bytes.slice(0,n));if(n<32)out.set(PAD.slice(0,32-n),n);return out}
+function ownerEntry(ownerBytes,userBytes){
+  let digest=md5(padPassword(ownerBytes));for(let i=0;i<50;i++)digest=md5(digest);
+  const key=digest.slice(0,16);let out=rc4(padPassword(userBytes),key);for(let i=1;i<=19;i++)out=rc4(out,xorKey(key,i));return out;
+}
+function le32(v){const b=new Uint8Array(4),d=new DataView(b.buffer);d.setUint32(0,v>>>0,true);return b}
+function fileKey(userBytes,O,P,fileId){
+  let digest=md5(concat([padPassword(userBytes),O,le32(P>>>0),fileId]));for(let i=0;i<50;i++)digest=md5(digest.slice(0,16));return digest.slice(0,16)
+}
+function userEntry(fileKey,fileId){
+  let digest=md5(concat([PAD,fileId]));let out=rc4(digest,fileKey);for(let i=1;i<=19;i++)out=rc4(out,xorKey(fileKey,i));const u=new Uint8Array(32);u.set(out,0);u.set(PAD.slice(0,16),16);return u
+}
+function objectKey(fileKey,objNum,genNum){
+  const extra=new Uint8Array([objNum&255,(objNum>>8)&255,(objNum>>16)&255,genNum&255,(genNum>>8)&255]);const d=md5(concat([fileKey,extra]));return d.slice(0,Math.min(fileKey.length+5,16))
+}
+function buildProtectedPdf(jpegBytes,w,h){
+  const userBytes=new Uint8Array(0);const ownerBytes=new Uint8Array(32);crypto.getRandomValues(ownerBytes);const fileId=new Uint8Array(16);crypto.getRandomValues(fileId);
+  // Permissions: printing + high-quality printing + accessibility allowed; editing/copying/annotations/forms/assembly denied.
+  const P=0xFFFFFAC4>>>0, Psigned=P>0x7fffffff?P-0x100000000:P;
+  const O=ownerEntry(ownerBytes,userBytes),fk=fileKey(userBytes,O,P,fileId),U=userEntry(fk,fileId);
+  const objects=[];
+  objects[1]=ascii('<< /Type /Catalog /Pages 2 0 R >>');
+  objects[2]=ascii('<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  objects[3]=ascii('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>');
+  const encImg=rc4(jpegBytes,objectKey(fk,4,0));
+  objects[4]=concat([ascii(`<< /Type /XObject /Subtype /Image /Width ${w} /Height ${h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${encImg.length} >>\nstream\n`),encImg,ascii('\nendstream')]);
+  const content=ascii('q\n595.28 0 0 841.89 0 0 cm\n/Im0 Do\nQ\n'),encContent=rc4(content,objectKey(fk,5,0));
+  objects[5]=concat([ascii(`<< /Length ${encContent.length} >>\nstream\n`),encContent,ascii('\nendstream')]);
+  objects[6]=ascii(`<< /Filter /Standard /V 2 /Length 128 /O <${hex(O)}> /U <${hex(U)}> /P ${Psigned} /R 3 >>`);
+  let parts=[ascii('%PDF-1.4\n%âãÏÓ\n')],offsets=[0],pos=parts[0].length;
+  for(let i=1;i<=6;i++){offsets[i]=pos;const pre=ascii(`${i} 0 obj\n`),post=ascii('\nendobj\n');parts.push(pre,objects[i],post);pos+=pre.length+objects[i].length+post.length}
+  const xrefPos=pos;let xref=`xref\n0 7\n0000000000 65535 f \n`;for(let i=1;i<=6;i++)xref+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';
+  xref+=`trailer\n<< /Size 7 /Root 1 0 R /Encrypt 6 0 R /ID [<${hex(fileId)}><${hex(fileId)}>] >>\nstartxref\n${xrefPos}\n%%EOF`;
+  parts.push(ascii(xref));return concat(parts)
+}
+function makePdfBlob(){render();const jpeg=dataUrlToBytes(canvas.toDataURL('image/jpeg',0.98));const pdf=buildProtectedPdf(jpeg,canvas.width,canvas.height);currentBlob=new Blob([pdf],{type:'application/pdf'});return currentBlob}
+async function savePdf(){
+  try{
+    const blob=makePdfBlob();const filename='BITS_Letter_of_Completion_'+safeFileName(name)+'.pdf';
+    if('showSaveFilePicker' in window){
+      const handle=await window.showSaveFilePicker({suggestedName:filename,types:[{description:'PDF document',accept:{'application/pdf':['.pdf']}}]});
+      const writable=await handle.createWritable();await writable.write(blob);await writable.close();
+      msg.textContent='Saved successfully. Printing is allowed; editing and document changes are restricted.';return;
+    }
+    const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.rel='noopener';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+    msg.textContent='Your protected PDF has been created.';
+  }catch(e){if(e&&e.name==='AbortError'){msg.textContent='Save cancelled. Choose Save PDF when you are ready.';return}console.error(e);msg.textContent='Your browser could not save the PDF. Please try Save PDF again.'}
+}
+btn.addEventListener('click',savePdf);
+img.onload=()=>{render();msg.textContent='Your protected PDF is ready. Choose Save PDF.'};img.onerror=()=>msg.textContent='The letter template could not be loaded.';img.src='assets/letter-template.png';
+})();
+</script></body></html>

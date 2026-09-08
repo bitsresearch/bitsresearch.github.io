@@ -1,0 +1,306 @@
+<?xml version="1.0" ?>
+<manifest
+  identifier="AYqMF-s3UzFjfYDr5sh5TbeDT9ynobHl11K0YCFs"
+  version="1"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd"
+>
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <adlcp:location>metadata.xml</adlcp:location>
+  </metadata>
+  <organizations default="articulate_rise">
+      <organization identifier="articulate_rise">
+      <title>BITS Community Advisor Training Resources - 2026/27</title>
+      <item identifier="i1" identifierref="r1" isvisible="true">
+        <title>BITS Community Advisor Training Resources - 2026/27</title>
+        <adlcp:datafromlms>datafromlms</adlcp:datafromlms>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="r1" type="webcontent" adlcp:scormtype="sco" href="scormdriver/indexAPI.html">
+      
+        <file href="scormcontent/lib/ai-scenario/entry.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/57960b97.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/841684f2.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/6237cfa3.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/312c66b0.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/5e51779a.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/722e48c4.js" />
+      
+        <file href="scormcontent/lib/ai-scenario/a57db97e.js" />
+      
+        <file href="scormcontent/lib/mondrian/entry.js" />
+      
+        <file href="scormcontent/lib/mondrian/e3f3f2af.js" />
+      
+        <file href="scormcontent/lib/sandbox/sandbox.html" />
+      
+        <file href="scormcontent/lib/sandbox/c77685df.js" />
+      
+        <file href="scormcontent/lib/sandbox/4adfab46.css" />
+      
+        <file href="scormcontent/lib/learn_dist/entry.js" />
+      
+        <file href="scormcontent/lib/learn_dist/9b1f8619.js" />
+      
+        <file href="scormcontent/lib/learn_dist/cd7714c6.css" />
+      
+        <file href="scormcontent/lib/mondrian/542cd24e.js" />
+      
+        <file href="scormcontent/lib/learn_dist/9452aaba.js" />
+      
+        <file href="scormcontent/lib/mondrian/a4b4f786.js" />
+      
+        <file href="scormcontent/lib/mondrian/3868877e.js" />
+      
+        <file href="scormcontent/lib/mondrian/5d56aa22.js" />
+      
+        <file href="scormcontent/lib/rise/811c946f.js" />
+      
+        <file href="scormcontent/lib/rise/b5c246db.css" />
+      
+        <file href="scormcontent/lib/rise/18a921c6.js" />
+      
+        <file href="scormcontent/lib/rise/c46ab61d.css" />
+      
+        <file href="scormcontent/lib/rise/7fbf0356.js" />
+      
+        <file href="scormcontent/lib/rise/9aede266.ttf" />
+      
+        <file href="scormcontent/lib/rise/bff47411.woff" />
+      
+        <file href="scormcontent/lib/rise/f54a4bbb.js" />
+      
+        <file href="scormcontent/lib/rise/02cf473f.js" />
+      
+        <file href="scormcontent/lib/rise/db622a80.js" />
+      
+        <file href="scormcontent/lib/rise/fbfc27f0.js" />
+      
+        <file href="scormcontent/lib/rise/4fda90c0.js" />
+      
+        <file href="scormcontent/lib/rise/80c4ed75.js" />
+      
+        <file href="scormcontent/lib/rise/9ebbfd01.js" />
+      
+        <file href="scormcontent/lib/rise/299f5ddb.js" />
+      
+        <file href="scormcontent/lib/rise/ebbde940.js" />
+      
+        <file href="scormcontent/lib/rise/3c1c89b9.js" />
+      
+        <file href="scormcontent/lib/rise/b2fa32e8.js" />
+      
+        <file href="scormcontent/lib/rise/674a2edc.js" />
+      
+        <file href="scormcontent/lib/rise/61bd4112.js" />
+      
+        <file href="scormcontent/lib/rise/4241978b.js" />
+      
+        <file href="scormcontent/lib/rise/5fe14f00.js" />
+      
+        <file href="scormcontent/lib/rise/39f25c26.js" />
+      
+        <file href="scormdriver/driverOptions.js" />
+      
+        <file href="scormdriver/indexAPI.html" />
+      
+        <file href="scormdriver/goodbye.html" />
+      
+        <file href="scormcontent/index.html" />
+      
+        <file href="scormdriver/lib/dist/5306ddc2.js" />
+      
+        <file href="scormcontent/lib/dist/c7ae2a54.js" />
+      
+        <file href="scormcontent/assets/175_full.png" />
+      
+        <file href="scormcontent/assets/182_full.png" />
+      
+        <file href="scormcontent/assets/136_full.png" />
+      
+        <file href="scormcontent/assets/158_full.png" />
+      
+        <file href="scormcontent/assets/166_full.png" />
+      
+        <file href="scormcontent/assets/106_full.png" />
+      
+        <file href="scormcontent/assets/141_full.png" />
+      
+        <file href="scormcontent/assets/167_full.png" />
+      
+        <file href="scormcontent/assets/148_full.png" />
+      
+        <file href="scormcontent/assets/156_full.png" />
+      
+        <file href="scormcontent/assets/186_full.png" />
+      
+        <file href="scormcontent/assets/181_full.png" />
+      
+        <file href="scormcontent/assets/146_full.png" />
+      
+        <file href="scormcontent/assets/atrium_falmouth_campus_cl.webp" />
+      
+        <file href="scormcontent/assets/play-button.png" />
+      
+        <file href="scormcontent/assets/quote_background.jpg" />
+      
+        <file href="scormcontent/assets/mountains.jpg" />
+      
+        <file href="scormcontent/assets/poster1.png" />
+      
+        <file href="scormdriver/scormdriver.js" />
+      
+        <file href="scormcontent/assets/Copy-of-Call-999-if.webp" />
+      
+        <file href="scormdriver/lms-interface.js" />
+      
+        <file href="scormcontent/assets/Screenshot 2026-09-08 at 7.jpg" />
+      
+        <file href="scormdriver/browsersniff.js" />
+      
+        <file href="scormcontent/assets/Screenshot 2026-09-05 at 1.png" />
+      
+        <file href="scormdriver/blank.html" />
+      
+        <file href="scormcontent/assets/stock-image.jpg" />
+      
+        <file href="scormdriver/AICCComm.html" />
+      
+        <file href="scormcontent/assets/stock-image-1.jpg" />
+      
+        <file href="scormdriver/auto-scripts/AutoBookmark.js" />
+      
+        <file href="scormcontent/assets/stock-image-2.jpg" />
+      
+        <file href="scormdriver/auto-scripts/AutoCompleteSCO.js" />
+      
+        <file href="scormcontent/assets/A-candid-editorial-style-p.jpg" />
+      
+        <file href="scormdriver/auto-scripts/CourseExit.js" />
+      
+        <file href="scormcontent/assets/A-realistic-documentary-st.jpg" />
+      
+        <file href="scormcontent/assets/A-realistic-editorial-styl.jpg" />
+      
+        <file href="scormcontent/assets/a-real-image-about-a-art-w.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-3.jpg" />
+      
+        <file href="scormcontent/assets/A-real-life-editorial-phot.jpg" />
+      
+        <file href="scormcontent/assets/8adef2ea-9871-48b7-98ff-e8.jpg" />
+      
+        <file href="scormcontent/assets/quiz.png" />
+      
+        <file href="scormcontent/assets/A-candid-photo-of-a-univer.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-4.jpg" />
+      
+        <file href="scormcontent/assets/Screenshot 2026-09-08 at 4.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-5.jpg" />
+      
+        <file href="scormcontent/assets/question (2).png" />
+      
+        <file href="scormcontent/assets/aim.png" />
+      
+        <file href="scormcontent/assets/cartoon.png" />
+      
+        <file href="scormcontent/assets/stock-image-6.jpg" />
+      
+        <file href="scormcontent/assets/Screenshot 2026-09-08 at 4-1.jpg" />
+      
+        <file href="scormcontent/assets/question.png" />
+      
+        <file href="scormcontent/assets/Transcript - My College Tr.pdf" />
+      
+        <file href="scormcontent/assets/Transcript - Spiky profile.pdf" />
+      
+        <file href="scormcontent/assets/Screenshot 2026-09-08 at 4-2.jpg" />
+      
+        <file href="scormcontent/assets/Screenshot 2026-09-08 at 4-3.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-7.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-8.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-9.jpg" />
+      
+        <file href="scormcontent/assets/Transcript - What is dysca.pdf" />
+      
+        <file href="scormcontent/assets/stock-image-10.jpg" />
+      
+        <file href="scormcontent/assets/stock-image-11.jpg" />
+      
+        <file href="scormcontent/assets/Transcript - What is dysle.pdf" />
+      
+        <file href="scormcontent/assets/Transcript - Discover our.pdf" />
+      
+        <file href="scormcontent/assets/Title- What is Sensory Pro.pdf" />
+      
+        <file href="scormcontent/assets/Transcript - Social model.pdf" />
+      
+        <file href="scormcontent/assets/Transcript - What is ADHD.pdf" />
+      
+        <file href="scormcontent/assets/Transcript - Campus Safety.pdf" />
+      
+        <file href="scormcontent/assets/stock-image-12.jpg" />
+      
+        <file href="scormcontent/lib/fonts/Lato2-Italic.woff" />
+      
+        <file href="scormcontent/lib/fonts/Poppins-SemiBold.woff" />
+      
+        <file href="scormcontent/lib/fonts/Poppins-Bold.woff" />
+      
+        <file href="scormcontent/lib/fonts/Poppins-Regular.woff" />
+      
+        <file href="scormcontent/lib/fonts/Lato2-Bold.woff" />
+      
+        <file href="scormcontent/lib/fonts/Lato2-Black.woff" />
+      
+        <file href="scormcontent/lib/fonts/Lato2-Light.woff" />
+      
+        <file href="scormcontent/lib/fonts/Lato2-Regular.woff" />
+      
+        <file href="scormcontent/lib/fonts/Poppins-SemiBoldItalic.woff" />
+      
+        <file href="scormcontent/lib/fonts/Poppins-Italic.woff" />
+      
+        <file href="scormcontent/lib/fonts/Poppins-BoldItalic.woff" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/README.txt" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/__MACOSX/._README.txt" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/__MACOSX/._assets" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/__MACOSX/._download.html" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/__MACOSX/._index.html" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/__MACOSX/assets/._letter-template.png" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/assets/letter-template.png" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/download.html" />
+      
+        <file href="scormcontent/assets/7914d09c-b4d7-4939-b000-665358f6ea10/index.html" />
+      
+        <file href="scormcontent/runtime-data.js" />
+      
+    </resource>
+  </resources>
+</manifest>
