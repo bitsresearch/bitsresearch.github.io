@@ -698,6 +698,12 @@ if (fs.existsSync(blogDataPath)) {
 
   const buildBlogFallback = (post, file) => {
     const prefix = linkPrefix(file);
+    const bodyHtml = post.calendarLoginNote
+      ? post.bodyHtml.replace(
+        '<h2>Add your timetable to your calendar</h2>',
+        `<h2>Add your timetable to your calendar</h2><p><strong>${post.calendarLoginNote}</strong></p>`,
+      )
+      : post.bodyHtml;
     const mainNav = [...nav, ...legalNav]
       .map(([href, label]) => `<li><a href="${href}">${label}</a></li>`)
       .join('');
@@ -716,7 +722,7 @@ if (fs.existsSync(blogDataPath)) {
               <p>By <a href="/people/">Charlie Tak Hei Kwong 鄺德希</a> · <time datetime="${escapeHtml(post.dateISO)}">${escapeHtml(post.dateText)}</time></p>
             </header>
             ${image}
-            <div class="blog-prose">${post.bodyHtml}</div>
+            <div class="blog-prose">${bodyHtml}</div>
           </article>
         </main>
         <!-- END_STATIC_SEO_CONTENT -->

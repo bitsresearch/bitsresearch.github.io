@@ -26,9 +26,15 @@ export const BlogPostPage: React.FC = () => {
   }
   if (!post) return <Navigate to="/404.html" replace />;
 
+  const bodyHtml = post.calendarLoginNote
+    ? post.bodyHtml.replace(
+      '<h2>Add your timetable to your calendar</h2>',
+      `<h2>Add your timetable to your calendar</h2><p><strong>${post.calendarLoginNote}</strong></p>`,
+    )
+    : post.bodyHtml;
   const canonicalPath = `/blog/${post.slug}/`;
   const canonicalUrl = `${SITE_ORIGIN}${canonicalPath}`;
-  const readingMinutes = Math.max(1, Math.ceil(post.bodyHtml.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).length / 220));
+  const readingMinutes = Math.max(1, Math.ceil(bodyHtml.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).length / 220));
   const WorkshopSection = (globalThis as typeof globalThis & { BitsWorkshopSection?: React.ComponentType<{ layout?: 'homepage' | 'article' }> }).BitsWorkshopSection;
 
   useEffect(() => {
@@ -101,7 +107,7 @@ export const BlogPostPage: React.FC = () => {
         )}
 
         <div className="bg-white dark:bg-earth-800 border border-earth-200 dark:border-earth-700 rounded-4xl shadow-sm px-6 py-9 sm:px-10 md:px-14 md:py-12">
-          <div className="blog-prose" dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
+          <div className="blog-prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
           {post.interactive === 'storyteller-quiz' && <StorytellerQuiz />}
           {post.interactive === 'storyteller-quiz' && WorkshopSection && <WorkshopSection layout="article" />}
           {post.tags.length > 0 && (

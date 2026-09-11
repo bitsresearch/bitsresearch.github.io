@@ -6,6 +6,7 @@
     "description": "A simple guide to viewing your Falmouth University timetable and syncing it with Outlook, Google Calendar or Apple Calendar.",
     "category": "University Transition",
     "standfirst": "Found your university timetable but do not want to keep opening another website every time you need to check where you are going? Here is how to view it and add it to the calendar you already use.",
+    "calendarLoginNote": "You will need to be logged in to MyTimetable to access all of the calendar instructions below.",
     "dateISO": "2026-09-11",
     "dateText": "11 September 2026",
     "image": "/blog/set-up-mytimetable-cover.png",

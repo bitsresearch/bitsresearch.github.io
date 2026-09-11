@@ -7,6 +7,7 @@ export interface BlogPost {
   description: string;
   category: string;
   standfirst: string;
+  calendarLoginNote?: string;
   dateISO: string;
   dateText: string;
   image: string;
