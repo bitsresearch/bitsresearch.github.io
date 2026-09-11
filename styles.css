@@ -40,6 +40,11 @@ main:focus { outline: none; }
 .blog-prose blockquote p { font-size: 1.15rem; font-style: italic; }
 .blog-prose img { border-radius: 1.5rem; }
 .blog-prose .blog-inline-icon { display: inline-block; width: 45px; height: auto; margin: 0 .25rem; border-radius: 0; vertical-align: middle; }
+.blog-prose .blog-video { margin: 2rem 0; overflow: hidden; border: 1px solid #DAD5CB; border-radius: 1.5rem; background: #1A1614; }
+.dark .blog-prose .blog-video { border-color: #5C5148; }
+.blog-prose .blog-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
+.blog-prose .blog-workshop-cta { max-width: 44rem; margin: 1.75rem auto; padding: .9rem 1.1rem; border-left: 4px solid #728070; border-radius: .75rem; background: #E6EBE7; font-size: .95rem; line-height: 1.6; text-align: center; }
+.dark .blog-prose .blog-workshop-cta { background: #3A4038; }
 .blog-map-embed { margin: 2rem 0; overflow: hidden; border: 1px solid #DAD5CB; border-radius: 1.5rem; background: #F5F2ED; }
 .dark .blog-map-embed { border-color: #5C5148; background: #1A1614; }
 .blog-map-embed iframe { display: block; width: 100%; min-height: 30rem; border: 0; }
