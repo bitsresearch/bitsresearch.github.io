@@ -34,7 +34,7 @@ const pageContent = {
   '/': `
     <section>
       <h1>Building Identity Through Stories</h1>
-      <p>We co-develop creative storytelling activities to explore how transmedia storytelling may support the identity exploration of students with diverse learning journeys during the transition into higher education.</p>
+      <p>We co-develop creative storytelling activities to explore how transmedia storytelling may support identity, belonging and agency for students with Special Educational Needs and Disabilities (SEND), neurodivergent students and others with diverse learning journeys during the transition into higher education.</p>
       <p><a href="/about/">Read More</a></p>
     </section>
     <section>
@@ -65,7 +65,7 @@ const pageContent = {
     </section>
     <section>
       <h2>Falmouth University Learning Support and University Transition</h2>
-      <p>BITS (Building Identity Through Stories) is a research project based at Falmouth University and UAL. We focus on learning support, university transition, and supporting students with diverse learning journeys through transmedia storytelling.</p>
+      <p>BITS (Building Identity Through Stories) is a doctoral research project based at Falmouth University and UAL. We explore how students with Special Educational Needs and Disabilities (SEND), neurodivergent students and others with diverse learning journeys experience identity, belonging and transition into higher education through transmedia storytelling.</p>
     </section>
   `,
   '/about/': `
@@ -750,6 +750,33 @@ if (fs.existsSync(blogDataPath)) {
       .replace(/<meta property="og:image" content="[^"]*"\s*\/?\>/, `<meta property="og:image" content="${post.image ? SITE_ORIGIN + post.image : `${SITE_ORIGIN}/images/og-image.jpg`}" />`)
       .replace(/<meta name="twitter:title" content="[^"]*"\s*\/?\>/, `<meta name="twitter:title" content="${escapeHtml(post.title)}" />`)
       .replace(/<meta name="twitter:description" content="[^"]*"\s*\/?\>/, `<meta name="twitter:description" content="${escapeHtml(post.description)}" />`)
+      .replace(/<meta name="twitter:image" content="[^"]*"\s*\/?\>/, `<meta name="twitter:image" content="${post.image ? SITE_ORIGIN + post.image : `${SITE_ORIGIN}/images/og-image.jpg`}" />`)
+      .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script type="application/ld+json">${JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.description,
+            image: post.image ? [SITE_ORIGIN + post.image] : undefined,
+            datePublished: post.dateISO,
+            inLanguage: 'en-GB',
+            mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+            author: { '@type': 'Person', name: 'Charlie Tak Hei Kwong', alternateName: '鄺德希', url: `${SITE_ORIGIN}/people/` },
+            publisher: { '@type': 'Organization', name: 'Building Identity Through Stories', alternateName: 'BITS', url: SITE_ORIGIN },
+            articleSection: post.category,
+            keywords: post.tags,
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_ORIGIN}/` },
+              { '@type': 'ListItem', position: 2, name: 'Resources', item: `${SITE_ORIGIN}/output-resources/` },
+              { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
+            ],
+          },
+        ],
+      })}</script>`)
       .replace(/<div id="root">\s*<!-- BEGIN_STATIC_SEO_CONTENT -->[\s\S]*?<!-- END_STATIC_SEO_CONTENT -->\s*<\/div>/, fallback)
       .replace(/<div id="root"><\/div>/, fallback);
     fs.writeFileSync(filePath, html);

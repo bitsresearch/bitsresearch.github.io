@@ -69,7 +69,6 @@ export const BlogPostPage: React.FC = () => {
       description: post.description,
       image: post.image ? [`${SITE_ORIGIN}${post.image}`] : undefined,
       datePublished: post.dateISO,
-      dateModified: post.dateISO,
       inLanguage: 'en-GB',
       mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
       author: { '@type': 'Person', name: 'Charlie Tak Hei Kwong', alternateName: '鄺德希', url: `${SITE_ORIGIN}/people/` },
@@ -77,8 +76,21 @@ export const BlogPostPage: React.FC = () => {
       articleSection: post.category,
       keywords: post.tags,
     });
+    const breadcrumbSchema = document.createElement('script');
+    breadcrumbSchema.type = 'application/ld+json';
+    breadcrumbSchema.dataset.blogBreadcrumbSchema = 'true';
+    breadcrumbSchema.text = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_ORIGIN}/` },
+        { '@type': 'ListItem', position: 2, name: 'Resources', item: `${SITE_ORIGIN}/output-resources/` },
+        { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
+      ],
+    });
+    document.head.appendChild(breadcrumbSchema);
     document.head.appendChild(schema);
-    return () => schema.remove();
+    return () => { schema.remove(); breadcrumbSchema.remove(); };
   }, [canonicalUrl, post]);
 
   return (

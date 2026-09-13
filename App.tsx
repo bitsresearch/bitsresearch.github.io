@@ -26,6 +26,8 @@ const personSchema = {
   "alternateName": "鄺德希",
   "jobTitle": "Doctoral Researcher",
   "knowsAbout": [
+    "Special Educational Needs and Disabilities (SEND)",
+    "Neurodivergent students",
     "Transmedia storytelling",
     "Inclusive education",
     "Creative media",
@@ -51,7 +53,10 @@ const researchProjectSchema = {
     "Identity exploration",
     "Student transition",
     "Higher education transition",
+    "Special Educational Needs and Disabilities (SEND)",
+    "Neurodivergent students",
     "Students with diverse learning journeys",
+    "Belonging in higher education",
     "Inclusive education",
     "Arts-based educational research"
   ],
@@ -1676,8 +1681,8 @@ const ResearchUpdate: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO
-        title="Research Updates | Building Identity through Stories"
-        description="Watch research update videos from the BITS doctoral research project on transmedia storytelling, identity exploration, student transition, and inclusive education."
+        title="SEND University Transition Research Updates | BITS"
+        description="Follow BITS doctoral research updates on SEND and neurodivergent student transition, storytelling, identity, belonging and inclusive higher education."
         canonicalPath="/research-update/"
         ogTitle="Research Updates | Building Identity through Stories"
         ogDescription="Video updates from a doctoral research project exploring transmedia storytelling, identity exploration, and student transition into higher education."
@@ -1844,11 +1849,11 @@ const Home: React.FC = () => {
   return (
     <div className="w-full">
       <SEO 
-        title="Home | Building Identity through Stories"
-        description="Building Identity Through Stories is doctoral research by Charlie Tak Hei Kwong 鄺德希, exploring how transmedia storytelling may support identity exploration for students with diverse learning journeys during the transition into higher education."
+        title="SEND & Neurodivergent University Transition Research | BITS"
+        description="BITS doctoral research explores how students with Special Educational Needs and Disabilities (SEND) and neurodivergent students experience university transition, identity and belonging."
         canonicalPath="/"
-        ogTitle="Home | Building Identity through Stories"
-        ogDescription="A doctoral research project by Charlie Tak Hei Kwong 鄺德希 exploring transmedia storytelling, identity exploration, and student transition into higher education."
+        ogTitle="SEND & Neurodivergent University Transition Research | BITS"
+        ogDescription="Doctoral research on SEND and neurodivergent student transition to university, with a focus on storytelling, identity, belonging and student agency."
       />
       <JSONLD 
         data={{
@@ -1888,7 +1893,7 @@ const Home: React.FC = () => {
             
             <div className="bg-white/85 dark:bg-earth-800/85 backdrop-blur-md p-5 md:p-7 rounded-3xl border border-white/40 dark:border-earth-700 shadow-lg max-w-3xl mx-auto mb-8 md:mb-10">
                 <p className="text-lg md:text-xl text-earth-900 dark:text-earth-50 leading-relaxed font-light">
-                    We co-develop creative storytelling activities to explore how transmedia storytelling may support the identity exploration of students with diverse learning journeys during the transition into higher education.
+                    We co-develop creative storytelling activities to explore how transmedia storytelling may support identity, belonging and agency for students with Special Educational Needs and Disabilities (SEND), neurodivergent students and others with diverse learning journeys during the transition into higher education.
                 </p>
             </div>
 
@@ -2074,8 +2079,8 @@ const About: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="About | Building Identity through Stories"
-        description="Learn about Charlie Tak Hei Kwong’s doctoral research on transmedia storytelling as an educational intervention to support identity exploration for students with diverse learning journeys entering higher education."
+        title="About BITS: SEND University Transition Research | BITS"
+        description="Learn about BITS doctoral research on storytelling, identity and belonging during the transition to university for SEND and neurodivergent students."
         canonicalPath="/about/"
         ogTitle="About | Building Identity through Stories"
         ogDescription="A doctoral research project exploring how creative storytelling can support students with diverse learning journeys during the transition into higher education."
@@ -2213,8 +2218,8 @@ const People: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="People | Building Identity through Stories"
-        description="Meet Charlie Tak Hei Kwong 鄺德希, the doctoral researcher of Building Identity Through Stories, a fully funded project on transmedia storytelling, inclusive education, and transition into higher education."
+        title="Charlie Kwong & BITS University Transition Research | BITS"
+        description="Meet doctoral researcher Charlie Tak Hei Kwong, the supervisors and community advisors behind BITS research on SEND student transition, identity and belonging."
         canonicalPath="/people/"
         ogTitle="People | Building Identity through Stories"
         ogDescription="Meet Charlie Tak Hei Kwong 鄺德希, doctoral researcher for a fully funded project on transmedia storytelling, inclusive education, and transition into higher education."
@@ -2297,8 +2302,8 @@ const WhatWeCare: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="What We Care About | Building Identity through Stories"
-        description="Explore the values behind Building Identity Through Stories: identity exploration, student agency, community-based practice, ethical safety, and inclusive transition into higher education."
+        title="Identity, Belonging & Inclusive University Transition | BITS"
+        description="Explore the BITS research values: student agency, identity, belonging, inclusive education, ethical practice and transition into higher education."
         canonicalPath="/what-we-care/"
         ogTitle="What We Care About | Building Identity through Stories"
         ogDescription="The core values of BITS: identity exploration, student agency, community-based practice, ethical safety, and inclusive higher education transition."
@@ -2431,8 +2436,8 @@ const Output: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SEO 
-            title="Output and Resources | Building Identity through Stories"
-            description="Explore academic outputs, community resources, research findings, journal articles, book chapters, conference papers, and presentations from Building Identity Through Stories."
+            title="SEND University Transition Resources & Research | BITS"
+            description="Explore BITS research outputs and practical resources on SEND and neurodivergent student transition, identity, belonging and inclusive higher education."
             canonicalPath="/output-resources/"
             ogTitle="Output and Resources | Building Identity through Stories"
             ogDescription="Explore academic outputs, community resources, and research findings from the BITS doctoral research project."
@@ -2572,8 +2577,8 @@ const GetInvolved: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <SEO 
-            title="Get Involved | Building Identity through Stories"
-            description="Join Building Identity Through Stories workshops or collaborate as a Community Advisor to support research on identity, belonging, and university transition."
+            title="Join SEND University Transition Research & Workshops | BITS"
+            description="Join BITS creative storytelling workshops or become a Community Advisor for doctoral research on SEND and neurodivergent students transitioning to university."
             canonicalPath="/get-involved/"
             ogTitle="Get Involved | Building Identity through Stories"
             ogDescription="Take part in creative workshops or collaborate as a Community Advisor to help shape inclusive support for students in transition."
@@ -2697,8 +2702,8 @@ const Events: React.FC = () => {
   return (
     <div className="bg-earth-50 dark:bg-earth-900 min-h-screen pb-20">
       <SEO
-        title="Falmouth University Events & Student Workshops | BITS"
-        description="Find upcoming BITS student workshops at Falmouth University, Woodlane and Penryn Campus, plus online sessions. Explore creative university transition support, accessibility information and FAQs."
+        title="Falmouth Student Workshops & University Transition | BITS"
+        description="Find BITS creative storytelling workshops for students at Falmouth University, Penryn Campus and online, with accessibility information and session details."
         ogTitle="Falmouth University Events & Student Workshops | BITS"
         ogDescription="Upcoming creative student workshops at Falmouth University, Penryn Campus, Woodlane Campus and online, with practical FAQs before you join."
         canonicalPath="/events/"
@@ -2746,8 +2751,8 @@ const Contact: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-3xl mx-auto px-4">
       <SEO 
-        title="Contact | Building Identity through Stories"
-        description="Contact Building Identity Through Stories for research enquiries, workshop participation, collaboration, accessibility support, or questions about the doctoral research project."
+        title="Contact BITS University Transition Research | BITS"
+        description="Contact BITS about research participation, student workshops, collaboration, accessibility or doctoral research on SEND students transitioning to university."
         canonicalPath="/contact/"
         ogTitle="Contact | Building Identity through Stories"
         ogDescription="Get in touch about research participation, collaboration, accessibility, or enquiries related to Building Identity Through Stories."
@@ -2843,7 +2848,7 @@ const PrivacyPolicy: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO
-        title="Privacy Notice | Building Identity through Stories"
+        title="BITS Privacy Notice | Building Identity Through Stories"
         description="Read the BITS Privacy Notice covering information you may provide, external forms, accessibility preferences, GitHub Pages hosting, research data, withdrawal, data-protection rights, security, and contact information."
         canonicalPath="/privacy-policy/"
         ogTitle="Privacy Notice | Building Identity through Stories"
@@ -3134,7 +3139,7 @@ const TermsOfUse: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="Terms of Use | Building Identity through Stories"
+        title="BITS Terms of Use | Building Identity Through Stories"
         description="Read the Terms of Use for Building Identity Through Stories, including research use, intellectual property, CC BY-NC 4.0 licence, third-party content, and disclaimers."
         canonicalPath="/terms-of-use/"
         ogTitle="Terms of Use | Building Identity through Stories"
@@ -3237,8 +3242,8 @@ const Accessibility: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="Accessibility | Building Identity through Stories"
-        description="Read the accessibility statement for Building Identity Through Stories, including WCAG 2.2 AA design, keyboard access, readable typography, display preferences, text-to-speech, and support options."
+        title="BITS Website Accessibility Statement | BITS"
+        description="Read the BITS website accessibility statement, including WCAG 2.2 AA design, keyboard access, readable typography, display preferences and support options."
         canonicalPath="/accessibility/"
         ogTitle="Accessibility | Building Identity through Stories"
         ogDescription="Accessibility information for the BITS website, including readable design, display options, text-to-speech, and support requests."
@@ -3328,7 +3333,7 @@ const ThankYouPrizeTerms: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO
-        title="Thank-you Prize Terms and Conditions | Building Identity through Stories"
+        title="BITS Thank-you Prize Terms and Conditions"
         description="Read the terms and conditions for the optional BITS thank-you prize draw, including eligibility, prizes, entry, winner selection, privacy, and research participation."
         canonicalPath="/thank-you-prize-terms/"
         ogTitle="Thank-you Prize Terms and Conditions | Building Identity through Stories"
@@ -3530,8 +3535,8 @@ const ResearchEthics: React.FC = () => {
   return (
     <div className="py-16 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <SEO 
-        title="Research Ethics | Building Identity through Stories"
-        description="Read about the ethical approval, voluntary participation, consent, privacy, confidentiality, and participant safety procedures for Building Identity Through Stories."
+        title="BITS Research Ethics & Participant Information | BITS"
+        description="Read about BITS ethical approval, voluntary participation, informed consent, privacy, confidentiality, withdrawal and participant safety."
         canonicalPath="/research-ethics/"
         ogTitle="Research Ethics | Building Identity through Stories"
         ogDescription="Ethical approval, consent, privacy, confidentiality, and participant protection information for the BITS doctoral research project."

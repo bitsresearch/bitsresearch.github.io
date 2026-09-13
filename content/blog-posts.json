@@ -3,7 +3,7 @@
     "slug": "falmouth-mytimetable-how-to-view-and-sync-your-university-timetable",
     "seoTitle": "Falmouth MyTimetable: View & Sync Your Timetable",
     "title": "Falmouth MyTimetable: How to View and Sync Your University Timetable",
-    "description": "A simple guide to viewing your Falmouth University timetable and syncing it with Outlook, Google Calendar or Apple Calendar.",
+    "description": "How to view your Falmouth University MyTimetable and sync classes with Outlook, Google Calendar or Apple Calendar, with official help links.",
     "category": "University Transition",
     "standfirst": "Found your university timetable but do not want to keep opening another website every time you need to check where you are going? Here is how to view it and add it to the calendar you already use.",
     "calendarLoginNote": "You will need to be logged in to MyTimetable to access all of the calendar instructions below.",
@@ -26,7 +26,7 @@
   {
     "slug": "falmouth-university-clearing-2026-questions-to-ask",
     "title": "UK Clearing 2026: Questions Worth Asking Before You Say Yes",
-    "description": "Considering Falmouth University through Clearing 2026? Ask about teaching, disability support, accommodation, location, finance and next steps.",
+    "description": "Considering Falmouth University through Clearing 2026? Check teaching, disability support, accommodation, location, costs and next steps before you decide.",
     "category": "University Transition",
     "standfirst": "Considering Falmouth University through Clearing 2026? These questions can help you think beyond the offer itself and check what studying, living and getting support there could actually look like.",
     "dateISO": "2026-08-13",
@@ -38,13 +38,15 @@
     "tags": [
       "UK Clearing 2026",
       "Falmouth University Clearing",
-      "SEND university transition"
-    ]
+      "SEND university transition",
+      "Special Educational Needs and Disabilities (SEND)"
+    ],
+    "seoTitle": "Falmouth University Clearing 2026: Questions to Ask"
   },
   {
     "slug": "finding-private-accommodation-falmouth-penryn-neurodivergent-guide",
     "title": "Finding Private Accommodation in Falmouth & Penryn: A Neurodivergent Guide",
-    "description": "A practical guide to finding private accommodation in Falmouth and Penryn for neurodivergent, disabled and SEND students, from searching to signing.",
+    "description": "A practical guide to private student accommodation in Falmouth and Penryn for neurodivergent, disabled and SEND students, from searching to signing.",
     "category": "Student Accommodation",
     "standfirst": "Looking for private student accommodation in Falmouth or Penryn? This guide covers where to search, what to check at viewings and what to confirm before you sign.",
     "dateISO": "2026-08-14",
@@ -58,13 +60,15 @@
       "private accommodation Penryn",
       "neurodivergent student housing",
       "SEND students",
-      "student accommodation Cornwall"
-    ]
+      "student accommodation Cornwall",
+      "Special Educational Needs and Disabilities (SEND)"
+    ],
+    "seoTitle": "Falmouth Student Accommodation: Neurodivergent Guide"
   },
   {
     "slug": "online-degree-accessibility-send-neurodivergent-students",
     "title": "Is an Online Degree More Accessible for SEND and Neurodivergent Students?",
-    "description": "Explore how online degrees may remove some barriers for SEND and neurodivergent students, while creating new challenges around structure and support.",
+    "description": "Explore accessibility benefits and barriers of online degrees for students with Special Educational Needs and Disabilities (SEND) and neurodivergent students.",
     "category": "University Transition",
     "standfirst": "Online study can remove barriers such as travel and sensory overload, but it can also create new challenges around structure, digital systems and support. Here’s what to check before deciding whether an online course is more accessible for you.",
     "dateISO": "2026-08-13",
@@ -78,14 +82,16 @@
       "SEND students",
       "neurodivergent students",
       "reasonable adjustments",
-      "Disabled Students’ Allowance"
-    ]
+      "Disabled Students’ Allowance",
+      "Special Educational Needs and Disabilities (SEND)"
+    ],
+    "seoTitle": "Online Degrees for SEND & Neurodivergent Students"
   },
   {
     "slug": "falmouth-university-map-2026",
-    "seoTitle": "Falmouth University & Penryn Map 2026: GPS & Accessibility",
+    "seoTitle": "Falmouth University Map 2026: GPS & Accessibility",
     "title": "Falmouth & Penryn Community Map 2026: GPS & Accessibility Guide",
-    "description": "Moving to Falmouth University or Penryn in 2026? Find food, transport, support and AccessAble campus accessibility information in one GPS-friendly map.",
+    "description": "Use this Falmouth University and Penryn map for food, transport, support and AccessAble accessibility links, with GPS-friendly directions for new students.",
     "category": "University Transition",
     "standfirst": "A Falmouth and Penryn community map for finding everyday essentials, directions and campus accessibility information.",
     "dateISO": "2026-08-26",
@@ -109,9 +115,9 @@
   },
   {
     "slug": "falmouth-university-student-links-guide-2026",
-    "seoTitle": "Falmouth University Student Links Guide 2026",
+    "seoTitle": "Falmouth University Student Support Links 2026",
     "title": "Stuck? Here’s Where to Go: Falmouth University Student Links Guide",
-    "description": "A simple guide to key Falmouth University and FX Plus links, organised by the kind of support you need and the situation you are in.",
+    "description": "Find key Falmouth University and FX Plus student links for timetables, study, wellbeing, disability support, campus services and getting help in 2026.",
     "category": "University Transition",
     "standfirst": "University websites contain a lot of useful information, but finding the right page at the exact moment you need it can be harder than it should be. This guide brings together useful Falmouth University and FX Plus links by situation, from getting started to study support.",
     "dateISO": "2026-09-01",
@@ -130,9 +136,9 @@
   },
   {
     "slug": "what-kind-of-storyteller-are-you",
-    "seoTitle": "What Kind of Storyteller Are You?",
+    "seoTitle": "What Kind of Storyteller Are You? BITS Student Quiz",
     "title": "What Kind of Storyteller Are You?",
-    "description": "Try a short, playful BITS quiz, receive a small story prompt, then find a workshop that works for you.",
+    "description": "Try the short BITS storytelling quiz, get a creative story prompt and explore student workshops about identity, belonging and starting university.",
     "category": "Stories & University Life",
     "standfirst": "",
     "dateISO": "2026-09-01",

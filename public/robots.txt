@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /advisor-training/
 
 Sitemap: https://bitsresearch.github.io/sitemap.xml

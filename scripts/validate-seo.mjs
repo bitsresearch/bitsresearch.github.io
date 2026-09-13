@@ -51,6 +51,8 @@ assert(fs.existsSync(path.join(dist,'images/og-image.jpg')) || fs.existsSync(pat
 
 const sitemap = read(path.join(dist,'sitemap.xml'));
 for (const route of routes) assert(sitemap.includes(`<loc>${origin}${route}</loc>`), `Sitemap missing: ${route}`);
+for (const post of blogPosts) assert(sitemap.includes(`<loc>${origin}/blog/${post.slug}/</loc>`), `Sitemap missing blog post: /blog/${post.slug}/`);
+assert(!sitemap.includes('/blog/Post-Name/'), 'Sitemap contains placeholder blog route');
 assert(!/upcomingworkshops|upcomingworkshop|team\//.test(sitemap), 'Sitemap contains retired route');
 assert(!/<lastmod>|<priority>|<changefreq>/.test(sitemap), 'Sitemap contains unreliable optional metadata');
 
