@@ -2,6 +2,15 @@
 
 Date: 24 August 2026
 
+## Workshop invitation and Events default view — 17 September 2026
+
+- Added a calm, non-modal BITS workshop invitation on the About page and all blog posts only. It appears only after 40 seconds and after a visitor has read at least half of the page.
+- The invitation appears at most once per browser session. Closing it or choosing “Not now” suppresses it for two days; “Don’t show again”, visiting Events, or selecting “See upcoming workshops” suppresses it for the current Autumn 2026 workshop campaign.
+- The invitation does not move keyboard focus or use an automatic announcement. It has native controls, visible focus styles, minimum 44px controls, a decorative image with empty alternative text, and reduced visual motion.
+- The invitation checks the published workshop schedule and remains hidden when it finds no upcoming dated sessions. A temporary schedule-fetching failure does not hide the invitation.
+- Added the supplied seagull image as a small decorative circular image within the invitation.
+- Changed the Events page to open in List View; Calendar View remains available as an optional switch.
+
 ## Falmouth community map direct-entry fix — 26 August 2026
 
 - Added an explicit React route for `/blog/:slug/index.html`, so a physical blog `index.html` entry no longer hydrates into the 404 page.

@@ -2719,7 +2719,7 @@ const Events: React.FC = () => {
               Upcoming BITS creative workshops at Falmouth University’s Woodlane Campus, Penryn Campus and online.
             </p>
           </header>
-          <WorkshopSection defaultView="calendar" allowViewSwitch />
+          <WorkshopSection defaultView="list" allowViewSwitch />
           <FullFAQ />
         </div>
       </div>

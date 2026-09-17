@@ -32,6 +32,12 @@ const AccessibilityIcon = ({ size = 24, className }: { size?: number, className?
 );
 
 const ACCESSIBILITY_PREFS_KEY = 'bits.accessibilityPreferences.v1';
+const WORKSHOP_INVITE_CAMPAIGN = 'autumn-2026';
+const WORKSHOP_INVITE_DISMISS_KEY = `bits.workshopInvite.${WORKSHOP_INVITE_CAMPAIGN}.dismissedUntil`;
+const WORKSHOP_INVITE_SESSION_KEY = `bits.workshopInvite.${WORKSHOP_INVITE_CAMPAIGN}.shownThisSession`;
+const WORKSHOP_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAX_TguHx2FXd0pxNxM5ViTiTnGnbZPsdrO7KGm98aekIxu4kkHHhAVwM2_W1xiB_WJTbPfSZLet2/pub?output=csv';
+const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000;
+const CAMPAIGN_DISMISS_MS = 120 * 24 * 60 * 60 * 1000;
 
 type AccessibilityPreferences = {
   theme: 'light' | 'dark';
@@ -77,6 +83,8 @@ export const Layout: React.FC = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [emailStatus, setEmailStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [isAccessMenuOpen, setIsAccessMenuOpen] = useState(false);
+  const [showWorkshopInvite, setShowWorkshopInvite] = useState(false);
+  const [hasUpcomingWorkshops, setHasUpcomingWorkshops] = useState<boolean | null>(null);
   
   const location = useLocation();
   const accessMenuRef = useRef<HTMLDivElement>(null);
@@ -256,6 +264,76 @@ export const Layout: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const isWorkshopInvitePage = location.pathname.startsWith('/blog/') || /^\/about(?:\.html)?\/?$/.test(location.pathname);
+
+  const dismissWorkshopInvite = (duration: number) => {
+    try {
+      window.localStorage.setItem(WORKSHOP_INVITE_DISMISS_KEY, String(Date.now() + duration));
+    } catch {
+      // The invitation remains dismissible even when local storage is blocked.
+    }
+    setShowWorkshopInvite(false);
+  };
+
+  const stopWorkshopInviteCampaign = () => dismissWorkshopInvite(CAMPAIGN_DISMISS_MS);
+
+  useEffect(() => {
+    if (!isWorkshopInvitePage) {
+      setShowWorkshopInvite(false);
+      if (location.pathname.startsWith('/events')) stopWorkshopInviteCampaign();
+      return;
+    }
+
+    let cancelled = false;
+    const checkForUpcomingWorkshops = async () => {
+      try {
+        const response = await fetch(WORKSHOP_CSV_URL, { cache: 'no-store' });
+        if (!response.ok) throw new Error('Workshop schedule could not be loaded');
+        const csv = await response.text();
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const hasFutureDate = [...csv.matchAll(/\b(\d{1,2})\/(\d{1,2})\/(\d{4})\b/g)].some((match) => {
+          const date = new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
+          return !Number.isNaN(date.getTime()) && date >= today;
+        });
+        if (!cancelled) setHasUpcomingWorkshops(hasFutureDate);
+      } catch {
+        // Do not hide recruitment because a temporary network problem prevents a schedule check.
+        if (!cancelled) setHasUpcomingWorkshops(true);
+      }
+    };
+    checkForUpcomingWorkshops();
+    return () => { cancelled = true; };
+  }, [isWorkshopInvitePage, location.pathname]);
+
+  useEffect(() => {
+    if (!isWorkshopInvitePage || !hasUpcomingWorkshops) return;
+
+    const isDismissed = () => {
+      try { return Number(window.localStorage.getItem(WORKSHOP_INVITE_DISMISS_KEY) || 0) > Date.now(); }
+      catch { return false; }
+    };
+    const wasShownThisSession = () => {
+      try { return window.sessionStorage.getItem(WORKSHOP_INVITE_SESSION_KEY) === 'true'; }
+      catch { return false; }
+    };
+    const showIfEngaged = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pastHalfway = scrollableHeight > 0 && window.scrollY / scrollableHeight >= 0.5;
+      if (!isDismissed() && !wasShownThisSession() && pastHalfway) {
+        setShowWorkshopInvite(true);
+        try { window.sessionStorage.setItem(WORKSHOP_INVITE_SESSION_KEY, 'true'); } catch { /* no-op */ }
+      }
+    };
+
+    const timer = window.setTimeout(showIfEngaged, 40000);
+    window.addEventListener('scroll', showIfEngaged, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('scroll', showIfEngaged);
+    };
+  }, [hasUpcomingWorkshops, isWorkshopInvitePage]);
 
   const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -586,6 +664,54 @@ export const Layout: React.FC = () => {
       <main id="main-content" className="flex-grow" tabIndex={-1}>
         <Outlet />
       </main>
+
+      {showWorkshopInvite && (
+        <aside
+          className="fixed bottom-24 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm rounded-3xl border border-earth-200 bg-[#fffdf6] p-5 shadow-xl dark:border-earth-700 dark:bg-earth-800 sm:bottom-6 sm:right-6"
+          aria-labelledby="workshop-invite-title"
+        >
+          <button
+            type="button"
+            onClick={() => dismissWorkshopInvite(TWO_DAYS_MS)}
+            className="absolute right-3 top-3 min-h-11 min-w-11 rounded-full text-xl text-earth-700 hover:bg-earth-100 focus:outline-none focus:ring-2 focus:ring-sage-700 dark:text-earth-200 dark:hover:bg-earth-700"
+            aria-label="Close workshop invitation for two days"
+          >
+            <X aria-hidden="true" size={20} />
+          </button>
+          <img
+            src="/images/cute-seagull.png"
+            alt=""
+            className="float-right ml-4 h-20 w-20 rounded-full border-2 border-white object-cover object-[42%_25%] shadow-sm"
+          />
+          <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-sage-700 dark:text-sage-300">BITS workshops</p>
+          <h2 id="workshop-invite-title" className="mb-2 pr-8 font-serif text-2xl leading-tight text-earth-900 dark:text-earth-50">Still figuring out uni?</h2>
+          <p className="mb-3 text-sm leading-relaxed text-earth-700 dark:text-earth-300">Explore your story and diverse learning journey, your way. No art skills. No pressure to share.</p>
+          <p className="mb-4 text-sm font-bold leading-relaxed text-earth-900 dark:text-earth-100">£10 gift-card prize draw at every session.</p>
+          <div className="clear-both flex flex-wrap gap-2">
+            <Link
+              to="/events/"
+              onClick={stopWorkshopInviteCampaign}
+              className="min-h-11 flex-1 rounded-xl bg-sage-700 px-4 py-3 text-center text-sm font-bold text-white transition-colors hover:bg-sage-800 focus:outline-none focus:ring-2 focus:ring-sage-700 focus:ring-offset-2 dark:focus:ring-sage-300"
+            >
+              See upcoming workshops
+            </Link>
+            <button
+              type="button"
+              onClick={() => dismissWorkshopInvite(TWO_DAYS_MS)}
+              className="min-h-11 rounded-xl border border-earth-300 px-4 py-3 text-sm font-bold text-earth-800 transition-colors hover:bg-earth-100 focus:outline-none focus:ring-2 focus:ring-sage-700 focus:ring-offset-2 dark:border-earth-600 dark:text-earth-100 dark:hover:bg-earth-700"
+            >
+              Not now
+            </button>
+            <button
+              type="button"
+              onClick={stopWorkshopInviteCampaign}
+              className="min-h-11 w-full rounded-xl px-4 py-2 text-sm font-bold text-earth-700 underline underline-offset-4 hover:text-sage-700 focus:outline-none focus:ring-2 focus:ring-sage-700 focus:ring-offset-2 dark:text-earth-300 dark:hover:text-sage-300"
+            >
+              Don’t show again
+            </button>
+          </div>
+        </aside>
+      )}
 
       {/* Back to Top */}
       {showScrollTop && !isMenuOpen && !isAccessMenuOpen && (
