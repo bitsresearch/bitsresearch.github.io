@@ -1893,7 +1893,10 @@ const Home: React.FC = () => {
             
             <div className="bg-white/85 dark:bg-earth-800/85 backdrop-blur-md p-5 md:p-7 rounded-3xl border border-white/40 dark:border-earth-700 shadow-lg max-w-3xl mx-auto mb-8 md:mb-10">
                 <p className="text-lg md:text-xl text-earth-900 dark:text-earth-50 leading-relaxed font-light">
-                    We co-develop creative storytelling activities to explore how transmedia storytelling may support identity, belonging and agency for students with Special Educational Needs and Disabilities (SEND), neurodivergent students and others with diverse learning journeys during the transition into higher education.
+                    We create storytelling activities with students to explore what it’s like to start university — finding your place, figuring out who you are, and having more say in your own journey.
+                </p>
+                <p className="mt-4 text-lg md:text-xl text-earth-900 dark:text-earth-50 leading-relaxed font-light">
+                    BITS is especially interested in the experiences of SEND and neurodivergent students, while recognising that everyone’s route into university can look different.
                 </p>
             </div>
 

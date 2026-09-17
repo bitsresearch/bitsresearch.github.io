@@ -9,6 +9,7 @@ Date: 24 August 2026
 - The invitation does not move keyboard focus or use an automatic announcement. It has native controls, visible focus styles, minimum 44px controls, a decorative image with empty alternative text, and reduced visual motion.
 - The invitation checks the published workshop schedule and remains hidden when it finds no upcoming dated sessions. A temporary schedule-fetching failure does not hide the invitation.
 - Added the supplied seagull image as a small decorative circular image within the invitation.
+- Centred the invitation in the viewport without adding a dimmed overlay or forcing keyboard focus into it.
 - Changed the Events page to open in List View; Calendar View remains available as an optional switch.
 
 ## Falmouth community map direct-entry fix — 26 August 2026

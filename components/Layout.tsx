@@ -667,7 +667,7 @@ export const Layout: React.FC = () => {
 
       {showWorkshopInvite && (
         <aside
-          className="fixed bottom-24 right-4 z-40 w-[calc(100vw-2rem)] max-w-sm rounded-3xl border border-earth-200 bg-[#fffdf6] p-5 shadow-xl dark:border-earth-700 dark:bg-earth-800 sm:bottom-6 sm:right-6"
+          className="fixed left-1/2 top-1/2 z-40 w-[calc(100vw-2rem)] max-w-sm -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-earth-200 bg-[#fffdf6] p-5 shadow-xl dark:border-earth-700 dark:bg-earth-800"
           aria-labelledby="workshop-invite-title"
         >
           <button
